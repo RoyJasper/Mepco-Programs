@@ -1,0 +1,526 @@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NAME:ROY JASPER C.S                            EX.NO:2 
+                OPERATIONS USING STACK DATA SRUCTURE
+************************************************************************
+PROGRAM:
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<ctype.h>
+struct node
+{
+char data;
+struct node *next;
+};
+typedef struct node * stack;
+void push(char,stack);
+char pop(stack);
+int isempty(stack);
+void makeempty(stack);
+void display(stack);
+int paranthesis(char[],stack);
+void infix(char[],stack);
+int priority(char);
+
+//#include"h.h"
+main()
+{
+int a,i,j,v,choice;
+char b,c[20],d[20],e[20];
+stack top;
+top=(stack)malloc(sizeof(struct node));
+top->next=NULL;
+while(1)
+{
+
+printf("\nenter the choice\n1.Push\n2.Pop\n3.Isempty\n4.Makeempty");
+printf("\n5.Display\n6.Paranthesis");
+printf(" \n7.Infix to postfix`\n8.exit\n");
+scanf("%d",&choice);
+switch(choice)
+{
+case 1: printf("\nEnter the character");
+scanf("%s",&b);
+push(b,top);
+break;
+case 2:
+b=pop(top);
+printf("\n%c is Deleted",b);
+break;
+case 3:
+i=isempty(top);
+if(i==1)
+{
+printf("\nStack is Empty");
+}
+else
+{
+printf("\nStack is not empty");
+}
+break;
+case 4:
+makeempty(top);
+break;
+case 5:
+display(top);
+break;
+case 6:
+printf("\nEnter the expression");
+scanf(" %s",d);
+v=paranthesis(d,top);
+break;
+case 7:
+printf("\nEnter the expression");
+scanf(" %s",c);
+infix(c,top);
+break;
+case 8:
+exit (0);
+}
+}
+}
+//#include"h.h"
+void push(char x,stack top)
+{
+stack temp;
+temp=(stack)malloc(sizeof(struct node));
+temp->data=x;
+temp->next=top->next;
+top->next=temp;
+}
+char pop(stack top)
+{
+stack t;
+char a;
+t=top->next;
+top->next=top->next->next;
+a=t->data;
+free(t);
+return a;
+}
+int isempty(stack top)
+{
+if(top->next==NULL)
+{
+return 1;
+}
+else
+{
+return 0;
+}
+}
+void makeempty(stack top)
+{
+int a;
+while(top->next!=NULL)
+{
+a=pop(top);
+printf("%c",a);
+}
+}
+void display(stack top)
+{
+stack t;
+t=top->next;
+while(t!=NULL)
+{
+printf("%c",t->data);
+t=t->next;
+}
+}
+int paranthesis(char d[20],stack top)
+{
+char x,t;
+int c,i=0;
+while(d[i]!='\0')
+{
+if(isalnum(d[i])||d[i]=='+'||d[i]=='-'||d[i]=='*'||d[i]=='/')
+{
+i++;
+continue;
+}
+if(d[i]=='['||d[i]=='('||d[i]=='{')
+{
+t=d[i];
+push(t,top);
+i++;
+}
+else if(d[i]==']'||d[i]==')'||d[i]=='}')
+{
+c=isempty(top);
+if(c==1)
+{
+printf("\nMissing of open paranthesis");
+return 0;
+}
+else
+{
+x=pop(top);
+if(x=='('&&d[i]==')')
+{
+i++;
+continue;
+}
+else
+if(x=='['&&d[i]==']')
+{
+i++;
+continue;
+}
+else
+if(x=='{'&&d[i]=='}')
+{
+i++;
+continue;
+}
+else
+printf("\nMiss match of paranthesis");
+return 0;
+}
+}
+}
+if(!isempty(top))
+{
+printf("\nMissing of closing paranthesis");
+makeempty(top);
+return 0;
+}
+else
+{
+printf("Valid expression");
+return 0;
+}
+}
+void infix(char b[50],stack top)
+{
+int i,q,j;
+char t,d,f,x,g,c;
+while(b[i]!='\0')
+{
+if(isalnum(b[i]))
+{
+printf("%c",b[i]);
+i++;
+}
+else if(b[i]=='('||b[i]=='{'||b[i]=='[')
+{
+push(b[i],top);
+i++;
+}
+else if(b[i]==')'||b[i]=='}'||b[i]==']')
+{
+c=pop(top);
+while(d!='('||d!='{'||d!='[')
+{
+printf("%c",d);
+c=pop(top);
+i++;
+}
+if(d=='('||d=='{'||d=='[')
+i++;
+}
+else
+{
+if(isempty(top))
+{
+if(b[i]=='*'||b[i]=='+'||b[i]=='-'||b[i]=='/')
+{
+push(b[i],top);
+i++;
+}
+}
+else
+{
+g=pop(top);
+if(g=='*'||g=='+'||g=='-'||g=='/')
+{
+if(priority(g)>=priority(b[i]))
+{
+push(b[i],top);
+printf("%c",g);
+i++;
+}
+else
+{
+push(g,top);
+push(b[i],top);
+i++;
+}
+}
+else
+{
+//push(g,top);
+//push(b[i],top);
+i++;
+}
+}
+}
+}
+makeempty(top);
+}
+int priority(char x)
+{
+if(x=='-')
+return 0;
+else if(x=='+')
+return 1;
+else if(x=='*')
+return 2;
+else if(x=='/')
+return 3;
+}
+
+
+
+#include<stdlib.h>
+#include<stdio.h>
+struct node1
+{
+ int eta;
+ struct node1*next1;
+ };
+typedef struct node1*stack1;
+void push1(int,stack1);
+int pop1(stack1);
+int calc(int,int,char);
+void push1(int x,stack1 top1)
+{
+ stack1 temp;
+ temp =(stack1)malloc(sizeof(struct node1));
+ temp->eta=x;
+ temp->next1=top1->next1;
+ top1->next1=temp;
+ }
+int pop1(stack1 top1)
+{
+ static int j=0;
+ int x;
+ stack1 k;
+ k=top1->next1;
+ top1->next1=top1->next1->next1;
+ x=k->eta;
+ free(k);
+ return x;
+ }
+main()
+{
+ int g,p,q,r,i=0,j,m;
+ char c[20],u;
+ stack1 top1;
+ top1=(stack1)malloc(sizeof(struct node1));
+ top1->next1='\0';
+   printf("Enter postfix expression");
+        scanf("%s",c);
+        while(c[i]!='\0')
+        {
+         u=c[i];
+         if(isalpha(u))
+         { printf("Enter value for %c\t",u);
+           scanf("%d",&m);
+           push1(m,top1);}
+           else if((u=='+')||(u=='-')||(u=='*')||(u=='/'))
+           {
+            if((q=pop1(top1))&&(p=pop1(top1)))
+            push1(calc(p,q,u),top1);
+            else
+            printf("Error in calculation\n");
+            }
+          else
+          continue;
+          i++;
+         }
+        r=pop1(top1);
+        if(top1->next1=='\0')
+        printf("total answer is %d\n",r);
+        else
+        printf("Wrong epression\n");
+ }
+int calc(int p,int q,char u)
+{
+  switch(u)
+  {
+    case '+': return p+q;
+    case '-': return p-q;
+    case '*': return p*q;
+    case '/': return p/q;
+     }}
+
+
+OUTPUT:
+t
+
+enter the choice
+1.Push
+2.Pop
+3.Isempty
+4.Makeempty
+5.Display
+6.Paranthesis 
+7.Infix to postfix`
+8.exit
+1
+
+Enter the character2
+
+enter the choice
+1.Push
+2.Pop
+3.Isempty
+4.Makeempty
+5.Display
+6.Paranthesis 
+7.Infix to postfix`
+8.exit
+1
+
+Enter the character3
+
+enter the choice
+1.Push
+2.Pop
+3.Isempty
+4.Makeempty
+5.Display
+6.Paranthesis 
+7.Infix to postfix`
+8.exit
+1
+
+Enter the character4
+
+enter the choice
+1.Push
+2.Pop
+3.Isempty
+4.Makeempty
+5.Display
+6.Paranthesis 
+7.Infix to postfix`
+8.exit
+1
+
+Enter the character5
+
+enter the choice
+1.Push
+2.Pop
+3.Isempty
+4.Makeempty
+5.Display
+6.Paranthesis 
+7.Infix to postfix`
+8.exit
+1
+
+Enter the character6
+
+enter the choice
+1.Push
+2.Pop
+3.Isempty
+4.Makeempty
+5.Display
+6.Paranthesis 
+7.Infix to postfix`
+8.exit
+1
+
+Enter the character7
+
+enter the choice
+1.Push
+2.Pop
+3.Isempty
+4.Makeempty
+5.Display
+6.Paranthesis 
+7.Infix to postfix`
+8.exit
+2
+
+7 is Deleted
+enter the choice
+1.Push
+2.Pop
+3.Isempty
+4.Makeempty
+5.Display
+6.Paranthesis 
+7.Infix to postfix`
+8.exit
+3
+
+Stack is not empty
+enter the choice
+1.Push
+2.Pop
+3.Isempty
+4.Makeempty
+5.Display
+6.Paranthesis 
+7.Infix to postfix`
+8.exit
+5
+65432
+enter the choice
+1.Push
+2.Pop
+3.Isempty
+4.Makeempty
+5.Display
+6.Paranthesis 
+7.Infix to postfix`
+8.exit
+6
+
+Enter the expression{a+b)
+
+Miss match of paranthesis
+enter the choice
+1.Push
+2.Pop
+3.Isempty
+4.Makeempty
+5.Display
+6.Paranthesis 
+7.Infix to postfix`
+8.exit
+6
+
+Enter the expression(a+b
+
+Missing of closing paranthesis(65432
+enter the choice
+1.Push
+2.Pop
+3.Isempty
+4.Makeempty
+5.Display
+6.Paranthesis 
+7.Infix to postfix`
+8.exit
+7
+
+Enter the expressiona a+b*c
+abc*+
+enter the choice
+1.Push
+2.Pop
+3.Isempty
+4.Makeempty
+5.Display
+6.Paranthesis 
+7.Infix to postfix`
+8.exit
+8
+
+
+Enter postfix expressionabc*+\ 
+Enter value for a	2
+Enter value for b	4
+Enter value for c	6
+total answer is 26
+
+
+
+Script done on Sun 06 Sep 2015 12:05:11 PM IST

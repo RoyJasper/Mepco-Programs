@@ -1,0 +1,432 @@
+
+
+2015-08-14 16:09                     14bit058                     Page 1
+
+
+                                                        
+********************************************************
+USER NAME      :14bit058
+DATE AND TIME  :Fri Aug 14 16:09:18 IST 2015
+SERVER NAME    :mepcolinux.mepcoeng.ac.in
+JOB NAME       :ex3.prn
+PRINT FROM     :172.16.24.21
+*********************************************************
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NAME: C.S.ROY JASPER
+14BIT058
+TITLE: PROGRAM USING STATIC MEMBER AND STATIC FUNCTIONS
+EXERCISE 3
+***********************************************************************************************
+%%%%%%%%%%%%%%%%%%%%NO OF CARS CALCULATION%%%%%%%%%%%%%%%%%%%%%%
+bash-3.2$ cat car.pp
+PROGRAM:
+
+#include<iostream>
+#include<string>
+using namespace std;
+class car
+{
+ public:
+   static int bmw;
+   static int audi;
+   static int jaquar;
+   static int bugati;
+ private:
+   int no,yr;
+   string name,manifacturer,col;
+ public:
+   static void totbmw();
+   static void totaudi();
+   static void totjaquar();
+   static void totbugati();
+   void read();
+};
+void car::read()
+{
+ cout<<"\nEnter model no:";
+ cin>>no;
+ cout<<"\nEnter colour";
+ cin>>col;
+ cout<<"\nEnter name";
+ cin>>name;
+ cout<<"\nEnter company";
+ cin>>manifacturer;
+ if(name=="bmw")
+   bmw++;
+ if(name=="audi")
+   audi++;
+ if(name=="jaquar")
+   jaquar++;
+ if(name=="bugati")
+  bugati++;
+}
+int car::bmw;
+int car::audi;
+int car::bugati;
+int car::jaquar;
+void car::totbmw()
+
+
+
+
+
+
+
+2015-08-14 16:09                     14bit058                     Page 2
+
+
+{
+ cout<<"\nno of bmw cars are "<<car::bmw;
+}
+void car::totaudi()
+{
+ cout<<"\nno of audi cars are "<<car::audi;
+}
+void car::totbugati()
+{
+ cout<<"\ntotal no of bugatti "<<car::bugati;
+}
+void car::totjaquar()
+{
+ cout<<"\nTotal no of jaquar cars are "<<car::jaquar; 
+}
+int main()
+{
+ int i,n;
+ cout<<"Enter no of cars";
+ cin>>n;
+ car b[20];
+ for(i=0;i<n;i++)
+  {
+   cout<<"\n Enter car no"<<i+1;
+   b[i].read();
+  }
+ car::totbmw();
+ car::totaudi();
+ car::totbugati();
+ car::totjaquar(); 
+}
+
+
+bash-3.2$ ./a.out
+OUTPUT:
+
+Enter no of cars3
+
+ Enter car no1
+Enter model no:12312
+
+Enter colourwhite
+
+Enter nameaudi
+
+Enter company das
+
+ Enter car no2
+Enter model no:123554
+
+Enter colourorange
+
+Enter name  bugati
+
+Enter companyauto
+
+ Enter car no3
+Enter model no: 123134
+
+Enter colour viloet
+
+Enter name jaquar
+
+
+
+
+
+
+
+2015-08-14 16:09                     14bit058                     Page 3
+
+
+
+Enter company tas
+
+no of bmw cars are 0
+no of audi cars are 1
+total no of bugatti 1
+Total no of jaquar cars are 1
+
+%%%%%%%%%%%%%%%%%%%%%%%LOAN ACCOUNT%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+bash-3.2$ cat loan1.cpp
+PROGRAM:
+
+#include<iostream>
+#include<string>
+using namespace std;
+class loan
+{
+ private:
+ int accno;
+ string name;
+ string ltype;
+ int amount;
+ int year;
+ public:
+ static int totalloans;
+ static int housing;
+ static int loans;
+ static void displaytotalloans();
+ static void displayhousing();
+ static void displayloan();
+ void read();
+ void print();
+};
+void loan::read()
+{
+ cout<<"\nenter the account no:";
+ cin>>accno;
+ cout<<"enter the name";
+ cin>>name;
+ cout<<"enter the loan type";
+ cin>>ltype;
+ cout<<"enter the loan amount";
+ cin>>amount;
+ cout<<"enter the no of years";
+ cin>>year;
+ totalloans++;
+ if(ltype=="housing")
+ housing++;
+ if(amount>2000000)
+ loans++;
+}
+int loan::totalloans;
+int loan::housing;
+int loan::loans;
+void loan::displaytotalloans()
+{
+ cout<<"\nno of loans sanctioned is"<<loan::totalloans;
+}
+void loan::displayhousing()
+{
+cout<<"\nloans sanctioned for housing is"<<loan::housing;
+}
+
+
+
+
+
+
+
+2015-08-14 16:09                     14bit058                     Page 4
+
+
+void loan::displayloan()
+{
+cout<<"no of account having loan greater than 2000000 is"<<loan::loans;
+}
+int main()
+{
+ int i,n;
+ loan l[10];
+ cout<<"\nenter the no of loan accounts";
+ cin>>n;
+ for(i=0;i<n;i++)
+ {
+  l[i].read();
+ }
+ loan::displaytotalloans();
+ loan::displayhousing();
+ loan::displayloan();
+}
+bash-3.2$ ./a.out
+
+OUTPUT:
+
+
+enter the no of loan accounts2
+
+enter the account no:53673
+enter the nameroy
+enter the loan typehoua sing^[[D            housing
+enter the loan amount123231234
+enter the no of years4
+
+enter the account no:124741
+enter the namejasper
+enter the loan typefox
+enter the loan amount 5542344
+enter the no of years
+no of loans sanctioned is2
+loans sanctioned for housing is1no of account having loan greater than 2000000 is2
+
+bash-3.2$ cat defau.cpp
+%%%%%%%%%%%%%%%%%%%%%%%%%% STUDENT PASS PERCENTAGE CALCULATION %%%%%%%%%%%%%%%%%%%%%%% 
+PROGRAM:
+
+#include<iostream>
+using namespace std;
+bool checkpass(int m1,int m2,int m3,int pass=50);
+class student
+{
+ private:
+       int rno,m1,m2,m3;
+       string name,dept;
+ public:
+       void read();
+       int print();
+};
+void student :: read()
+{
+ cout<<"enter rno";
+ cin>>rno;
+ cout<<"enter name";
+ cin>>name;
+ cout<<"enter m1";
+
+
+
+
+
+
+
+2015-08-14 16:09                     14bit058                     Page 5
+
+
+ cin>>m1;
+ cout<<"enter m2";
+ cin>>m2;
+ cout<<"enter m3";
+ cin>>m3;
+ cout<<"enter department";
+ cin>>dept;
+}
+int student :: print()
+{
+ int tot;
+ int result;
+ result= checkpass(m1,m2,m3);
+ tot=m1+m2+m3;
+ cout<<"\n student rno"<<rno;
+ cout<<"\n student name"<<name;
+ cout<<"\nMark 1 "<<m1<<"\nMark 2 "<<m2<<"\nMark 3 "<<m3;
+ cout<<"\ttotal "<<tot;
+ if(result==1)
+  return 1;
+ else
+  return 0;
+}
+bool checkpass(int m1,int m2,int m3,int pass)
+{
+ if((m1>50)&& (m2>50)&&(m3>50))
+  return true;
+ else
+  return false;
+}
+int main()
+{
+ student s[20];
+ int n=2,i,k;
+ float c=0;
+ cout<<"enter no of students";
+ cin>>k;
+ for(i=0;i<k;i++)
+ {
+  cout<<"\nEnter details of student no "<<i+1<<"\n";
+  s[i].read();
+ }
+ for(i=0;i<k;i++)
+ {
+  c=s[i].print()+c;
+ }
+ c=c/k;
+ c=c*100;
+ cout<<"\ntotal percentage is "<<c;
+ return 0;
+}
+
+OUTPUT:
+
+bash-3.2$ ./a.out
+total percentage is 0bash-3.2$ ./a.out
+enter no of students2
+
+Enter details of student no 1
+enter rno2341324
+enter name roy
+enter m1 33  
+
+
+
+
+
+
+
+2015-08-14 16:09                     14bit058                     Page 6
+
+
+enter m2 9
+enter m3 77
+enter departmentit
+
+Enter details of student no 2
+enter rno12412
+enter name jas
+enter m1 88
+enter m2 77
+enter m3 99
+enter departmentit
+
+ student rno2341324
+ student nameroy
+Mark 1 33
+Mark 2 9
+Mark 3 77	total 119
+ student rno12412
+ student namejas
+Mark 1 88
+Mark 2 77
+Mark 3 99	total 264
+total percentage is 50bash-3.2$ exit
+exit
+
+Script done on Fri 14 Aug 2015 03:59:39 PM IST
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

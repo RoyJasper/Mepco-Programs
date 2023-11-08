@@ -1,0 +1,182 @@
+**********************************************************************
+EXNO:1                                             NAME:M.VIGNESH
+DATE:7-1-16                                        ROLLNO:14BIT062
+**********************************************************************
+             WORKING WITH FILE SYSTEMS AND COMMANDS
+*********************************************************************
+
+#include<sys/types.h>
+#include<unistd.h>
+#include<fcntl.h>
+#include<sys/stat.h>
+#include<stdio.h>
+int main(int argc,char * argv[])
+{
+int i,fp;
+char ch;
+fp=open(argv[1],O_RDONLY);
+if(fp==-1)
+printf("\nSUCH FILE IS NOT EXISTS");
+else
+{
+while((read(fp,&ch,1))>0)
+{
+printf("%c",ch);
+}}
+close(fp);
+return 0;
+}
+bash-3.2$ cc 1a.c
+bash-3.2$ ./a.out read.txt
+good morning i am vignesh i am from madurai currently doing my b.tech IT in mepco schlenk engg clg sivakasi i want to complete my engg as soon as possible my aim in my life is to become a hod of the mepco schlenk engg clg i like my hostel my very much i like my friend chinnavel veryyyyy much in my hostel
+
+bash-3.2$ cat read.txt
+
+good morning i am vignesh i am from madurai currently doing my b.tech IT in mepco schlenk engg clg sivakasi i want to complete my engg as soon as possible my aim in my life is to become a hod of the mepco schlenk engg clg i like my hostel my very much i like my friend chinnavel veryyyyy much in my hostel
+bash-3.2$ cat read.txt[C[C[C[C[C[C[C[C[C[C[4@./a.ou[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[9Pcc 1a.c[1P.cb.c[C[C
+bash-3.2$ cc 1b.c[1P1b.c[1P1b.ca1b.ct1b.c 1b.c[C[C[C[C
+
+#include<sys/types.h>
+#include<unistd.h>
+#include<fcntl.h>
+#include<sys/stat.h>
+#include<stdio.h>
+int main(int argc,char * argv[])
+{
+int fp1,fp2;
+char ch;
+fp1=open(argv[1],O_WRONLY);
+fp2=open(argv[2],O_RDONLY);
+if(fp1==-1||fp2==-1)
+printf("\nSUCH FILE IS NOT EXISTS");
+else
+{
+while(read(fp2,&ch,1)>0)
+{
+write(fp1,&ch,1);
+}
+printf("COPY PROCESS IS DONE SUCCESSFUL");
+}
+close(fp1);
+close(fp2);
+return 0;
+}
+
+
+
+
+bash-3.2$ cat 1b.c[1Pc[C[C[C[C[C
+bash-3.2$ ./a.out  read.txt
+COPY PROCESS IS DONE SUCCESSFULbash-3.2$ 
+
+bash-3.2$ ./a.out read1.txt read.txt[C[C[C[C[C[C[C[C[C[Ccc 1b.c[K[1@at[C[C[C[C[C[C[C[K[K[K[Kread1.tc[Kxt
+good morning i am vignesh i am from madurai currently doing my b.tech IT in mepco schlenk engg clg sivakasi i want to complete my engg as soon as possible my aim in my life is to become a hod of the mepco schlenk engg clg i like my hostel my very much i like my friend chinnavel veryyyyy much in my hostel
+good morning i am vignesh i am from madurai currently doing my b.tech IT in mepco schlenk engg clg sivakasi i want to complete my engg as soon as possible my aim in my life is to become a hod of the mepco schlenk engg clg i like my hostel my very much i like my friend chinnavel veryyyyy much in my hostel
+good morning i am vignesh i am from madurai currently doing my b.tech IT in mepco schlenk engg clg sivakasi i want to complete my engg as soon as possible my aim in my life is to become a hod of the mepco schlenk engg clg i like my hostel my very much i like my friend chinnavel veryyyyy much in my hostel
+bash-3.2$ cat read1.txt[C[C[C[C[C[C[C[C[C[C./a.out read1.txt read.txt[C[C[C[C[C[C[C[C[C[Ccc 1b.c[K[1@at[C[C[C[C[C[1P.cc.c
+
+
+#include<sys/types.h>
+#include<sys/stat.h>
+#include<fcntl.h>
+#include<unistd.h>
+#include<stdio.h>
+int main(int argc,char*argv[])
+{
+int fp1,fp2;
+char ch;
+fp1=open(argv[1],O_WRONLY);
+fp2=open(argv[2],O_RDONLY);
+if(fp1==-1||fp2==-1)
+printf("error in opening the file");
+else
+{
+while(read(fp2,&ch,1)>0)
+{
+write(fp1,&ch,1);
+}
+printf("MOVE IS DONE SUCCESSFULLY");
+printf("READED FILE IS DELETED");
+unlink(argv[2]);
+}
+close(fp1);
+close(fp2);
+}
+bash-3.2$ cc 1c.c
+bash-3.2$ ./a.out read1.txt [1P[C[C[C[C[C r e a d 1 . t x t 
+MOVE IS DONE SUCCESSFULLY 
+FILE IS DELETED
+
+
+#include<sys/stat.h>
+#include<unistd.h>
+#include<stdio.h>
+#include<sys/types.h>
+#include<fcntl.h>
+int main(int argc,char * argv[])
+{
+int fp1,fp2,fp3;
+char ch;
+switch(argc)
+{
+printf("%s",argv[1]);
+case 2:
+fp1=open(argv[1],O_RDONLY);
+if(fp1==-1)
+printf("\nUNABLE TO OPEN THE FILE");
+else
+{
+while(read(fp1,&ch,1)>0)
+{
+printf("%c",ch);
+}}
+break;
+case 3:
+fp1=open(argv[1],O_WRONLY);
+fp2=open(argv[3],O_RDONLY);
+if(fp1==-1||fp2==-1)
+printf("\nSuch File is not openable");
+else
+{
+while(read(fp2,&ch,1)>0)
+{
+write(fp1,&ch,1);
+}
+printf("COPY IS DONE SUCESSFULLY");
+}
+break;
+case 4:
+fp1=open(argv[1],O_RDWR,00100);
+fp2=open(argv[3],O_RDONLY);
+if(fp1==-1||fp2==-1)
+printf("\nSuch File is not openable");
+else
+while(read(fp1,&ch,1)>0)
+while(read(fp2,&ch,1)>0)
+{
+write(fp1,&ch,1);
+}
+printf("APPEND IS DONE SUCCESSFULLY");
+//}
+break;
+}
+close(fp1);
+close(fp2);
+return 0;
+}
+ 
+bash-3.2$ cat 1d.c[1P1d.c[1P1d.c[1P1d.cc1d.c 1d.c
+bash-3.2$ .a/.[K[K[K/a.out read.tc[Kxt
+good morning i am vignesh i am from madurai currently doing my b.tech IT in mepco schlenk engg clg sivakasi i want to complete my engg as soon as possible my aim in my life is to become a hod of the mepco schlenk engg clg i like my hostel my very much i like my friend chinnavel veryyyyy much in my hostel
+good morning i am vignesh i am from madurai currently doing my b.tech IT in mepco schlenk engg clg sivakasi i want to complete my engg as soon as possible my aim in my life is to become a hod of the mepco schlenk engg clg i like my hostel my very much i like my friend chinnavel veryyyyy much in my hostel
+good morning i am vignesh i am from madurai currently doing my b.tech IT in mepco schlenk engg clg sivakasi i want to complete my engg as soon as possible my aim in my life is to become a hod of the mepco schlenk engg clg i like my hostel my very much i like my friend chinnavel veryyyyy much in my hostel
+bash-3.2$ ./a.out read.txt > read1.txt
+
+COPY IS DONE SUCESSFULLY
+
+bash-3.2$ ./a.out read.txt >> read1.txt
+
+APPEND IS DONE SUCCESSFULLY
+bash-3.2$ exit
+
+Script done on Thu 21 Jan 2016 12:01:18 PM IST

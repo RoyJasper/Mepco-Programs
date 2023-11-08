@@ -1,0 +1,145 @@
+*******************************************************************************
+Ex.no:6                                      Name:C.S.Roy Jasper
+Date:31/3/16                                        Roll.no:14BIT058
+*******************************************************************************
+*******************************************************************************
+              PRODUCER CONSUMER PROBLEM
+*******************************************************************************
+
+
+#include<stdlib.h>
+#include<stdio.h>
+#define BUFFER_SIZE 5
+int main()
+{
+int buffer[BUFFER_SIZE],in=0,out=0,n,c,p;
+while(1)
+{
+printf("\nEnter the Choice \n1.Producer \n2.Consumer \n3.Exit");
+scanf("%d",&n);
+switch(n)
+{
+case 1:
+if(in==out)
+printf("\noopS!!There is nothing in the Shop...");
+else
+{
+c=buffer[out];
+out=((out+1)%BUFFER_SIZE);
+printf("\n%d",c);
+}
+break;
+case 2:
+if(out==(in+1)%BUFFER_SIZE)
+printf("\nThere are More Items in the shop");
+else
+{
+printf("\nEnter the Thing to be Inserted");
+scanf("%d",&p);
+buffer[in]=p;
+in=((in+1)%BUFFER_SIZE);
+}
+break;
+case 3:
+exit(0);
+}}}
+
+bash-3.2$ cc queue.c
+bash-3.2$ ./a.out
+
+Enter the Choice 
+1.Producer 
+2.Consumer 
+3.Exit 1
+
+oopS!!There is nothing in the Shop...
+Enter the Choice 
+1.Producer 
+2.Consumer 
+3.Exit 2
+
+Enter the Thing to be Inserted1
+
+Enter the Choice 
+1.Producer 
+2.Consumer 
+3.Exit1
+
+1
+Enter the Choice 
+1.Producer 
+2.Consumer 
+3.Exitw 1 2
+
+Enter the Thing to be Inserted1
+
+Enter the Choice 
+1.Producer 
+2.Consumer 
+3.Exit2
+
+Enter the Thing to be Inserted1 2
+
+Enter the Choice 
+1.Producer 
+2.Consumer 
+3.Exit2
+
+Enter the Thing to be Inserted3
+
+Enter the Choice 
+1.Producer 
+2.Consumer 
+3.Exit1 2
+
+Enter the Thing to be Inserted4
+
+Enter the Choice 
+1.Producer 
+2.Consumer 
+3.Exit2
+
+There are More Items in the shop
+Enter the Choice 
+1.Producer 
+2.Consumer 
+3.Exit5
+
+Enter the Choice 
+1.Producer 
+2.Consumer 
+3.Exit1
+
+1
+Enter the Choice 
+1.Producer 
+2.Consumer 
+3.Exit1
+
+2
+Enter the Choice 
+1.Producer 
+2.Consumer 
+3.Exit1
+
+3
+Enter the Choice 
+1.Producer 
+2.Consumer 
+3.Exit1
+
+4
+Enter the Choice 
+1.Producer 
+2.Consumer 
+3.Exit1
+
+oopS!!There is nothing in the Shop...
+Enter the Choice 
+1.Producer 
+2.Consumer 
+3.Exit3
+bash-3.2$ exit
+exit
+
+Script done on Thu 18 Feb 2016 12:15:16 PM IST

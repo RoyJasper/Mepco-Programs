@@ -1,0 +1,80 @@
+----------Output for PAGE REPLACEMENT ALGORITHM----------
+
+Enter total number of pages:16
+Enter sequence:0 1 2 3 0 1 2 3 0 1 2 3 4 5 6 7
+        MENU
+1)FIFO
+2)OPTIMAL
+3)LRU
+4)Exit
+Enter your choice:1
+Enter size of page frame:3
+0       -1      -1
+0       1       -1
+0       1       2
+3       1       2
+3       0       2
+3       0       1
+3       0       1
+2       0       1
+2       3       1
+2       3       0
+2       3       0
+1       3       0
+1       2       0
+1       2       3
+1       2       3
+4       2       3
+4       5       3
+4       5       6
+4       5       6
+7       5       6
+Page Faults=16
+        MENU
+1)FIFO
+2)OPTIMAL
+3)LRU
+4)Exit
+Enter your choice:2
+Enter frame size:3
+0       -1      -1
+0       1       -1
+0       1       2
+0       1       3
+0       1       3
+0       1       3
+0       2       3
+0       2       3
+0       2       3
+1       2       3
+1       2       3
+1       2       3
+4       2       3
+5       2       3
+6       2       3
+7       2       3
+Total number of faults=10
+        MENU
+1)FIFO
+2)OPTIMAL
+3)LRU
+4)Exit
+Enter your choice:3
+Enter frame size:3
+0       -1      -1
+0       1       -1
+0       1       2
+3       1       2
+3       0       2
+1       0       2
+1       0       2
+1       3       2
+0       3       2
+1       3       2
+1       3       2
+1       3       2
+4       3       2
+4       3       5
+6       3       5
+6       7       5
+Total number of faults=13

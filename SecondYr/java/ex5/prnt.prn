@@ -1,0 +1,528 @@
+**************************************************************************
+          JAVA PROGRAMS USING INHERITANCE
+************************************************************************** 
+                 JAVA PROGRAMS USING INHERITANCE
+**************************************************************************
+Ex.No:5                                         Roll.no:14BIT054
+Date:                                           Name:G.Rakhav Krishna
+**************************************************************************
+
+Date:                                           Name:G.Rakhav Krishna
+**************************************************************************
+
+bash-3.2$ cat new.java
+import java.io.*;
+import java.util.*;
+class Batsman
+{
+private String name;
+private int nor;
+private int noc;
+private int nof;
+private int nom;
+private double avg;
+Batsman(String name,int nor,int noc,int nof,int nom)
+{
+this.name=name;
+this.nor=nor;
+this.noc=noc;
+this.nof=nof;
+this.nom=nom;
+avg=0.0;
+}
+public void averagecal()
+{
+avg=nor/nom;
+}
+public void display()
+{
+System.out.println("\nName of the player is " +name);
+System.out.println("\nNo of runs he scored"+nor);
+System.out.println("\nNo of centuries" +noc);
+System.out.println("\nNo of fifties" +nof);
+System.out.println("\nNo of matches he played" +nom);
+System.out.println("\nAverage runs he scored in every match " +avg);
+}
+}
+interface Bowler
+{
+int getnow();
+int getnoc();
+int getnol();
+int getnob();
+}
+class Allrounder extends Batsman implements Bowler
+{
+int now,noc,nol,nob;
+Allrounder(String nam,int nor1,int noc1,int nof1,int nom1,int wic,int cat,int lbw,int bolt)
+{
+super (nam,nor1,noc1,nof1,nom1);
+now=wic;
+noc=cat;
+nol=lbw;
+nob=bolt;
+}
+public int getnow()
+{
+return now;
+}
+public int getnoc()
+{
+return noc;
+}
+public int getnol()
+{
+return nol;
+}
+public int getnob()
+{
+return nob;
+}
+}
+class Demo
+{
+public static void main(String[] args) throws IOException
+{
+int now,noc,nol,nob;
+Allrounder obj=new Allrounder("rakhav",8090,25,37,216,123,66,23,33);
+obj.averagecal();
+System.out.println("\nBatsman Details are ");
+obj.display();
+now=obj.getnow();
+noc=obj.getnoc();
+nol=obj.getnol();
+nob=obj.getnob();
+System.out.println("\nBowler Details are ");
+System.out.println("\nNo of wickets he took" +now);
+System.out.println("\nNo of Catch wickets " +noc);
+System.out.println("\nNo of lbw wickets" +nol);
+System.out.println("\nNo of bolt wickets" +nob);
+}
+}
+
+bash-3.2$ java DE[Kemo
+
+Batsman Details are 
+
+Name of the player is rakhav
+
+No of runs he scored8090
+
+No of centuries25
+
+No of fifties37
+
+No of matches he played216
+
+Average runs he scored in every match 37.0
+
+Bowler Details are 
+
+No of wickets he took123
+
+No of Catch wickets 66
+
+No of lbw wickets23
+
+No of bolt wickets33
+bash-3.2$ ls
+Allrounder.class  Bowler.class	customer.class	Drive.class  Exam.class  prnt.prn	  Result.class	Sports.class  Student.class  Tester.java      Testshape.java
+Batsman.class	  Circle.class	Demo.class	Drive.java   new.java	 Rectangle.class  Shape.class	Square.class  Tester.class   Testshape.class  visit.class
+bash-3.2$ java[K[K[K[Kcat TE[Kester.java
+import java.io.*;
+import java.util.*;
+class customer
+{
+private String name;
+private boolean member;
+private String type;
+public customer(String k,boolean m,String l)
+{
+name=k;
+member=m;
+type=l;
+}
+String getName()
+{
+return name;
+}
+String getType()
+{
+return type;
+}
+boolean isMember()
+{
+return  member;
+}
+String print()
+{
+return ((getName())+getType());
+}}
+class visit extends customer
+{
+private int ser;
+private int exp;
+private String date;
+public visit(String n,boolean m,String l,int s,int e,String d)
+{
+super(n,m,l);
+ser=s;
+exp=e;
+date=d;
+}
+String getDate()
+{
+return date;
+}
+int getExp()
+{
+return exp;
+}
+int getSer()
+{
+return ser;
+}
+int getTotexp()
+
+{
+return (exp*ser);
+}
+
+private int gold= 3;
+private int silver= 2;
+private int premium= 4;
+private int pros= 1;
+private int prog= 1;
+private int prop= 5;
+public  int  getDisser()
+{
+int f;
+f=exp;
+if(f>2000)
+return (f/premium);
+else if (f<1000)
+return (f/silver);
+else
+return(f/gold);
+}
+public int  getDispro()
+{
+int f;
+f=ser;
+if(f>2000)
+return (f/prop);
+else if (f<1000)
+return (f/pros);
+else
+return(f/prog);
+}
+String display()
+{
+return ("The Total Expenses is " + getTotexp());
+}
+String display1()
+{
+return ("The Service Expenses is " + getDisser());
+}
+String display2()
+{
+return ("The Product Expenses is " + getDispro());
+}
+}
+class Tester
+{
+public static void main(String arg[])
+{
+String na,ty,da;
+int ser,pro;
+boolean me;
+Scanner obj = new Scanner(System.in);
+System.out.println("Enter the name");
+na=obj.nextLine();
+System.out.println("Enter the Type");
+ty=obj.nextLine();
+System.out.println("Enter the Whether a member or not");
+me=obj.nextBoolean();
+System.out.println("Enter the Service expences");
+ser=obj.nextInt();
+System.out.println("Enter the Product expences");
+pro=obj.nextInt();
+System.out.println("Enter the date");
+da=obj.nextLine();
+visit v= new visit(na,me,ty,ser,pro,da);
+System.out.println(v.print());
+System.out.println(v.display());
+System.out.println(v.display1());
+System.out.println(v.display2());
+}}
+bash-3.2$ java t[KTester
+Enter the name
+rakhav
+Enter the Type
+sevir
+Enter the Whether a member or not
+true
+Enter the Service
+2000
+Enter the Product
+3000
+Enter the date
+rakhavsevir
+The Total Expenses is 6000000
+The Service Expenses is 750
+The Product Expenses is 2000
+bash-3.2$ ls
+Allrounder.class  Bowler.class	customer.class	Drive.class  Exam.class  prnt.prn	  Result.class	Sports.class  Student.class  Tester.java      Testshape.java
+Batsman.class	  Circle.class	Demo.class	Drive.java   new.java	 Rectangle.class  Shape.class	Square.class  Tester.class   Testshape.class  visit.class
+bash-3.2$ java[K[K[K[Kcat Testshape.java
+import java.io.*;
+import java.util.*;
+ abstract class Shape
+{
+  private String color;
+  private boolean filled;
+  Shape()
+  {
+  color="";
+  filled=false;
+   }
+  Shape(String tcolor,boolean tfilled)
+  {
+   color=tcolor;
+    filled=tfilled;
+   }
+public String getcolor()
+{
+ return color;
+  }
+public boolean isfilled()
+{
+ return filled;
+  }
+public void setcolor(String tcolor)
+{
+  this.color=tcolor;
+  }
+public void setfilled(boolean tfilled)
+{
+  this.filled=tfilled;
+   }
+public abstract double getarea();
+public abstract double getperimeter();
+public abstract String tostring();
+}
+class Circle extends Shape
+{
+ double radius;
+ Circle()
+ {
+  radius=0.0;
+  }
+ Circle(double tr)
+ {
+  radius=tr;
+  }
+ Circle(double tr,String tcolor,boolean tfilled)
+ {
+  super(tcolor,tfilled);
+  radius=tr;
+  }
+  public double getradius()
+  {
+   return radius;
+   }
+  public void setradius(double tr)
+  {
+   this.radius=tr;
+   }
+  public double getarea()
+  {
+    return 3.14*radius*radius;
+    }
+   public double getperimeter()
+   {
+    return 2*3.14*radius;
+    }
+   public String tostring()
+   {
+    return ("CIRCLE");
+   }
+}
+
+class Rectangle extends Shape
+{
+ double length,width;
+ Rectangle()
+ {
+  length=0.0;
+  width=0.0;
+  }
+ Rectangle(double tl,double tw)
+ {
+  length=tl;
+  width=tw;
+  }
+ Rectangle(double tl,double tw,String tcolor,boolean tfilled)
+ {
+  super(tcolor,tfilled);
+  length=tl;
+  width=tw;
+  }
+  public double getlength()
+  {
+   return length;
+   }
+  public double getwidth()
+  {
+   return width;
+   }
+  public void setwidth(double tr)
+  {
+    this.width=tr;
+   }
+  public void setlength(double tr)
+  {
+   this.length=tr;
+   }
+  public double getarea()
+  {
+    return length*width;
+    }
+   public double getperimeter()
+   {
+    return 2*(length+width);
+    }
+   public String tostring()
+   {
+    return ("RECTANGLE");
+   }
+}
+class Square extends Rectangle
+{
+ double side;
+ 
+ Square()
+ {
+  side=0.0;
+  }
+ Square(double tr)
+ {
+  side=tr;
+  }
+ Square(double tr,String tcolor,boolean tfilled)
+ {
+  //super(tcolor,tfilled);
+  side=tr;
+  }
+  public double getside()
+  {
+   return side;
+   }
+  public void setside(double tr)
+  {
+   this.side=tr;
+   }
+  public double getarea()
+  {
+    return side*side;
+    }
+   public double getperimeter()
+   {
+    return 4*side;
+    }
+   public String tostring()
+   {
+    return ("SQUARE ");
+   }
+}
+public class Testshape
+{
+ public static void main(String args[])
+  {
+   double width,length,a,radius;
+   int choice;
+   Scanner obj=new Scanner(System.in);
+   do
+      {
+        System.out.println("ENTER YOUR CHOICE \n1.CIRCLE\n2.RECTANGLE\n3.SQUARE\n4.EXIT");
+        choice=obj.nextInt();
+ switch(choice)
+ {
+    case 2:
+       System.out.println("Enter length and breadth");
+       length=obj.nextDouble();
+       width=obj.nextDouble();
+       Shape rectangle =new Rectangle(length,width);
+       System.out.println("Rectangle width: " + width + " and length: " + length
+                + "\narea: " + rectangle.getarea()
+                + "\nperimeter: " + rectangle.getperimeter() + "\n");
+       break;
+       
+    case 1:
+        System.out.println("Enter Radius");
+        radius=obj.nextDouble();
+        Shape circle=new Circle(radius);
+        System.out.println("Circle radius: " + radius
+            + "\nArea: " + circle.getarea()
+            + "\nPerimeter: " + circle.getperimeter() + "\n");
+        break;
+    case 3:
+         System.out.println("Enter side");
+         a=obj.nextDouble();
+         Shape square=new Square(a);
+         System.out.println("Square side: " + a 
+                + "\n Area: " + square.getarea()
+                + "\n Perimeter: " + square.getperimeter() + "\n");
+        break;   
+    }
+   }
+  while(choice<4);
+ }
+}
+bash-3.2$ java Testshape
+ENTER YOUR CHOICE 
+1.CIRCLE
+2.RECTANGLE
+3.SQUARE
+4.EXIT
+1
+Enter Radius
+3
+Circle radius: 3.0
+Area: 28.259999999999998
+Perimeter: 18.84
+
+ENTER YOUR CHOICE 
+1.CIRCLE
+2.RECTANGLE
+3.SQUARE
+4.EXIT
+2
+Enter length and breadth
+3 4
+Rectangle width: 4.0 and length: 3.0
+area: 12.0
+perimeter: 14.0
+
+ENTER YOUR CHOICE 
+1.CIRCLE
+2.RECTANGLE
+3.SQUARE
+4.EXIT
+2 3
+Enter side
+6
+Square side: 6.0
+ Area: 36.0
+ Perimeter: 24.0
+
+ENTER YOUR CHOICE 
+1.CIRCLE
+2.RECTANGLE
+3.SQUARE
+4.EXIT
+4
+bash-3.2$ exit
+exit
+
+Script done on Tue 23 Feb 2016 11:52:30 AM IST

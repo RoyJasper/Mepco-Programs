@@ -1,0 +1,33 @@
+import java.util.*;
+import java.io.*;
+
+public class HashTableDemo 
+{
+
+   public static void main(String args[]) 
+{
+      Hashtable balance = new Hashtable();
+      Enumeration names;
+      String name,str;
+      int score;
+      int n;
+      Scanner obj=new Scanner(System.in);
+      Scanner obj1= new Scanner(System.in);
+      System.out.println("Enter the number of players:");
+      n=obj.nextInt();
+      for(int i=0;i<n;i++)
+      {
+      System.out.println("Enter the Name and score");
+      name=obj1.nextLine();
+      score=obj.nextInt();
+      balance.put(name,score);
+      }
+      names = balance.keys();
+      while(names.hasMoreElements())
+      {
+         str = (String) names.nextElement();
+         System.out.println(str + ": " +
+         balance.get(str));
+      }
+   }
+}

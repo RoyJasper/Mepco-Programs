@@ -1,0 +1,472 @@
+Script started on Wed 03 Feb 2016 10:39:36 AM IST
+bash-3.2$ cat hash.h
+struct SymbolNode
+{
+	char SymbolName[10];
+	char SegmentName[10];
+	char Type[5];
+	int Length;
+	int Adrs;
+  struct SymbolNode *next;
+};
+
+typedef struct SymbolNode* list;
+
+struct SymbolTable
+{
+	list *Bucket;
+};
+
+typedef struct SymbolTable *HashTable;
+
+HashTable HT;
+
+HashTable initialize();
+int Hash(char*);
+list Search(HashTable,char*,char*);
+void Insert(HashTable,char*,char*,char*,int,int);
+void Modify(HashTable,char*,char*,char*,int ,int);
+void Delete(HashTable,char*,char*);
+void Display(HashTable);
+void DeAllocated(HashTable);
+
+bash-3.2$ hash.c
+#include"hash.h"
+#include<ctype.h>
+#include<string.h>
+#include<stdlib.h>
+#include<stdio.h>
+HashTable initialize()
+{
+	HashTable h;
+	int i;
+	h=malloc(sizeof(HashTable));
+	h->Bucket = malloc(sizeof(list)*26);
+	for(i=0;i<26;i++)
+  {
+		h->Bucket[i] = malloc(sizeof(struct SymbolNode));
+        h->Bucket[i]->next = NULL;
+  }
+  return h;
+}
+
+void Insert(HashTable HT,char*symname,char*segname,char*type,int length,int adrs)
+{
+    list temp;
+    list sn = malloc(sizeof(struct SymbolNode));
+    strcpy(sn->SymbolName,symname);
+    strcpy(sn->SegmentName,segname);
+    strcpy(sn->Type,type);
+    sn->Length = length;
+    sn->Adrs = adrs;
+   	int key = Hash(sn->SymbolName);
+    temp = HT->Bucket[key];
+
+    while( temp->next!=NULL && 
+          strcmp(temp->next->SymbolName,sn->SymbolName) <0 )
+	  {
+		    temp = temp->next;
+	  }
+
+ 	  if(temp->next == NULL)
+	  {
+	    	sn->next = temp->next;
+		    temp->next = sn;
+		    return;
+	  }
+
+	  if(strcmp(temp->next->SymbolName,sn->SymbolName)>0)
+	  {
+		   sn->next = temp->next;
+		   temp->next = sn;
+		   return;
+	  }
+
+	  if(strcmp(temp->next->SymbolName,sn->SymbolName)==0)
+	  {
+		    while((temp->next!=NULL) &&
+               strcmp(temp->next->SymbolName,sn->SymbolName)==0 && 
+               strcmp(temp->next->SegmentName,sn->SegmentName)<0)
+		    {
+				    temp=temp->next;
+		    }
+		    sn->next=temp->next;
+		    temp->next = sn;
+		    return;
+	  }
+
+}
+
+int Hash(char*key)
+{
+    return (toupper(key[0])-65);
+}
+
+list Search(HashTable HT,char*sym,char*seg)
+{
+	list p;
+	p=HT->Bucket[Hash(sym)];
+	while(p->next!=NULL)
+	{
+		p=p->next;
+		if((strcmp(p->SymbolName,sym)==0) &&  
+        (strcmp(p->SegmentName,seg)==0))
+		{
+			return p;
+		}
+	}
+	return NULL;
+}
+
+void Delete(HashTable HT,char*sym,char*seg)
+{
+ 	  list p,q;
+    p=HT->Bucket[Hash(sym)];
+    while(p->next!=NULL)
+    {
+      q=p;
+      p=p->next;
+      if((strcmp(p->SymbolName,sym)==0) && (strcmp(p->SegmentName,seg)==0))
+      {
+        q->next = p->next;
+        return;
+      }
+    }
+}
+
+void Display(HashTable HT)
+{
+    int i;
+	list temp;
+	printf("\n\n BucketNO   Symbol   Segment  Type  Length   Address");
+    for(i=0;i<26;i++)
+	{
+		temp=HT->Bucket[i];
+		temp=temp->next;
+        while(temp!=NULL)
+		{
+			printf("\n %d %13s  %5s  %6s  %5d  %7d ",i,temp->SymbolName,temp->SegmentName, 
+                 temp->Type,temp->Length,temp->Adrs);
+			temp=temp->next;
+		}
+	}
+}
+
+void  Modify(HashTable HT,char*sym,char*seg,char*type,int len,int adrs)
+{
+	list p;
+	p=HT->Bucket[Hash(sym)];
+	while(p->next!=NULL)
+	{
+		p=p->next;
+		if((strcmp(p->SymbolName,sym)==0) && (strcmp(p->SegmentName,seg)==0))
+		{
+            if(strcmp(type,"NULL")!=0)
+                strcpy(p->Type,type);
+            if(len!=-1)
+                p->Length = len;
+            if(adrs!=-1)
+                p->Adrs = adrs;
+            return;
+		}
+	}
+}
+
+void DeAllocated(HashTable HT)
+{
+	int i;
+	list temp,temp1;
+	for(i=0;i<26;i++)
+	{
+  	temp = HT->Bucket[i];
+		while(temp->next!=NULL)
+    {
+      temp1 = temp;
+			temp = temp->next;
+      free(temp1);
+		}
+  }
+}
+bash-3.2$ cat hash_app.c
+cat: hash_app.c: No such file or directory
+bash-3.2$ cat hashapp.c\
+bash-3.2$ main.c
+bash-3.2$ cat main.c
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include"hash.h"
+int main()
+{
+	HashTable HT;
+	int ch,ch1;
+	char opt[2];
+	char SymbolName[11],SegmentName[11],Type[5];
+	int Length,Adrs;
+	HT = initialize();
+	list temp;
+	printf("\n 1.Insert\n 2.delete\n 3. Search and modify \n 4.search only \n 5.display ");
+  do
+	{
+	printf("\n Enter the choice : ");
+	scanf("%d",&ch);
+	switch(ch)
+	{
+		case 1:
+		printf("\n Enter the Symbol Details\n");
+
+		printf("\n Symbol Name : ");
+		scanf("%s",SymbolName);
+		printf("\n Segment Name : ");
+		scanf("%s",SegmentName);
+		printf("\n Type : ");
+		scanf("%s",Type);
+		printf("\n Length : ");
+		scanf("%d",&Length);
+		printf("\n Address : ");
+		scanf("%d",&Adrs);
+
+		if(Search(HT,SymbolName,SegmentName)==NULL)
+     {
+          Insert(HT,SymbolName,SegmentName,Type,Length,Adrs);
+     }
+     else
+           printf("element already present");
+ 		break;
+
+	case 2:
+    printf("\n enter \n");
+		printf("\n Symbol Name  : ");
+		scanf("%s",SymbolName);
+	  printf("\n Segment Name : ");
+		scanf("%s",SegmentName);
+		if(Search(HT,SymbolName,SegmentName)!=NULL)
+    {
+        Delete(HT,SymbolName,SegmentName);
+        printf("\n Deleted successfully");
+    }
+    else
+        printf("\n Given symbol is not present in Symbol Table");
+		break;
+
+  case 3:
+      strcpy(Type,"NULL");
+      Length = -1;
+      Adrs = -1;
+      printf("\n Modify the symbol detail");
+      printf("\n Symbol Name  : ");
+		  scanf("%s",SymbolName);
+	    printf("\n Segment Name : ");
+		  scanf("%s",SegmentName);
+      if(Search(HT,SymbolName,SegmentName)!=NULL)
+      {
+         do
+         {
+            printf("\n which are the item you want to modify : ");
+            printf("\n 1.Type\n 2.Length\n 3.Address ");
+            scanf("%d",&ch1);
+            if(ch1==1)
+            {
+                printf("\n Enter Type : ");
+                scanf("%s",Type);
+            }
+            else if(ch1==2)
+            {
+                printf("\n Enter Length : ");
+                scanf("%d",&Length);
+            }
+            else if(ch1==3)
+            {
+                printf("\n Enter Address : ");
+                scanf("%d",&Adrs);
+            }
+            printf("\n Are you modify another item (y/n) : ");
+            scanf("%s",opt);
+         }while(strcmp(opt,"y")==0);
+         Modify(HT,SymbolName,SegmentName,Type,Length,Adrs);
+        }
+      else
+          printf("\n The symbol is not presented");
+      break;
+
+  case 4:
+        printf("\n Search a symbol ");
+        printf("\n Symbol Name  : ");
+	      scanf("%s",SymbolName);
+ 	      printf("\n Segment Name : ");
+	      scanf("%s",SegmentName);
+	      temp = Search(HT,SymbolName,SegmentName);
+        if(temp!=NULL)
+        {
+           printf("\n \tDetail : ");
+           printf("\n   Symbol Name   :  %s",temp->SymbolName);
+           printf("\n   Segment Name  :  %s",temp->SegmentName);
+           printf("\n   Type          :  %s",temp->Type);
+           printf("\n   Length        :  %d",temp->Length);
+           printf("\n   Address       :  %d",temp->Adrs);
+        }
+        else
+           printf("\n The symbol is not presented");
+      break;
+
+  case 5:
+		    Display(HT);
+		    break;
+
+  default:
+        printf("\n INVALID CHOICE");
+  }
+
+  }while(ch<6);
+
+DeAllocated(HT);
+  return 0;
+}
+
+bin/      hash.exe  obj/      
+bash-3.2$ ./hash.exe 
+
+ 1.Insert
+ 2.delete
+ 3. Search and modify 
+ 4.search only 
+ 5.display 
+ Enter the choice : 1
+
+ Enter the Symbol Details
+
+ Symbol Name : a
+
+ Segment Name : a
+
+ Type : d
+
+ Length : 1010
+
+ Address : 2011
+
+ Enter the choice : 1
+
+ Enter the Symbol Details
+
+ Symbol Name : aa
+
+ Segment Name : 1
+
+ Type : w
+
+ Length : 1
+
+ Address : 1
+
+ Enter the choice : 1
+
+ Enter the Symbol Details
+
+ Symbol Name : ac
+
+ Segment Name : ss
+
+ Type : int
+
+ Length : 1
+
+ Address : 10
+
+ Enter the choice : 1
+
+ Enter the Symbol Details
+
+ Symbol Name : ab
+
+ Segment Name : ss
+
+ Type : byte
+
+ Length : 12
+
+ Address : 1111
+
+ Enter the choice : 1
+
+ Enter the Symbol Details
+
+ Symbol Name : dd
+
+ Segment Name : ss
+
+ Type : word
+
+ Length : 10000
+
+ Address : 620762
+
+ Enter the choice : 5
+
+
+ BucketNO   Symbol   Segment  Type  Length   Address
+ 0             a      a       d   1010     2011 
+ 0            aa      1       w      1        1 
+ 0            ab     ss    byte     12     1111 
+ 0            ac     ss     int      1       10 
+ 3            dd     ss    word  10000   620762 
+ Enter the choice : 2
+
+ enter 
+
+ Symbol Name  : aa
+
+ Segment Name : 1
+
+ Deleted successfully
+ Enter the choice : 5
+
+
+ BucketNO   Symbol   Segment  Type  Length   Address
+ 0             a      a       d   1010     2011 
+ 0            ab     ss    byte     12     1111 
+ 0            ac     ss     int      1       10 
+ 3            dd     ss    word  10000   620762 
+ Enter the choice : 3
+
+ Modify the symbol detail
+ Symbol Name  : dd
+
+ Segment Name : ss
+
+ which are the item you want to modify : 
+ 1.Type
+ 2.Length
+ 3.Address 1
+
+ Enter Type : byte
+
+ Are you modify another item (y/n) : n
+
+ Enter the choice : 5
+
+
+ BucketNO   Symbol   Segment  Type  Length   Address
+ 0             a      a       d   1010     2011 
+ 0            ab     ss    byte     12     1111 
+ 0            ac     ss     int      1       10 
+ 3            dd     ss    byte  10000   620762 
+ Enter the choice : 4
+
+ Search a symbol 
+ Symbol Name  : ab
+
+ Segment Name : ss
+
+ 	Detail : 
+   Symbol Name   :  ab
+   Segment Name  :  ss
+   Type          :  byte
+   Length        :  12
+   Address       :  1111
+ Enter the choice : 6
+
+ INVALID CHOICEbash-3.2$ exit
+exit
+
+Script done on Wed 03 Feb 2016 10:43:13 AM IST

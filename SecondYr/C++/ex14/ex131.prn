@@ -1,0 +1,180 @@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ ROY JASPER                 14BIT058
+				EXPECTION HANDLING IN C++
+------------------------------------------------
+
+						STACK OPERATION
+PROGRAM:
+
+  #include<iostream>
+  #include<string>
+  #include<exception>
+  using namespace std;
+  class stack
+  {
+  public:
+  int top;
+  int sarr[10];
+  public:
+  stack()
+  {
+  top=0;
+  }
+  };
+  int  main()
+  {
+  int x,f,n;
+  int data;
+  stack s;
+ // cout<<"\t\t\tWELCOME TO STACK OPERATION\n";
+  try
+  {
+  cout<<"\n Enter no of elements to be pushed ";
+  cin>>n;
+  for(int i=0;i<n;i++)
+  {
+  cout<<"\n"<<"Enter elements ";
+  cin>>data;
+  if(s.top==5)
+  throw 25;
+  else
+  {
+  s.sarr[s.top]=data;
+  cout<<"\n pushed element is  "<<s.sarr[s.top];
+  s.top++;
+  }
+  }
+  cout<<"\n"<<"Enter no of elements to be  poped  ";
+  cin>>n;
+  for(int j=0;j<n;j++)
+  {
+  if(s.top==0)
+  throw 'a';
+  else
+  {
+  s.top--; 
+  cout<<"\npoped element is "<<s.sarr[s.top];
+  }
+  }}
+  catch(int )
+  {
+  cout<<"\nOver flow ... \n";
+  exit(0);
+  }
+  catch(char )
+  {
+  cout<<"\nUnderflow.....\n";
+  exit(0);
+  }
+  return 0;
+  }
+
+
+OUTPUT:
+
+Enter no of elements to be pushed 3
+
+Enter elements 2
+
+ pushed element is  2
+Enter elements 4
+
+ pushed element is  4
+Enter elements 6
+
+ pushed element is  6
+Enter no of elements to be  poped  4
+
+poped element is 6
+poped element is 4
+poped element is 2
+Underflow.....
+----------------------------------------------
+
+			STACK OPERATION
+
+PROGRAM:
+
+  #include<iostream>
+  #include<string>
+  #include<exception>
+  using namespace std;
+  class stack
+  {
+  public:
+  int top;
+  int sarr[10];
+  public:
+  stack()
+  {
+  top=0;
+  }
+  int set()
+  {
+  cout<<"\nOverflow... \n";
+  exit(0);
+  }
+  int set1()
+  {
+  cout<<"\nUnderflow....\n";
+  exit(0);
+  }
+  };
+  int  main()
+  {
+  int x,f,n;
+  int data;
+  stack s;
+  //cout<<"\t\t\tWELCOME TO STACK OPERATION\n";
+  cout<<"\n Enter no of elements .. ";
+  cin>>n;
+  for(int i=0;i<n;i++)
+  {
+  cout<<"\n"<<"\n Enter elements .. ";
+  cin>>data;
+  if(s.top==5)
+  throw (s.set());
+  else
+  {
+  s.sarr[s.top]=data;
+  cout<<"\nPushed Element is ..  "<<s.sarr[s.top];
+  s.top++;
+  }}
+  cout<<"\n"<<" Enter no of elements to be poped ..  ";
+  cin>>n;
+  for(int j=0;j<n;j++)
+  {
+  if(s.top==0)
+  throw (s.set1());
+  else
+  {
+  s.top--;
+  cout<<"\nPoped element is ... "<<s.sarr[s.top];
+  }
+  }
+  }
+
+
+OUTPUT:
+
+ Enter no of elements .. 3
+
+
+ Enter elements .. 6 7 8    
+
+Pushed Element is ..  6
+
+ Enter elements .. 7
+
+Pushed Element is ..  7
+
+ Enter elements .. 8
+
+Pushed Element is ..  8
+ Enter no of elements to be poped ..  2
+
+Poped element is ... 8
+Poped element is ... 7
+
+
+Script done on Fri 30 Oct 2015 04:05:47 PM IST

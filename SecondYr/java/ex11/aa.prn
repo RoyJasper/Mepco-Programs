@@ -1,0 +1,332 @@
+************************************************************************
+EXNO:12                                            NAME:M.Vignesh
+DATE:5-4-16                                        ROLLNO:14BIT062
+************************************************************************
+                     PROGRAMS USING THREADS
+
+import java.io.*;
+import java.util.*;
+class Demo extends Thread implements Runnable
+{
+public void run()
+{
+int i;
+String c[]={"JAVA","DAA","DM","OS"};
+for(i=0;i<4;i++)
+{
+System.out.println("The Subjects are"+c[i]);
+}
+}
+public static void main(String args[])
+{
+Demo s=new Demo();
+Thread t1=new Thread(s);
+Thread t2=new Thread(s);
+Thread t3=new Thread(s);
+t1.start();
+t2.start();
+t3.start();
+}
+}
+
+bash-3.2$ c[Kjava Demo
+The Subjects areJAVA
+The Subjects areDAA
+The Subjects areDM
+The Subjects areOS
+The Subjects areJAVA
+The Subjects areDAA
+The Subjects areDM
+The Subjects areJAVA
+The Subjects areOS
+The Subjects areDAA
+The Subjects areDM
+The Subjects areOS
+bash-3.2$ cat Prti[K[Kime.java
+import java.io.*;
+import java.util.*;
+class Sample extends Thread
+{
+int n;
+Sample(int n)
+{
+this.n=n;
+}
+public void run()
+{
+int i;
+for( i=2;i<n;i++)
+{
+if(n%i==0)
+break;
+}
+if(n==i)
+System.out.println("Prime");
+else
+System.out.println("Not a Prime");
+}
+}
+class Sample1 implements Runnable
+{
+int n;
+Sample1(int n)
+{
+this.n=n;
+}
+public void run()
+{
+int i;
+for( i=2;i<n;i++)
+{
+if(n%i==0)
+break;
+}
+if(n==i)
+System.out.println("Prime");
+else
+System.out.println("Not a Prime");
+}
+}
+class Prime
+{
+public static void main(String args[])
+{
+int p;
+Scanner in =new Scanner(System.in);
+System.out.println("Enter the Number");
+p=in.nextInt();
+Sample s=new Sample(p);
+System.out.println("********BY THREAD************");
+s.start();
+Sample1 q=new Sample1(p);
+Thread t=new Thread(q);
+System.out.println("********BY RUNNABLE************");
+t.start();
+}
+}
+bash-3.2$ java Prime
+Enter the Number
+23
+********BY THREAD************
+********BY RUNNABLE************
+Prime
+Prime
+bash-3.2$ java Prime
+Enter the Number
+40
+********BY THREAD************
+********BY RUNNABLE************
+Not a Prime
+Not a Prime
+bash-3.2$ java Primecat Prime.java[C[C[C[C[C[C[C[C[C[C[5Pjava Democat Prime.java[1P.java[1P.java[1P.java[1P.java[1P.javaS.javaa.javam.javap.java[1P.java[1P.java[1P.java[1P.javaX.java1.java
+class A { 
+int value; 
+
+public void setA(int v) { 
+value=v; 
+} 
+
+public int getA() { 
+return value; 
+} 
+} 
+
+class put implements Runnable { 
+
+A obj; 
+
+public void run() { 
+for(int i=1;i<=10;i++) { 
+System.out.println("putting in A value is " + i ); 
+obj.setA(i); 
+} 
+} 
+
+put(A ob) { 
+obj=ob; 
+} 
+} 
+
+
+class get implements Runnable { 
+A obj; 
+
+get(A ob) { 
+obj = ob; 
+} 
+
+
+public void run() {  
+for(int i=10;i>0;i--)
+System.out.println(i); } 
+
+
+} 
+
+public class X1 { 
+
+public static void main(String arg[]) { 
+A obj = new A(); 
+
+put p = new put(obj); 
+get g = new get(obj); 
+
+Thread p1 = new Thread(p); 
+Thread g2 = new Thread(g); 
+
+p1.start(); 
+g2.start(); 
+} 
+} 
+bash-3.2$ java X1
+putting in A value is 1
+putting in A value is 2
+putting in A value is 3
+putting in A value is 4
+putting in A value is 5
+putting in A value is 6
+putting in A value is 7
+putting in A value is 8
+putting in A value is 9
+putting in A value is 10
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+bash-3.2$ cat Ran.java
+import java.io.*;
+import java.util.*;
+class Ran extends Thread
+{
+double n;
+public void run()
+{
+n=Math.random();
+n=0.3*100;
+}
+public double get()
+{
+System.out.println(n);
+return n;
+}
+public static void main(String args[])
+{
+Ran r = new Ran();
+double s=0;
+int i;
+r.start();
+for(i=0;i<5;i++)
+{
+System.out.println("Thread is "+r.get());
+s=s+r.get();
+}
+System.out.println("Sum is"+s);
+}
+}
+
+
+bash-3.2$ java Ran
+0.0
+Thread is 0.0
+30.0
+30.0
+Thread is 30.0
+30.0
+30.0
+Thread is 30.0
+30.0
+30.0
+Thread is 30.0
+30.0
+30.0
+Thread is 30.0
+30.0
+Sum is150.0
+bash-3.2$ cat Timer.java
+import java.io.*;
+import java.util.*;
+class Timer extends Thread
+{
+int n=10;
+public void run()
+{
+for(int i=n;i>0;i--)
+{
+try
+{
+Thread.sleep(500);
+}
+catch(InterruptedException e)
+{
+System.out.println(e);
+}
+System.out.println(i);
+}
+System.out.println("Time OUT");
+}
+public static void main(String args[])
+{
+Timer t=new Timer();
+t.start();
+}
+}
+bash-3.2$ java Timer
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+Time OUT
+bash-3.2$ cat Sa[K[K[K[K[K[Kjava Sample1
+Exception in thread "main" java.lang.NoSuchMethodError: main
+bash-3.2$ java Sample1[K
+Exception in thread "main" java.lang.NoSuchMethodError: main
+bash-3.2$ java Sample[C[1P Sample[1P Sample[1P Sample[1P Samplec Samplea Samplet Sample[C[C[C[C[C[C[C.java
+import java.io.*;
+import java.util.*;
+class Sample extends Thread
+{
+public void run()
+{
+int i;
+for(i=0;i<5;i++)
+{
+System.out.println(i);
+}
+}
+public static void main(String args[])
+{
+Sample s=new Sample();
+Thread t1=new Thread(s);
+Thread t2=new Thread(s);
+t1.start();
+t2.start();
+}
+}
+bash-3.2$ javac Sa,[Kmple.java
+bash-3.2$ java Sa,p[K[Kmple
+0
+1
+2
+3
+4
+0
+1
+2
+3
+4
+bash-3.2$ exit
+exit
+
+Script done on Tue 05 Apr 2016 12:26:49 PM IST

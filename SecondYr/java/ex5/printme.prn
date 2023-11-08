@@ -1,0 +1,638 @@
+*********************************************************************
+ ROY JASPER C S                                  14BIT058
+                EX 6 --> PROGRAMS USING INHERITANCE
+---------------------------------------------------------------------
+
+                      BATSMAN PROBLEM				  
+    PROGRAM:
+import java.io.*;
+import java.lang.*;
+class Batsman
+{
+ private String name;
+ private float avg;
+ private int nocen,nof,runs,nom;
+
+ Batsman(String name,int nocen,int nof,int runs,int nom)
+ {
+  this.name=name;
+  this.nocen=nocen;
+  this.nof=nof;
+  this.runs=runs;
+  this.nom=nom;
+ }
+ public void avgcalc()
+ {
+  avg=runs/nom;
+ }
+ public void display()
+ {
+  System.out.println("\nName:"+name+"\nNo of matches:"+nom+"\nNo of centuries:"+nocen+"\nNo of fifty:"+nof+"\nRuns:"+runs+"\n Avg is :"+avg);
+ }
+}
+interface Bowler
+{
+ int getnow();
+ int getnoc();
+ int getlbw();
+ int getbolt();
+}
+class AllRounder extends Batsman implements Bowler
+{
+ int now,noc,lbw,bolt;
+ AllRounder(String name,int nocen,int nof,int runs,int nom,int now,int noc,int lbw,int bolt)
+ {
+ super( name, nocen, nof, runs, nom);
+ this.now=now;
+ this.noc=noc;
+ this.lbw=lbw;
+ this.bolt=bolt;
+ }
+ public int getnow()
+  {
+   return now; 
+  }
+ public int getnoc()
+  {
+   return noc;
+  }
+ public int getlbw()
+  {
+   return lbw;
+  }
+ public int getbolt()
+  {
+   return bolt;
+  }
+}
+class Demo
+{
+ public static void main(String args[]) throws IOException
+ {
+  //Scanner obj=new Scanner (System.in);
+  AllRounder obj=new AllRounder("Roy",20,56,2564,89,23,65,15,45);
+  obj.avgcalc();
+  //number=obj.nextInt();
+  System.out.println("\nBatsman Details are");
+  obj.display();
+  System.out.println("\nNo of wickets are:"+obj.getnow()+"\nNo of catches:"+obj.getnoc()+"\nNo of lbw:"+obj.getlbw()+"\nNo of bolt:"+obj.getbolt());
+ }
+}
+
+OUTPUT:
+
+Batsman Details are
+
+Name:Roy
+No of matches:89
+No of centuries:20
+No of fifty:56
+Runs:2564
+ Avg is :28.0
+
+No of wickets are:23
+No of catches:65
+No of lbw:15
+No of bolt:45
+--------------------------------------------------------------------------
+           TO CALCULATE AREA AND PERIMETER FOR DIFFERENT SHAPES
+
+	PROGRAM:
+import java.io.*;
+import java.util.*;
+ abstract class Shape
+{
+  private String color;
+  private boolean filled;
+  Shape()
+  {
+  color="";
+  filled=false;
+   }
+  Shape(String tcolor,boolean tfilled)
+  {
+   color=tcolor;
+    filled=tfilled;
+   }
+public String getcolor()
+{
+ return color;
+  }
+public boolean isfilled()
+{
+ return filled;
+  }
+public void setcolor(String tcolor)
+{
+  this.color=tcolor;
+  }
+public void setfilled(boolean tfilled)
+{
+  this.filled=tfilled;
+   }
+public abstract double getarea();
+public abstract double getperimeter();
+public abstract String tostring();
+}
+class Circle extends Shape
+{
+ double radius;
+ Circle()
+ {
+  radius=0.0;
+  }
+ Circle(double tr)
+ {
+  radius=tr;
+  }
+ Circle(double tr,String tcolor,boolean tfilled)
+ {
+  super(tcolor,tfilled);
+  radius=tr;
+  }
+  public double getradius()
+  {
+   return radius;
+   }
+  public void setradius(double tr)
+  {
+   this.radius=tr;
+   }
+  public double getarea()
+  {
+    return 2*3.14*radius*radius;
+    }
+   public double getperimeter()
+   {
+    return 2*3.14*radius;
+    }
+   public String tostring()
+   {
+    return ("CIRCLE");
+   }
+}
+
+class Rectangle extends Shape
+{
+ double length,width;
+ Rectangle()
+ {
+  length=0.0;
+  width=0.0;
+  }
+ Rectangle(double tl,double tw)
+ {
+  length=tl;
+  width=tw;
+  }
+ Rectangle(double tl,double tw,String tcolor,boolean tfilled)
+ {
+  super(tcolor,tfilled);
+  length=tl;
+  width=tw;
+  }
+  public double getlength()
+  {
+   return length;
+   }
+  public double getwidth()
+  {
+   return width;
+   }
+  public void setwidth(double tr)
+  {
+    this.width=tr;
+   }
+  public void setlength(double tr)
+  {
+   this.length=tr;
+   }
+  public double getarea()
+  {
+    return length*width;
+    }
+   public double getperimeter()
+   {
+    return (2*(length+width));
+    }
+   public String tostring()
+   {
+    return ("RECTANGLE");
+   }
+}
+class Square extends Rectangle
+{
+ double side;
+ 
+ Square()
+ {
+  side=0.0;
+  }
+ Square(double tr)
+ {
+  side=tr;
+  }
+ Square(double tr,String tcolor,boolean tfilled)
+ {
+  //super(tcolor,tfilled);
+  side=tr;
+  }
+  public double getside()
+  {
+   return side;
+   }
+  public void setside(double tr)
+  {
+   this.side=tr;
+   }
+  public double getarea()
+  {
+    return side*side;
+    }
+   public double getperimeter()
+   {
+    return 4*side;
+    }
+   public String tostring()
+   {
+    return ("SQUARE ");
+   }
+}
+public class Testshape
+{
+ public static void main(String args[])
+  {
+   double width,length,a,radius;
+   int choice;
+   Scanner obj=new Scanner(System.in);
+   do
+      {
+        System.out.println("ENTER YOUR CHOICE \n1.CIRCLE\n2.RECTANGLE\n3.SQUARE\n4.EXIT");
+        choice=obj.nextInt();
+ switch(choice)
+ {
+    case 2:
+       System.out.println("Enter length and breadth");
+       length=obj.nextDouble();
+       width=obj.nextDouble();
+       Shape rectangle =new Rectangle(length,width);
+       System.out.println("Rectangle width: " + width + " and length: " + length
+                + "\narea: " + rectangle.getarea()
+                + "\nperimeter: " + rectangle.getperimeter() + "\n");
+       break;
+       
+    case 1:
+        System.out.println("Enter Radius");
+        radius=obj.nextDouble();
+        Shape circle=new Circle(radius);
+        System.out.println("Circle radius: " + radius
+            + "\nArea: " + circle.getarea()
+            + "\nPerimeter: " + circle.getperimeter() + "\n");
+        break;
+    case 3:
+         System.out.println("Enter side");
+         a=obj.nextDouble();
+         Shape square=new Square(a);
+         System.out.println("Square side: " + a 
+                + "\n Area: " + square.getarea()
+                + "\n Perimeter: " + square.getperimeter() + "\n");
+        break;
+    case 4:
+         System.exit(0);	
+    }
+   }
+  while(true);
+ }
+}
+
+
+OUTPUT:
+
+ENTER YOUR CHOICE
+1.CIRCLE
+2.RECTANGLE
+3.SQUARE
+4.EXIT
+1
+Enter Radius
+5
+Circle radius: 5.0
+Area: 157.0
+Perimeter: 31.400000000000002
+
+ENTER YOUR CHOICE
+1.CIRCLE
+2.RECTANGLE
+3.SQUARE
+4.EXIT
+2
+Enter length and breadth
+6
+7
+Rectangle width: 7.0 and length: 6.0
+area: 42.0
+perimeter: 26.0
+
+ENTER YOUR CHOICE
+1.CIRCLE
+2.RECTANGLE
+3.SQUARE
+4.EXIT
+3
+Enter side
+8
+Square side: 8.0
+ Area: 64.0
+ Perimeter: 32.0
+
+ENTER YOUR CHOICE
+1.CIRCLE
+2.RECTANGLE
+3.SQUARE
+4.EXIT
+4
+----------------------------------------------------------------
+				TO GET CUSTOMER DETAILS
+	PROGRAM:
+	
+import java.io.*;
+import java.util.*;
+class customer
+{
+    private String name;
+    private boolean member;
+    private String type;
+    public customer(String k,boolean m,String l)
+    {
+        name=k;
+        member=m;
+        type=l;
+    }
+    String getName()
+    {
+        return name;
+    }
+    String getType()
+    {
+        return type;
+    }
+    boolean isMember()
+    {
+        return  member;
+    }
+    String print()
+    {
+        return ((getName())+getType());
+    }
+}
+class visit extends customer
+{
+    private int ser;
+    private int exp;
+    private String date;
+    public visit(String n,boolean m,String l,int s,int e,String d)
+    {
+        super(n,m,l);
+        ser=s;
+        exp=e;
+        date=d;
+    }
+    String getDate()
+    {
+        return date;
+    }
+    int getExp()
+    {
+        return exp;
+    }
+    int getSer()
+    {
+        return ser;
+    }
+    int getTotexp()
+
+    {
+        return (exp*ser);
+    }
+
+    private int gold= 3;
+    private int silver= 2;
+    private int premium= 4;
+    private int pros= 1;
+    private int prog= 1;
+    private int prop= 5;
+    public  int  getDisser()
+    {
+        int f;
+        f=exp;
+        if(f>2000)
+            return (f/premium);
+        else if (f<1000)
+            return (f/silver);
+        else
+            return(f/gold);
+    }
+    public int  getDispro()
+    {
+        int f;
+        f=ser;
+        if(f>2000)
+            return (f/prop);
+        else if (f<1000)
+            return (f/pros);
+        else
+            return(f/prog);
+    }
+    String display()
+    {
+        return ("The Total Expenses is " + getTotexp());
+    }
+    String display1()
+    {
+        return ("The Service Expenses is " + getDisser());
+    }
+    String display2()
+    {
+        return ("The Product Expenses is " + getDispro());
+    }
+}
+class Tester
+{
+    public static void main(String arg[])
+    {
+        String na,ty,da;
+        int ser,pro;
+        boolean me;
+        Scanner obj = new Scanner(System.in);
+        System.out.println("Enter the name");
+        na=obj.nextLine();
+        System.out.println("Enter the Type");
+        ty=obj.nextLine();
+        System.out.println("Enter the Whether a member or not");
+        me=obj.nextBoolean();
+        System.out.println("Enter the Service expences");
+        ser=obj.nextInt();
+        System.out.println("Enter the Product expences");
+        pro=obj.nextInt();
+        System.out.println("Enter the date");
+        da=obj.nextLine();
+        visit v= new visit(na,me,ty,ser,pro,da);
+        System.out.println(v.print());
+        System.out.println(v.display());
+        System.out.println(v.display1());
+        System.out.println(v.display2());
+    }
+}
+
+OUTPUT:
+Enter the name
+roy
+Enter the Type
+house
+Enter the Whether a member or not
+true
+Enter the Service expences
+2000
+Enter the Product expences
+300
+Enter the date
+royhouse
+The Total Expenses is 600000
+The Service Expenses is 150
+The Product Expenses is 2000
+----------------------------------------------------------------------------------
+				TO CALCULATE STUDENT MARKS
+PROGRAM:
+
+import java.io.*;
+import java.util.*;
+ class Student
+{
+ private String name,dept;
+ private int rollno,spr;
+  Student(String tname,String tdept,int trollno,int sprt)
+  {
+   name=tname;
+   dept=tdept;
+   rollno=trollno;
+   spr=sprt;
+   }
+  public String getname()
+  {
+   return name;
+   }
+  public String getdept()
+  {
+   return dept;
+   }
+  public int getrollno()
+  {
+   return rollno;
+   }
+  public int getspr()
+  {
+   return spr;
+    }
+}
+  interface Sports
+  {
+   int mark=5;
+   void Sportsmark();
+   }
+  
+class Exam 
+{
+ public int rno,totale;
+ int m[]=new int[6];
+ private String name;
+
+ public void setmarks(int tmarks[])
+ {
+ 
+   for(int i=0;i<6;i++)
+   {
+    m[i]=tmarks[i];
+   // System.out.println(""+totale);
+    }
+   }
+  public int gettotale()
+  {
+    for(int i=0;i<6;i++)
+   {
+  totale=totale+m[i];
+  }
+   return totale;
+   }
+  }
+ class Result  extends Exam implements Sports
+ {
+  public int tot;
+ public void Sportsmark()
+ {
+  System.out.println("SPORTS MARK =5");
+  }
+    public int getsum(Student ts,Exam te,int sp)
+    {
+     int a,b=0,c;
+     a=te.gettotale();
+     System.out.println(""+a);
+     if(sp==1)
+     b=Sports.mark;
+     c=a+b;
+     if(c>60)
+     c=60;
+     else
+     c=a;
+     tot=c;
+   return tot;
+     }
+  
+    public int gettotal()
+    {
+     return tot;
+    
+    }
+}
+ public class Drive
+ {
+   public static void main(String args[])
+   {
+    int rol,sum,sp;
+    int mar[]=new int[6];
+    String nam,dep;
+    Result r=new Result();
+    Scanner obj=new Scanner(System.in);
+    System.out.println("ENTER NAME, DEPT, ROLL NO,SPORTS PERSON=1 or 0");
+    nam=obj.nextLine();
+    dep=obj.nextLine();
+    rol=obj.nextInt();
+    sp=obj.nextInt();
+    System.out.println("ENTER 6 MARKS FOR THE STUDENT");            
+    for(int i=0;i<6;i++)
+    mar[i]=obj.nextInt();
+    Student s=new Student(nam,dep,rol,sp);
+    Exam e=new Exam();
+    r.setmarks(mar);
+    sum=r.getsum(s,e,sp);
+   System.out.println("MARK OBJAINED BY STUDENT="+sum);
+  }
+ }
+                                                                             
+OUTPUT:
+
+ENTER NAME, DEPT, ROLL NO,SPORTS PERSON=1 or 0
+roy
+it
+13235
+0
+ENTER 6 MARKS FOR THE STUDENT
+2
+5
+6
+9
+7
+4
+0
+MARK OBJAINED BY STUDENT=33
+---------------------------------------------------------
+		   

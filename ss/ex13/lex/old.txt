@@ -1,0 +1,6 @@
+printf
+//good morning
+//hai
+//hello
+//scanf
+warm geetings

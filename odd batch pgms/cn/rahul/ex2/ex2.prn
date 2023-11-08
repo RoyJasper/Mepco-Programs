@@ -1,0 +1,515 @@
+*******************************************************************************
+EX NO: 2                NAME:RAHUL RAJAN D
+DATE:14.7.16            ROLLNO:14BIT053
+*******************************************************************************
+  ERROR DETECTION TECHNIQUE
+*******************************************************************************
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+main()
+{
+  FILE *fp,*fp1;
+  char a[50],b[50][50],c[50];
+  int m,choice,n,i,j,k=0,count=0,l=0;
+  for(i=0;i<50;i++)
+  {
+    for(j=0;j<50;j++)
+    {
+      b[i][j]='\0';
+    }
+  }
+  for(i=0;i<50;i++)
+	{
+    a[i]='\0';
+		c[i]='\0';
+	}
+  printf("1.VRC\n2.LRC\nENTER THE CHOICE:");
+  scanf("%d",&choice);
+  switch(choice)
+  {
+    case 1:
+			fp=fopen("medium1.txt","w");
+      printf("ENTER THE BIT SEQUENCE");
+      scanf("%s",a);
+      n=strlen(a);
+      for(i=0;i<n;i++)
+      {
+        for(j=0;j<8;j++)
+        {
+          b[i][j]=a[k];
+            k++;
+          if(k>=n)
+            break;
+        }
+          if(k>=n)
+            break;
+      }
+      m=i+1;
+      for(i=0;i<m;i++)
+      {
+				count=0;
+        for(j=0;j<strlen(b[i]);j++)
+        {
+          if(b[i][j]=='1')
+          {
+            count=count+1;
+          }
+        }
+        if(count%2!=0)
+          b[i][j]='1';
+        else
+          b[i][j]='0';
+      }
+      for(i=0;i<m;i++)
+      {
+        printf("%s\n",b[i]);
+      }
+			for(i=0;i<m;i++)
+			{
+				for(j=0;j<strlen(b[i]);j++)
+				{
+					fputc(b[i][j],fp);
+				}
+			}
+      break;
+		case 2:
+			fp1=fopen("medium2.txt","w");
+			printf("ENTER THE BIT SEQUENCE");
+      scanf("%s",a);
+      n=strlen(a);
+			for(i=0;i<n;i++)
+      {
+        for(j=0;j<8;j++)
+        {
+          b[i][j]=a[k];
+            k++;
+          if(k>=n)
+            b[i][j]='0';
+        }
+          if(k>=n)
+            break;
+      }
+      m=i+1;
+			for(i=0;i<m;i++)
+      {
+        printf("%s\n",b[i]);
+      }
+			for(i=0;i<8;i++)
+			{
+				count=0;
+				for(j=0;j<m;j++)
+				{
+					count=count+b[j][i];
+				}
+				if(count%2!=0)
+				{
+					c[l]='1';
+					l++;
+				}
+				else
+				{
+					c[l]='0';
+					l++;
+				}
+			}
+			printf("%s",c);
+		for(i=0;i<m;i++)
+		{
+			for(j=0;j<strlen(b[i]);j++)
+      {
+        fputc(b[i][j],fp1);
+      }
+		}
+		for(j=0;j<strlen(c);j++)
+    {
+      fputc(c[j],fp1);
+    }
+  }
+}
+bash-3.2$ cc vrcsen1.c
+bash-3.2$ ./a.out
+1.VRC
+2.LRC
+ENTER THE CHOICE:1
+ENTER THE BIT SEQUENCE^[[4~^[[2~          1010100010101
+101010001
+101011
+bash-3.2$ caat medium1.txt
+bash: caat: command not found
+bash-3.2$ caat[K[Kt medium1.txt
+101010001101011bash-3.2$ ./a.out
+1.VRC
+2.LRC
+ENTER THE CHOICE:2
+ENTER THE BIT SEQUENCE101000101010
+10100010
+10100000
+00000010bash-3.2$ cat medium2.txt
+101000101010000000000010bash-3.2$ cat vrcrec1.c
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+main()
+{
+	FILE *fp,*fp1;
+	int m,n,choice,i,j,k=0,count=0,l;
+	char b[50][50],a[50],d,g,c[50];
+	fp=fopen("medium1.txt","r");
+	fp1=fopen("medium2.txt","r");
+	for(i=0;i<50;i++)
+  {
+    for(j=0;j<50;j++)
+    {
+      b[i][j]='\0';
+    }
+  }
+  for(i=0;i<50;i++)
+	{
+    a[i]='\0';
+		c[i]='\0';
+	}
+	printf("1.VRC\n2.LRC\nENTER THE CHOICE:");
+	scanf("%d",&choice);
+	i=0;
+	switch(choice)
+	{
+		case 1:
+			d=fgetc(fp);
+			while(d!=EOF)
+			{
+				a[i]=d;
+				i++;
+				d=fgetc(fp);
+			}
+		//	printf("%s",a);
+			 n=strlen(a);
+      for(i=0;i<n;i++)
+      {
+        for(j=0;j<9;j++)
+        {
+          b[i][j]=a[k];
+            k++;
+          if(k>=n)
+            break;
+        }
+          if(k>=n)
+            break;
+      }
+      m=i+1;
+	//		for(i=0;i<m;i++)
+	//		{
+		//		printf("%s\n",b[i]);
+	//		}
+      for(i=0;i<m;i++)
+      {
+        count=0;
+        for(j=0;j<(strlen(b[i])-1);j++)
+        {
+          if(b[i][j]=='1')
+          {
+            count=count+1;
+          }
+        }
+        if(count%2!=0)
+          g='1';
+        else
+          g='0';
+		//		printf("\n%c\t%d\n",b[i][j],strlen(b[i]));
+				if(g==b[i][j])
+				{
+					b[i][j]='\0';
+				}
+				else
+				{
+					printf("ERROR MESSAGE");
+					break;
+				}
+      }
+      for(i=0;i<m;i++)
+      {
+        printf("%s\n",b[i]);
+      }
+			close(fp);
+			close(fp1);
+			break;
+		case 2:
+			d=fgetc(fp1);
+      while(d!=EOF)
+      {
+        a[i]=d;
+        i++;
+        d=fgetc(fp1);
+      }
+      n=strlen(a);
+			n=n/8;
+	//		printf("%d",n);
+			 for(i=0;i<n;i++)
+      {
+        for(j=0;j<8;j++)
+        {
+          b[i][j]=a[k];
+            k++;
+        }
+      }
+      m=i;
+    //  for(i=0;i<m;i++)
+    //  {
+    //    printf("%s\n",b[i]);
+    //  }
+			l=0;
+			for(i=0;i<8;i++)
+      {
+        count=0;
+        for(j=0;j<m;j++)
+        {
+					if(b[j][i]!='0')
+          	count=count+1;
+        }
+	//			printf("%d\t",count);
+        if(count%2==0)
+        {
+          l++;
+        }
+      }
+			if(l==8)
+			{
+				printf("MESSAGE RECEIVED\n");
+				for(i=0;i<m-1;i++)
+					printf("%s\n",b[i]);
+			}
+			else
+			{
+	//			for(i=0;i<m-1;i++)
+    //      printf("%s\n",b[i]);
+				printf("ERROR MESSAGE");
+			}
+			close(fp);
+			close(fp1);
+			break;
+	}
+}	
+bash-3.2$ cc vrcrec1.c
+bash-3.2$ ./a.out
+1.VRC
+2.LRC
+ENTER THE CHOICE:1
+10101000
+10101
+bash-3.2$ ./a.oout[K[K[K[Kout
+1.VRC
+2.LRC
+ENTER THE CHOICE:2
+MESSAGE RECEIVED
+10100010
+10100000
+bash-3.2$ cat crcsen.c
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+char xor(char a,char b)
+{
+  if((a=='0'&& b=='0')||(a=='1'&&b=='1'))
+  {
+    return '0';
+  }
+  else
+  {
+    return '1';
+  }
+}
+main()
+{
+  FILE *fp;
+  char a[50],b[50],c[50],d[50];
+  int n,m,i,j;
+  fp=fopen("medium.txt","w");
+  for(i=0;i<50;i++)
+    a[i]='\0';
+  for(i=0;i<50;i++)
+    b[i]='\0';
+  for(i=0;i<50;i++)
+    c[i]='\0';
+  for(i=0;i<50;i++)
+    d[i]='\0';
+  printf("ENTER THE BIT SEQUENCE:");
+  scanf("%s",a);
+  printf("ENTER THE DIVIDEND:");
+  scanf("%s",b);
+  n=strlen(b);
+  m=strlen(a);
+  for(i=0;i<n;i++)
+  {
+    d[i]='0';
+  }
+  for(i=m;i<(m+(n-1));i++)
+  {
+    a[i]='0';
+  }
+  //printf("%s%d\n",a,strlen(a));
+  for(i=0;i<n;i++)
+  {
+    c[i]=a[i];
+  }
+  //printf("%s%d\n",d,strlen(d));
+  for(i=n-1;i<strlen(a);i++)
+  {
+    j=0;
+    if(c[j]!='0')
+    {
+      for(j=0;j<n;j++)
+      {
+        c[j-1]=xor(c[j],b[j]);
+      //  printf("%c\t",c[j-1]);
+      }
+  //    printf("%d\t",j-1);
+      for(j=n;j<50;j++)
+        c[j-1]='\0';
+    //  printf("%s\n",c);
+    }
+    else
+    {
+      for(j=0;j<n;j++)
+      {
+        c[j-1]=xor(c[j],d[j]);
+      }
+      for(j=n;j<50;j++)
+        c[j-1]='\0';
+    //  printf("%s%d\n",c,j-1);
+    }
+    c[3]=a[i+1];
+  //  printf("%s%d\n",c,strlen(c));
+  }
+  j=0;
+  for(i=m;i<strlen(a);i++)
+  {
+    a[i]=c[j];
+    j++;
+  }
+  printf("%s",a);
+  for(i=0;i<strlen(a);i++)
+  {
+    putc(a[i],fp);
+  }
+  putc('$',fp);
+  for(i=0;i<strlen(b);i++)
+  {
+    putc(b[i],fp);
+  }
+}
+
+bash-3.2$ cc crcsen.c
+bash-3.2$ ./a.oout[K[K[Kut
+ENTER THE BIT SEQUENCE:^[[4~^[[2~^[[2~               100100
+ENTER THE DIVIDEND:1011
+100100101bash-3.2$ vi medium.txt
+bash-3.2$ cat medium.txt
+100100101$1011
+bash-3.2$ cc[Kat crcrec.c
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+char xor(char a,char b)
+{
+  if((a=='0'&& b=='0')||(a=='1'&&b=='1'))
+  {
+    return '0';
+  }
+  else
+  {
+    return '1';
+  }
+}
+main()
+{
+  FILE *fp;
+  char a[50],b[50],c[50],d[50],e;
+  int n,m,i=0,j=0,count=0;
+  fp=fopen("medium.txt","r");
+  for(i=0;i<50;i++)
+    a[i]='\0';
+  for(i=0;i<50;i++)
+    b[i]='\0';
+  for(i=0;i<50;i++)
+    c[i]='\0';
+  for(i=0;i<50;i++)
+    d[i]='\0';
+  e=fgetc(fp);
+	i=0;
+	while(e!='$')
+	{
+		a[i]=e;
+		i++;
+		e=fgetc(fp);
+	}
+	//  printf("%s%d\n",a,strlen(a));
+	e=fgetc(fp);
+	while(e!=EOF)
+  {
+    b[j]=e;
+    j++;
+		e=fgetc(fp);
+		if(e==EOF)
+			break;
+  }
+	//  printf("%s%d\n",b,strlen(b));
+	n=strlen(b)-1;
+	m=strlen(a);
+  for(i=0;i<n;i++)
+  {
+    d[i]='0';
+  }
+ // printf("%s%d\n",a,strlen(a));
+  for(i=0;i<n;i++)
+  {
+    c[i]=a[i];
+  }
+ // printf("%s%d\n",c,strlen(c));
+  for(i=n-1;i<strlen(a);i++)
+  {
+    j=0;
+    if(c[j]!='0')
+    {
+      for(j=0;j<n;j++)
+      {
+        c[j-1]=xor(c[j],b[j]);
+      //  printf("%c\t",c[j-1]);
+      }
+  //    printf("%d\t",j-1);
+      for(j=n;j<50;j++)
+        c[j-1]='\0';
+    // printf("%s\n",c);
+    }
+    else
+    {
+      for(j=0;j<n;j++)
+      {
+        c[j-1]=xor(c[j],d[j]);
+      }
+      for(j=n;j<50;j++)
+        c[j-1]='\0';
+    //  printf("%s%d\n",c,j-1);
+    }
+    c[3]=a[i+1];
+   // printf("%s%d\n",c,strlen(c));
+  }
+  for(i=0;i<strlen(c);i++)
+	{
+		if(c[i]!='0')
+			break;
+		count=count+1;
+	}
+	for(i=m-1;i>(m-n);i--)
+			a[i]='\0';
+	if(count==strlen(c))
+		printf("THE MESSAGE IS :%s",a);
+	else
+		printf("ERROR MESSAGE");
+}
+
+bash-3.2$ cc crcrec.c
+bash-3.2$ ./a.out
+THE MESSAGE IS :100100bash-3.2$ exit
+exit
+
+Script done on Thu 28 Jul 2016 12:17:01 PM IST

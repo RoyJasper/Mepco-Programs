@@ -1,0 +1,267 @@
+*******************************************************************************
+EX NO:05												NAME:RAHUL RAJAN D
+DATE:26.8.15										ROLL NO:14BIT053
+*******************************************************************************
+			IMPLEMENTATION OF AVL TREE
+******************************************************************************
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+struct node
+{
+int data;
+struct node *left;
+struct node *right;
+int height;
+};
+typedef struct node * avl;
+avl insert(int,avl);
+int height(avl);
+avl srl(avl);
+avl drl(avl);
+avl drr(avl);
+avl srr(avl);
+void search(int,avl);
+void inorder(avl);
+void preorder(avl);
+void postorder(avl);
+int max(int,int);
+
+bash-3.2$ cat avlimp.c
+#include"avlhead.h"
+avl insert (int x,avl t)
+{
+int d;
+if(t==NULL)
+{
+t=(avl)malloc(sizeof(struct node));
+t->data=x;
+t->left=NULL;
+t->right=NULL;
+t->height=0;
+return t;
+}
+else if(x<t->data)
+{
+t->left=insert(x,t->left);
+if(height(t->left)-height(t->right)==2)
+{
+if(x<t->left->data)
+{
+t=srl(t);
+}
+else
+{
+t=drl(t);
+}
+}
+}
+else if(x>t->data)
+{
+t->right=insert(x,t->right);
+if(height(t->left)-height(t->right)==-2)
+{
+if(x>t->right->data)
+{
+t=srr(t);
+}
+else
+{
+t=drr(t);
+}
+}
+}
+d=max(height(t->left),height(t->right));
+t->height=d+1;
+return t;
+}
+int height(avl t)
+{
+if(t==NULL)
+{
+return -1;
+}
+else
+return t->height;
+}
+avl srl(avl t1)
+{
+avl t2;
+t2=t1->left;
+t1->left=t2->right;
+t2->right=t1;
+t1->height=max(height(t1->left),height(t1->right))+1;
+t2->height=max(height(t2->left),height(t2->right))+1;
+return t2;
+}
+avl drl (avl t1)
+{
+t1->left=srr(t1->left);
+return (srl(t1));
+}
+avl srr(avl t1)
+{
+avl t2;
+t2=t1->right;
+t1->right=t2->left;
+t2->left=t1;
+t1->height=max(height(t1->left),height(t1->right))+1;
+t2->height=max(height(t2->left),height(t2->right))+1;
+return t2;
+}
+avl drr (avl t1)
+{
+t1->right=srl(t1->right);
+return (srr(t1));
+}
+int max (int b,int c)
+{
+int a;
+a=(b>c)?b:c;
+return a;
+}
+void search(int x,avl t)
+{
+int c=0;
+if(t==NULL)
+{
+printf("TREE IS EMPTY");
+}
+else
+{
+if(x<t->data)
+{
+search(x,t->left);
+}
+else if(x>t->data)
+{
+search(x,t->right);
+}
+else
+{
+printf("ELEMENT IS PRESENT");
+c=1;
+}
+}
+if(c==0)
+{
+printf("IT IS NOT PRESENT");
+}
+}
+void inorder(avl t)
+{
+if(t!=NULL)
+{
+inorder(t->left);
+printf("%d",t->data);
+inorder(t->right);
+}
+}
+void preorder(avl t)
+{
+if(t!=NULL)
+{
+printf("%d",t->data);
+preorder(t->left);
+preorder(t->right);
+}
+}
+void postorder(avl t)
+{
+if(t!=NULL)
+{
+postorder(t->left);
+postorder(t->right);
+printf("%d",t->data);
+}
+}
+
+bash-3.2$ cat avlapp.c
+#include"avlhead.h"
+main()
+{
+avl t,k;
+int a,b,choice;
+t=NULL;
+k=(avl)malloc(sizeof(struct node));
+while(1)
+{
+printf("1.INSERT 2.SEARCH 3.HEIGHT 4.INORDER 5.PREORDER 6.POSTORDER 7.EXIT\nENTER THE CHOICE");
+scanf("%d",&choice);
+switch(choice)
+{
+case 1:
+printf("ENTER THE VALUE TO BE INSERTED");
+scanf("%d",&a);
+t=insert(a,t);
+printf("ELEMENT IS INSERTED SUCCESSFULLY%d",t->data);
+break;
+case 2:
+printf("ENTER ELEMENT TO BE SEARCHED");
+scanf("%d",&a);
+search(a,t);
+break;
+case 3:
+b=height(t);
+printf("THE HEIGHT IS %d",b);
+break;
+case 4:
+inorder(t);
+break;
+case 5:
+preorder(t);
+break;
+case 6:
+postorder(t);
+break;
+case 7:
+exit(0);
+}
+}
+}
+ 
+bash-3.2$ cc avlimp.c -c
+bash-3.2$ cc avlapp.c avlimp.o
+bash-3.2$ ./a.out
+1.INSERT 2.SEARCH 3.HEIGHT 4.INORDER 5.PREORDER 6.POSTORDER 7.EXIT
+ENTER THE CHOICE 1
+ENTER THE VALUE TO BE INSERTED 5
+ELEMENT IS INSERTED SUCCESSFULLY
+1.INSERT 2.SEARCH 3.HEIGHT 4.INORDER 5.PREORDER 6.POSTORDER 7.EXIT
+ENTER THE CHOICE 1
+ENTER THE VALUE TO BE INSERTED 4
+ELEMENT IS INSERTED SUCCESSFULLY
+1.INSERT 2.SEARCH 3.HEIGHT 4.INORDER 5.PREORDER 6.POSTORDER 7.EXIT
+ENTER THE CHOICE 1
+ENTER THE VALUE TO BE INSERTED 6
+ELEMENT IS INSERTED SUCCESSFULLY
+1.INSERT 2.SEARCH 3.HEIGHT 4.INORDER 5.PREORDER 6.POSTORDER 7.EXIT
+ENTER THE CHOICE 1
+ENTER THE VALUE TO BE INSERTED 8
+ELEMENT IS INSERTED SUCCESSFULLY
+1.INSERT 2.SEARCH 3.HEIGHT 4.INORDER 5.PREORDER 6.POSTORDER 7.EXIT
+ENTER THE CHOICE 1
+ENTER THE VALUE TO BE INSERTED 9
+ELEMENT IS INSERTED SUCCESSFULLY
+1.INSERT 2.SEARCH 3.HEIGHT 4.INORDER 5.PREORDER 6.POSTORDER 7.EXIT
+ENTER THE CHOICE 2
+ENTER ELEMENT TO BE SEARCHED 9
+ELEMENT IS PRESENT
+1.INSERT 2.SEARCH 3.HEIGHT 4.INORDER 5.PREORDER 6.POSTORDER 7.EXIT
+ENTER THE CHOICE 3
+THE HEIGHT IS 1
+1.INSERT 2.SEARCH 3.HEIGHT 4.INORDER 5.PREORDER 6.POSTORDER 7.EXIT
+ENTER THE CHOICE 4
+45689
+1.INSERT 2.SEARCH 3.HEIGHT 4.INORDER 5.PREORDER 6.POSTORDER 7.EXIT
+ENTER THE CHOICE 5
+54869
+1.INSERT 2.SEARCH 3.HEIGHT 4.INORDER 5.PREORDER 6.POSTORDER 7.EXIT
+ENTER THE CHOICE 6
+46985
+1.INSERT 2.SEARCH 3.HEIGHT 4.INORDER 5.PREORDER 6.POSTORDER 7.EXIT
+ENTER THE CHOICE 7
+bash-3.2$ exit
+exit
+
+Script done on Sun 06 Sep 2015 11:17:14 PM IST

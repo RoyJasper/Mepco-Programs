@@ -1,0 +1,82 @@
+**************************************************************
+EX.NO:05		NAME: RAHUL RAJAN D
+DATE:2/8/16		ROLLNO: 14BIT053
+**************************************************************
+	ITERATIVE PROGRAM USING UDP
+**************************************************************
+CLIENT:
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<sys/socket.h>
+#include<unistd.h>
+#include<netinet/in.h>
+#include<sys/types.h>
+int main()
+{
+ int sd,b,ad,f,l,len;
+ char msg[100],msg1[100];
+ struct sockaddr_in server,client;
+ server.sin_family=AF_INET;
+ printf("ENTER THE PORT NO:");
+ scanf("%d",&f);
+ server.sin_port=htons(f);
+ server.sin_addr.s_addr=htonl(INADDR_ANY);
+ sd=socket(AF_INET,SOCK_DGRAM,0);
+ printf("ENTER THE MSG");
+ memset(server.sin_zero,'\0',sizeof(server.sin_zero));
+ scanf("%s",msg);
+ len=sizeof(server);
+ sendto(sd,msg,strlen(msg),0,(struct sockaddr *) &server,sizeof(server));
+ recvfrom(sd,msg1,1024,0,NULL,NULL);
+ if(strcmp(msg,msg1)==0)
+  printf("THE MSG IS %s",msg1);
+ else
+  printf("ERROR");
+}
+
+SERVER:
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<sys/socket.h>
+#include<unistd.h>
+#include<netinet/in.h>
+#include<sys/types.h>
+int main()
+{
+ int ad,b,lac,len,f,i;
+ char msg[100];
+ struct sockaddr_in server,client;
+ server.sin_family=AF_INET;
+ printf("ENTER THE PORT NUMBER");
+ scanf("%d",&f);
+ server.sin_port=htons(f);
+ server.sin_addr.s_addr=htonl(INADDR_ANY);
+ ad=socket(AF_INET,SOCK_DGRAM,0);
+ if(ad>0||ad==0)
+  printf("SOCKET SUCCESS");
+ else
+  printf("ERROR");
+ b=bind(ad,(struct sockaddr *) &server,sizeof(server));
+ if(b>0||b==0)
+  printf("BIND SUCCESS");
+ else
+  printf("BIND ERROR");
+ len=sizeof(client);
+ recvfrom(ad,msg,1024,0,(struct sockaddr *) &client,sizeof(client));
+ printf("CLIENT:%s",msg);
+ sendto(ad,msg,strlen(msg),0,(struct sockaddr *) &client, sizeof(client));
+ return 0;
+}
+OUTPUT:
+CLIENT:
+ENTER THE PORT NO:8800
+ENTER THE MSGHAI
+THE MSG IS HAI
+
+SERVER:
+ENTER THE PORT NUMBER:8800
+SOCKET SUCCESS
+BIND SUCCESS
+CLIENT:HAI

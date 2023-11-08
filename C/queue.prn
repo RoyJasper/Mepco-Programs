@@ -1,0 +1,308 @@
+*******************************************************************************
+EXNO:03																NAME: RAHUL RAJAN D
+DATE:12.8.15													ROLLNO: 14bit053
+*******************************************************************************
+							IMPLEMENTATION OF QUEUE
+*******************************************************************************
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+struct node
+{
+int data;
+struct node * next;
+};
+typedef struct node *queue;
+queue enqueue(int,queue);
+queue dequeue(queue,queue);
+int isempty(queue,queue);
+void makeempty(queue,queue);
+void search(queue,queue,int);
+void palindrome(char[]); 
+bash-3.2$ cat queueimp.c
+#include"queuehead.h"
+queue enqueue(int a,queue rear)
+{
+queue temp;
+temp=(queue)malloc(sizeof(struct node));
+temp->data=a;
+rear->next=temp;
+temp->next=NULL;
+rear=temp;
+printf("IT IS INSERTED SUCCESSFULLY");
+return rear;
+}
+queue dequeue(queue front,queue rear)
+{
+queue k;
+int a,x;
+a=isempty(front,rear);
+if(a==1)
+{
+printf("NOT POSSIBLE");
+return NULL;
+}
+else
+{
+k=front->next;
+x=k->data;
+front->next=front->next->next;
+printf("%d IS DELETED",x);
+if(front->next==NULL)
+rear=front;
+free(k);
+return rear;
+}
+}
+int isempty(queue front,queue rear)
+{
+if(rear==front)
+{
+return 1;
+}
+else 
+return 0;
+}
+void makeempty(queue front,queue rear)
+{
+int a;
+queue k;
+while(front->next!=NULL)
+{
+rear=dequeue(front,rear);
+}
+printf("QUEUE IS EMPTY");
+}
+void display(queue front,queue rear)
+{
+queue k;
+k=front->next;
+while(k!=NULL)
+{
+printf("%d",k->data);
+k=k->next;
+}
+}
+void search(queue front,queue rear,int x)
+{
+queue k;
+k=front->next;
+while(k!=NULL)
+{
+if(k->data==x)
+{
+printf("IT IS PRESENT");
+break;
+}
+else
+k=k->next;
+}
+}
+void palindrome(char a[10])
+{
+int size,rear,front=0,i=0,c,n;
+n=strlen(a);
+rear=n-1;
+size=n;
+while(i<n)
+{
+if(a[front]==a[rear])
+{
+
+front++;
+rear--;
+i++;
+c=1;
+}
+else
+{
+c=0;
+break;
+}
+}
+if(c==0)
+{
+printf("IT IS NOT PALINDROME");
+}
+else
+{
+printf("IT IS PALINDROME");
+}
+}
+
+bash-3.2$ cat queueapp.c
+#include"queuehead.h"
+main()
+{
+int choice,a,b,d,c;
+queue front,rear,k;
+char h[10];
+front=(queue)malloc(sizeof(struct node));
+front->next=NULL;
+rear=front;
+while(1)
+{
+printf("1.ENQUEUE\n2.DEQUEUE\n3.ISEMPTY\n4.MAKE EMPTY\n5.SEARCH\n6.DISPLAY\n7.PALINDROME\n8.EXIT\nENTER THE CHOICE");
+scanf("%d",&choice);
+switch(choice)
+{
+case 1:
+printf("ENTER THE ELEMENTS");
+scanf("%d",&a);
+rear=enqueue(a,rear);
+break;
+case 2:
+rear=dequeue(front,rear);
+//printf("%d IS DELETED",b);
+break;
+case 3:
+c=isempty(front,rear);
+if(c==1)
+printf("QUEUE IS EMPTY");
+else
+printf("QUEUE IS NOT EMPTY");
+break;
+case 4:
+makeempty(front,rear);
+break;
+case 6:
+display(front,rear);
+break;
+case 5:
+printf("ENTER THE SEARCH ELEMENT");
+scanf("%d",&d);
+search(front,rear,d);
+break;
+case 7:
+printf("ENTER THE STRING");
+scanf("%s",&h);
+palindrome(h);
+break;
+case 8:
+exit(0);
+}
+}
+}
+
+bash-3.2$ cc queueimp.c -c
+bash-3.2$ cc queueapp.c queueimp.o
+bash-3.2$ ./a.out
+1.ENQUEUE
+2.DEQUEUE
+3.ISEMPTY
+4.MAKE EMPTY
+5.SEARCH
+6.DISPLAY
+7.PALINDROME
+8.EXIT
+ENTER THE CHOICE 1
+ENTER THE ELEMENTS 5
+IT IS INSERTED SUCCESSFULLY1.ENQUEUE
+2.DEQUEUE
+3.ISEMPTY
+4.MAKE EMPTY
+5.SEARCH
+6.DISPLAY
+7.PALINDROME
+8.EXIT
+ENTER THE CHOICE 1
+ENTER THE ELEMENTS 9
+IT IS INSERTED SUCCESSFULLY1.ENQUEUE
+2.DEQUEUE
+3.ISEMPTY
+4.MAKE EMPTY
+5.SEARCH
+6.DISPLAY
+7.PALINDROME
+8.EXIT
+ENTER THE CHOICE 1
+ENTER THE ELEMENTS 6
+IT IS INSERTED SUCCESSFULLY1.ENQUEUE
+2.DEQUEUE
+3.ISEMPTY
+4.MAKE EMPTY
+5.SEARCH
+6.DISPLAY
+7.PALINDROME
+8.EXIT
+ENTER THE CHOICE 1
+ENTER THE ELEMENTS 7
+IT IS INSERTED SUCCESSFULLY1.ENQUEUE
+2.DEQUEUE
+3.ISEMPTY
+4.MAKE EMPTY
+5.SEARCH
+6.DISPLAY
+7.PALINDROME
+8.EXIT
+ENTER THE CHOICE 5
+ENTER THE SEARCH ELEMENT 7
+IT IS PRESENT1.ENQUEUE
+2.DEQUEUE
+3.ISEMPTY
+4.MAKE EMPTY
+5.SEARCH
+6.DISPLAY
+7.PALINDROME
+8.EXIT
+ENTER THE CHOICE 6
+59671.ENQUEUE
+2.DEQUEUE
+3.ISEMPTY
+4.MAKE EMPTY
+5.SEARCH
+6.DISPLAY
+7.PALINDROME
+8.EXIT
+ENTER THE CHOICE 2
+5 IS DELETED1.ENQUEUE
+2.DEQUEUE
+3.ISEMPTY
+4.MAKE EMPTY
+5.SEARCH
+6.DISPLAY
+7.PALINDROME
+8.EXIT
+ENTER THE CHOICE 3
+QUEUE IS NOT EMPTY1.ENQUEUE
+2.DEQUEUE
+3.ISEMPTY
+4.MAKE EMPTY
+5.SEARCH
+6.DISPLAY
+7.PALINDROME
+8.EXIT
+ENTER THE CHOICE 4
+9 IS DELETED6 IS DELETED7 IS DELETEDQUEUE IS EMPTY1.ENQUEUE
+2.DEQUEUE
+3.ISEMPTY
+4.MAKE EMPTY
+5.SEARCH
+6.DISPLAY
+7.PALINDROME
+8.EXIT
+ENTER THE CHOICE 7
+ENTER THE STRING racecar
+IT IS PALINDROME1.ENQUEUE
+2.DEQUEUE
+3.ISEMPTY
+4.MAKE EMPTY
+5.SEARCH
+6.DISPLAY
+7.PALINDROME
+8.EXIT
+ENTER THE CHOICE 7
+ENTER THE STRING rad
+IT IS NOT PALINDROME1.ENQUEUE
+2.DEQUEUE
+3.ISEMPTY
+4.MAKE EMPTY
+5.SEARCH
+6.DISPLAY
+7.PALINDROME
+8.EXIT
+ENTER THE CHOICE 8
+bash-3.2$  exit
+exit
+
+Script done on Wed 02 Sep 2015 11:47:18 AM IST

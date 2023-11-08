@@ -1,0 +1,209 @@
+**********************************************************************
+EX.NO:1                             C.S.Roy Jasper
+               ROLL.NO:14BIT050
+**********************************************************************
+
+SENDER SIDE:
+
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+main()
+int n,d;
+FILE *fp;
+int x,y,s,i,j,a[50],k,f;
+printf("Enter the number");
+scanf("%d",&n);
+i=0;
+while(n!=0)
+{
+    s=n%10;
+    n=n/10;
+    a[i]=s;
+    i++;
+}
+fp=fopen("a.txt","w");
+x=0;
+y=1;
+fprintf(fp,"%d %d ",x,x);
+i=i-1;
+for(j=i; j>=0; j--)
+{
+    if(a[j]==0)
+    {
+        fprintf(fp,"%d %d ",x,y);
+    }
+    else
+    {
+        fprintf(fp,"%d %d ",y,x);
+    }
+}
+fprintf(fp,"%d %d ",y,y);
+fclose(fp);
+}
+
+RECEIVER SIDE:
+
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+main()
+{
+    int n,d;
+    FILE *fp;
+    int x,y,s,i,j,a[50],k,f;
+    fp=fopen("a.txt","r");
+    fscanf(fp,"%d%d",&x,&y);
+    if((x!=0)||(y!=0))
+    {
+        printf("Error in the starting of the message");
+        exit(0);
+    }
+
+    rewind(fp);
+    while(fscanf(fp,"%d%d",&x,&y)!=EOF);
+    if((x!=1)||(y!=1))
+    {
+        printf("Error in the ending of the message");
+        exit(0);
+    }
+
+    rewind(fp);
+    i=0;
+    while(fscanf(fp,"%d%d",&x,&y)!=EOF)
+    {
+        i++;
+    }
+    rewind(fp);
+    i=i-1;
+    fscanf(fp,"%d%d",&x,&y);
+    while((i-1)!=0)
+    {
+        fscanf(fp,"%d%d",&x,&y);
+        if((x+y)==1)
+        {
+            if((x==0)&&(y==1))
+                printf("0");
+            else
+                printf("1");
+        }
+        else
+        {
+            printf("Error in the Text");
+            exit(0);
+        }
+        i--;
+    }
+    fclose(fp);
+}
+
+OUTPUT:
+
+SENDER:
+
+Enter the number 1100
+
+FILE:
+
+0 0 1 0 1 0 0 1 0 1 1 1
+
+RECEIVER:
+
+1100
+
+-----------------------------------------------------------------
+						CHARACTER COUNT
+
+SENDER SIDE:
+
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+char a[100][100];
+FILE *fp;
+int get();
+void make(int);
+main()
+{
+    int n=get();
+    make(n);
+}
+int get()
+{
+    int ans,i=0;
+    do
+    {
+        printf("\nEnter the Word");
+        scanf("%s",&a[i]);
+        printf("\nDo u want to continue \n1.yes \n2.no");
+        scanf("%d",&ans);
+        i++;
+    }
+    while(ans!=2);
+    return i;
+}
+void make(int n)
+{
+    int i;
+    fp=fopen("b.txt","w");
+    for(i=0; i<n; i++)
+        fprintf(fp,"%s %d ",a[i],(strlen(a[i])+1));
+    fclose(fp);
+}
+
+RECEIVER SIDE:
+
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+FILE *fp;
+main()
+{
+int b,z;
+char a[100];
+fp=fopen("b.txt","r");
+while(fscanf(fp,"%s%d",a,&b)!=EOF)
+{
+z=strlen(a)+1;
+if(b==z)
+printf("%s\t",a);
+else
+{
+printf("\nError in message");
+exit(0);
+}
+}
+fclose(fp);
+}
+
+
+OUTPUT:
+
+SENDER:
+
+Enter the Word:jasper
+
+Do u want to continue 
+1.yes 
+2.no 
+1
+
+Enter the Word:jazzy
+
+Do u want to continue 
+1.yes 
+2.no 
+2
+
+FILE:
+****
+jasper 6 jazzy 5
+
+RECEIVER:
+
+jasper  jazzy
+
+~                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+~                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+~                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+~                                                                                 

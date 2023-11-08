@@ -1,0 +1,273 @@
+****************************************************************************
+EXNO:13                                                 NAME:C.S.ROY JASPER
+DATE:30-10-15                                           ROLLNO:14BIT058	
+*****************************************************************************
+                        RUNTIME POLYMORPHISM
+#include<iostream>
+#include<string>
+#include<typeinfo>
+using namespace std;
+int main()
+{
+float f=4.20,f1=4.30;
+int k;
+cout<<"\n"<<typeid(k).name();
+cout<<"\n"<<typeid(f).name();
+if(typeid(k)==typeid(f))
+cout<<"\nBOTH ARE SAME";
+else
+cout<<"\nTHEY ARE DIFFERENT";
+f1=float(k);
+cout<<"\n"<<typeid(f1).name();
+cout<<"\n"<<typeid(f).name();
+if(typeid(f1)==typeid(f))
+cout<<"\nBOTH ARE SAME";
+else
+cout<<"\nTHEY ARE DIFFERENT";
+}
+
+bash-3.2$ .[Kc++ a.cpp
+bash-3.2$ ./a.out
+
+i
+f
+THEY ARE DIFFERENT
+f
+f
+BOTH ARE SAME
+
+PROGRAM:
+
+#include<iostream>
+#include<string>
+using namespace std;
+class vol
+{
+public:
+virtual void volume()
+{
+cout<<"\n THUS THE VOLUME FUNCTION IS CALLED";
+}
+};
+class cube : public vol
+{
+public:
+int f;
+void volume()
+{
+float a;
+a=f*f*f;
+cout<<"\n THE VOLUME OF CUBE OF SIZE " << f << " IS : "<< a;
+}
+};
+class cylinder : public vol
+{
+public:
+int r,h;
+void volume()
+{
+float a;
+a=3.14*r*r*h;
+cout<<"\n THE VOLUME OF CYLINDER OF SIZE " << r << "AND" << h << " IS : "<< a;
+}
+};
+class sphere : public vol
+{
+public:
+int rd;
+void volume()
+{
+float a;
+a=4*0.33*3.14*rd*rd*rd;
+cout<<"\n THE VOLUME OF SPHERE OF SIZE " << rd << " IS : "<< a;
+}
+};
+int main()
+{
+vol *v,v1;
+cube c;
+cylinder y;;
+sphere s;
+v1.volume();
+cout<<"\nENTER THE a OF THE CUBE";
+cin>>c.f;
+v=&c;
+v->volume();
+cout<<"\nENTER THE r AND h OF THE CYLINDER";
+cin>>y.r>>y.h;
+v=&y;
+v->volume();
+cout<<"\nENTER THE r OF THE SPHERE";
+cin>>s.rd;
+v=&s;
+v->volume();
+}
+
+
+OUTPUT:
+
+ THUS THE VOLUME FUNCTION IS CALLED
+ENTER THE a OF THE CUBE 3
+
+ THE VOLUME OF CUBE OF SIZE 3 IS : 27
+ENTER THE r AND h OF THE CYLINDER 3 2
+
+ THE VOLUME OF CYLINDER OF SIZE 3AND2 IS : 56.52
+ENTER THE r OF THE SPHERE 2
+
+ THE VOLUME OF SPHERE OF SIZE 2 IS : 33.1584
+
+PROGRAM:
+
+#include<iostream>
+#include<string>
+using namespace std;
+class vehicle
+{
+public:
+virtual void mileage() const =0;
+};
+void vehicle :: mileage() const
+{
+cout<<"\nTHUS THE MAIN CLASS VEHICLE IS CALLED";
+}
+class two :public vehicle
+{
+public:
+void mileage () const
+{
+vehicle :: mileage();
+}
+};
+class four :public vehicle
+{
+public:
+void mileage () const
+{
+vehicle :: mileage();
+}
+};
+class bicycle :public two
+{
+public:
+int d,f;
+void mileage () const
+{
+float m;
+two :: mileage();
+m=d/f;
+cout<<"\nTHE MILEAGE GIVEN BY BICYCLE IS "<<m;
+}
+};
+class scooter :public two
+{
+public:
+int d,f;
+void mileage () const
+{
+float m;
+two :: mileage();
+m=d/f;
+cout<<"\nTHE MILEAGE GIVEN BY SCOOTER IS "<<m;
+}};
+class petrol :public four
+{
+public:
+int d,f;
+void mileage () const
+{
+float m;
+four :: mileage();
+m=d/f;
+cout<<"\nTHE MILEAGE GIVEN BY PETROL VEHICLE IS "<<m;
+}};
+class diesel :public four
+{
+public:
+int d,f;
+void mileage () const
+{
+float m;
+four :: mileage();
+m=d/f;
+cout<<"\nTHE MILEAGE GIVEN BY DIESEL VEHICLE IS "<<m;
+}};
+
+int main()
+{
+bicycle bi;
+cout<<"\n************FOR BICYCLE*********************\n";
+cout<<"\nENTER THE DISTANCE TRAVELLED km : ";
+cin>>bi.d;
+cout<<"\nENTER THE FUEL CONSUMED l : ";
+cin>>bi.f;
+vehicle *b = & bi;
+b->mileage();
+
+scooter oo;
+cout<<"\n************FOR SCOOTER*********************\n";
+cout<<"\nENTER THE DISTANCE TRAVELLED km : ";
+cin>>oo.d;
+cout<<"\nENTER THE FUEL CONSUMED l : ";
+cin>>oo.f;
+vehicle *s = & oo;
+s->mileage();
+
+petrol pe;
+cout<<"\n************FOR PETROL VEHICLE*********************\n";
+cout<<"\nENTER THE DISTANCE TRAVELLED km :";
+cin>>pe.d;
+cout<<"\nENTER THE FUEL CONSUMED l : ";
+cin>>pe.f;
+vehicle *p = & pe;
+p->mileage();
+
+diesel di;
+cout<<"\n************FOR DIESEL VEHICLE*********************\n";
+cout<<"\nENTER THE DISTANCE TRAVELLED km :";
+cin>>di.d;
+cout<<"\nENTER THE FUEL CONSUMED l : ";
+cin>>di.f;
+vehicle *df = & di;
+df->mileage();
+
+return 0;
+}
+
+OUTPUT:
+
+************FOR BICYCLE*********************
+
+ENTER THE DISTANCE TRAVELLED km : 90
+
+ENTER THE FUEL CONSUMED l : 2
+
+THUS THE MAIN CLASS VEHICLE IS CALLED
+THE MILEAGE GIVEN BY BICYCLE IS 45
+************FOR SCOOTER*********************
+
+ENTER THE DISTANCE TRAVELLED km : 80
+
+ENTER THE FUEL CONSUMED l : 2
+
+THUS THE MAIN CLASS VEHICLE IS CALLED
+THE MILEAGE GIVEN BY SCOOTER IS 40
+************FOR PETROL VEHICLE*********************
+
+ENTER THE DISTANCE TRAVELLED km : 78
+
+ENTER THE FUEL CONSUMED l : 2
+
+THUS THE MAIN CLASS VEHICLE IS CALLED
+THE MILEAGE GIVEN BY PETROL VEHICLE IS 39
+************FOR DIESEL VEHICLE*********************
+
+ENTER THE DISTANCE TRAVELLED km : 70
+
+ENTER THE FUEL CONSUMED l : 2
+
+THUS THE MAIN CLASS VEHICLE IS CALLED
+THE MILEAGE GIVEN BY DIESEL VEHICLE IS 35bash-3.2$ exit
+exit
+
+Script done on Fri 23 Oct 2015 03:12:17 PM IST

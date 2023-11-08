@@ -1,0 +1,316 @@
+********************************************************************************
+EX NO:1								NAME:RAHUL RAJAN D
+DATE:5.7.16						ROLLNO:14BIT053
+********************************************************************************
+			FRAMING TECHNIQUE
+********************************************************************************
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+main()
+{
+	FILE *fp;
+	char a[100],b[]={'s','t','x'},c[]={'e','t','x'};
+	int n,i,j,k,d=0,e=0;
+	printf("ENTER THE STRING   ");
+	gets(a);
+	n=strlen(a);
+	fp=fopen("sender.txt","w");
+	for(i=0;i<3;i++)
+	{
+		putc(b[i],fp);
+	}
+	for(i=0;i<n;i++)
+  {
+    if(a[i]=='e')
+		{
+			if(a[i+1]=='t')
+			{
+				if(a[i+2]=='x')
+				{
+					j=i;
+					n=n+3;
+					k=n-1;
+					while(k>=j+3)
+					{
+						a[k]=a[k-3];
+						k--;
+					}
+					a[k]='e';
+					a[k-1]='l';
+					a[k-2]='d';
+					d=1;
+				}
+			}
+		}
+		if(d==1)
+		{
+			i=i+6;
+		}
+		if(a[i]=='d')
+    {
+      if(a[i+1]=='l')
+      {
+        if(a[i+2]=='e')
+        {
+          j=i;
+          n=n+3;
+          k=n-1;
+          while(k>=j+3)
+          {
+            a[k]=a[k-3];
+            k--;
+          }
+          a[k]='e';
+          a[k-1]='l';
+          a[k-2]='d';
+          e=1;
+				}
+			}
+		}
+		if(e==1)
+		{
+			i=i+6;
+		}
+	}
+	for(i=0;i<n;i++)
+  {
+    putc(a[i],fp);
+  }
+	for(i=0;i<3;i++)
+  {
+    putc(c[i],fp);
+  }
+	fclose(fp);
+}
+bash-3.2$ cat chare[Krec.c
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+main()
+{
+	FILE *fp;
+	int i=0,n,e=0,c=0,f=0,j,k;
+	char b[100],d;
+	fp=fopen("sender.txt","r");
+	d=fgetc(fp);
+	while(d!=EOF)
+	{
+		b[i]=d;
+		i++;
+		d=fgetc(fp);
+	}
+//	printf("%s",b);
+	n=i;
+	if(b[0]=='s')
+	{
+		if(b[1]=='t')
+		{
+			if(b[2]=='x')
+			{
+				c=1;
+			}
+		}
+	}
+	if(c!=1)
+	{
+		printf("STX ERROR");
+	}
+	else
+	{
+	//	printf("%d",n);
+		if(b[n-3]=='e')
+		{
+			if(b[n-2]=='t')
+    	{
+      	if(b[n-1]=='x')
+      	{
+        	e=1;
+      	}
+    	}
+  	}
+  	if(e!=1)
+  	{
+    	printf("ETX ERROR");
+  	}
+		else
+		{
+			n=n-3;
+			for(i=3;i<n;i++)
+			{
+				if(b[i]=='d')
+				{
+					if(b[i+1]=='l')
+    			{
+      			if(b[i+2]=='e')
+      			{
+							if(b[i+3]=='e'||b[i+3]=='d')
+							{
+								if(b[i+4]=='t'||b[i+4]=='l')
+								{
+									if(b[i+5]=='x'||b[i+5]=='e')
+									{
+										f=1;
+									}
+								}
+							}
+							if(f!=1)
+							{
+								printf("DLE ERROR");
+							}
+							else
+							{
+        				j=i;
+								for(k=j+3;k<n;k++)
+								{
+									b[k-3]=b[k];
+								}
+								n=n-3;
+      				}
+						}
+    			}
+  			}
+			}
+			for(i=3;i<n;i++)
+				printf("%c",b[i]);
+		}
+	}
+	fclose(fp);
+}
+bash-3.2$ cc charsend.c
+bash-3.2$ ./a.out
+ENTER THE STRING   rahul etx rajan
+bash-3.2$ cc charrec.c
+bash-3.2$ ./a.out
+rahul etx rajanbash-3.2$ cc[Kat sender.txt
+stxrahul dleetx rajanetxbash-3.2$ cat bitsen.c
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+main()
+{
+	FILE *fp;
+	char a[]={'0','1','1','1','1','1','1','0'},b[100];
+	int i,n,k,j,l,flag=0;
+	printf("ENTER THE BIT STRING    ");
+	scanf("%s",b);
+	fp=fopen("sender1.txt","w");
+	for(i=0;i<8;i++)
+	{
+		putc(a[i],fp);
+	}
+	n=strlen(b);
+	printf("%s",b);
+	for(i=0;i<n;i++)
+	{
+		if(b[i]=='1')
+		{
+			j=i;
+			for(;j<i+5;j++)
+			{
+				if(b[j]=='1')
+				{
+					flag=flag+1;
+				}
+			}
+			if(flag==5)
+			{
+				k=j;
+				n=n+1;
+				for(l=n-1;l>=k+1;l--)
+				{
+					b[l]=b[l-1];
+				}
+			b[l]='0';
+			i=j+1;
+			}
+		}
+	}
+	for(i=0;i<n;i++)
+	{
+		putc(b[i],fp);
+	}
+	for(i=0;i<8;i++)
+  {
+    putc(a[i],fp);
+  }
+}
+bash-3.2$ cat bitrec.c
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+main()
+{
+	FILE *fp;
+	char d,b[100];
+	int i,n,c=0,k,j,flag=0;
+	fp=fopen("sender1.txt","r");
+	d=fgetc(fp);
+	i=0;
+	while(d!=EOF)
+	{
+		b[i]=d;
+		i++;
+		d=getc(fp);
+	}
+	n=i;
+	if(b[0]=='0'&&b[1]=='1'&&b[2]=='1'&&b[3]=='1'&&b[4]=='1'&&b[5]=='1'&&b[6]=='1'&&b[7]=='0')
+	{
+		c=1;
+	}
+	if(c!=1)
+	{
+		printf("START ERROR");
+	}
+	else
+	{
+		if(b[n-9]=='0'&&b[n-8]=='1'&&b[n-7]=='1'&&b[n-6]=='1'&&b[n-5]=='1'&&b[n-4]=='1'&&b[n-3]=='1'&&b[n-2]=='0')
+  	{
+    	d=1;
+  	}
+  	if(d!=1)
+  	{
+    	printf("END ERROR");
+  	}
+		else
+		{
+			n=n-9;
+			for(i=8;i<n;i++)
+			{
+				if(b[i]=='1')
+    		{
+      		j=i;
+      		for(;j<i+5;j++)
+      		{
+        		if(b[j]=='1')
+        		{
+          		flag=flag+1;
+        		}
+      		}
+      		if(flag==5)
+      		{
+            for(k=n-1;k>=j+1;k--)
+            {
+            	b[k-1]=b[k];
+            }
+            n=n-1;
+					}
+				}
+			}
+			for(i=8;i<n;i++)
+			{
+				printf("%c",b[i]);
+			}
+		}
+	}
+}
+bash-3.2$ cc bitsen.c
+bash-3.2$ ./a.out
+ENTER THE BIT STRING    111111
+111111bash-3.2$ cc bitrec.c
+bash-3.2$ ./a.out
+111111bash-3.2$ cc[Kat sender1.txt
+01111110111110101111110bash-3.2$ end[K[Kxit
+exit
+
+Script done on Thu 21 Jul 2016 12:40:42 PM IST

@@ -1,0 +1,78 @@
+*****************************************************************
+ROY JASPER C S 					14BIT058
+		MULTICASTING IN JAVA
+ --------------------------------------------------------------
+
+import java.io.*;
+import java.util.*;
+import java.net.*;
+public class ser
+{
+    public static void main(String[] args)
+    {
+        DatagramSocket soc=null;
+        DatagramPacket op=null;
+        byte[] ob;
+        Scanner sc=new Scanner(System.in);
+        final int PORT=1111;
+        try
+        {
+            soc=new DatagramSocket();
+            long c=0;
+            String msg;
+            do
+            {
+                System.out.println("\nEnter the message to be transmitted:");
+                msg=sc.next();
+                ob=msg.getBytes();
+                InetAddress ad=InetAddress.getByName("224.2.2.3");
+                op=new DatagramPacket(ob,ob.length,ad,PORT);
+                soc.send(op);
+                System.out.println("Message Sent:"+msg);
+catch(InterruptedException ie){}
+            }
+            while(!msg.equals("done"));
+        }
+        catch(IOException ioe)
+        {
+            System.out.println(ioe);
+        }
+    }
+}
+
+
+bash-3.2$ cat cli.java
+import java.io.*;
+import java.net.*;
+public class cli
+{
+    public static void main(String[] args)
+    {
+        MulticastSocket soc=null;
+        DatagramPacket ip=null;
+        byte[] ib=new byte[256];
+        try
+        {
+            soc=new MulticastSocket(1111);
+            InetAddress ad=InetAddress.getByName("224.2.2.3");
+            soc.joinGroup(ad);
+            while(true)
+            {
+                ip=new DatagramPacket(ib,ib.length);
+                soc.receive(ip);
+                String msg=new String(ib,0,ip.getLength());
+                System.out.println("\nFrom "+ip.getAddress()+" Vignesh Sends\n"+" Message:"+msg);
+            }
+        }
+        catch(IOException ioe)
+        {
+            System.out.println(ioe);
+        }
+    }
+}
+
+
+bash-3.2$ exit
+exit
+
+Script done on Tue 20 Sep 2016 03:00:20 PM IST

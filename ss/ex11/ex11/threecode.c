@@ -1,0 +1,227 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int k=0;
+int assignment(char a[50],int cou)
+{
+    int j=0,kk=0,i,n;
+    char strr[50][50];
+    n=strlen(a);
+    for(i=0; i<n-1; i++)
+    {
+        if(a[i]!='=')
+        {
+            strr[j][kk]=a[i];
+            kk++;
+        }
+        else
+        {
+            j++;
+            kk=0;
+        }
+    }
+    cou++;
+    printf("\n%d\ttemp%d=%s",cou,k,strr[1]);
+    cou++;
+    printf("\n%d\t%s=temp%d",cou,strr[0],k);
+    k++;
+    if(k>9)
+    {
+        k=0;
+    }
+    return cou;
+}
+int ari(char str[50],int cou)
+{
+    int i,n,k1=0,kk=0,cc,j=0,jj,ii,k3,nn;
+    char strr[50][50],str2[50],str1[]="temp",str3[50];
+    for(i=0; i<50; i++)
+        strcpy(strr[i],"1");
+    n=strlen(str);
+    for(i=0; i<n-1; i++)
+    {
+        if(str[i]!='=' && str[i]!='+' && str[i]!='-' && str[i]!='*' && str[i]!='/')
+        {
+            strr[j][kk]=str[i];
+            kk++;
+        }
+        else
+        {
+            str2[k1]=str[i];
+            k1++;
+            kk=0;
+            j++;
+        }
+    }
+    j++;
+    for(ii=0; ii<k1; ii++)
+    {
+        if(str2[ii]=='/' || str2[ii]=='*')
+        {
+            if(k>9)
+            {
+                k=0;
+            }
+            cou++;
+            printf("\n%d\ttemp%d=%s%c%s",cou,k,strr[ii],str2[ii],strr[ii+1]);
+            str1[nn]=k+48;
+            strcpy(strr[ii],str1);
+            for(jj=ii+2; jj<j; jj++)
+                strcpy(strr[jj-1],strr[jj]);
+            for(k3=ii+1; k3<k1; k3++)
+                str2[k3-1]=str2[k3];
+            k++;
+            if(k>9)
+            {
+                k=0;
+            }
+            ii--;
+            k1--;
+            j--;
+        }
+    }
+    for(ii=0; ii<k1; ii++)
+    {
+        if(str2[ii]=='+' || str2[ii]=='-')
+        {
+            if(k>9)
+            {
+                k=0;
+            }
+            cou++;
+            printf("\n%d\ttemp%d=%s%c%s",cou,k,strr[ii],str2[ii],strr[ii+1]);
+            nn=4;
+            str1[nn]=k+48;
+            strcpy(strr[ii],str1);
+            for(jj=ii+2; jj<j; jj++)
+                strcpy(strr[jj-1],strr[jj]);
+            strcpy(strr[jj-1],"\0");
+            for(k3=ii+1; k3<k1; k3++)
+                str2[k3-1]=str2[k3];
+            k++;
+            if(k>9)
+            {
+                k=0;
+            }
+            ii--;
+            k1--;
+            j--;
+        }
+    }
+    cou++;
+    printf("\n%d\t%s=%s",cou,strr[0],strr[1]);
+    k++;
+    return cou;
+}
+int arithmetic(int cou)
+{
+    FILE *fp1;
+    int c=0,i,cc,n,k1=0;
+    cc=cou;
+    char str[50];
+    fp1=fopen("ipprog.c","r");
+    while(!strcmp(str,"while")==0)
+        fscanf(fp1,"%s",str);
+    fscanf(fp1,"%s",str);
+    fscanf(fp1,"%s",str);
+    while(!strcmp(str,"}")==0)
+    {
+        fscanf(fp1,"%s",str);
+        n=strlen(str);
+        for(i=0; i<n; i++)
+        {
+            if(str[i]!='+' && str[i]!='-' && str[i]!='*' && str[i]!='/' && strcmp(str,"while")!=0)
+                c=c+1;
+        }
+        if(c==n)
+            cc=cc+2;
+        else
+        {
+            for(i=0; i<n-1; i++)
+                if(str[i] =='=' || str[i] =='+' || str[i] =='-' || str[i] =='*' || str[i] =='/')
+                    k1++;
+            cc=cc+k1;
+        }
+    }
+    return cc;
+}
+int main()
+{
+    char strr[50][50],str[50],d,str2[50],str1[]="temp",str3[50];
+    int cou=0,c=0,i,j,n,kk=0,ii,jj,k1=0,k3=0,nn;
+    FILE *fp;
+    fp=fopen("program.c","r");
+    i=0;
+    while(!strcmp(str,"main()")==0)
+        fscanf(fp,"%s",str);
+    if(strcmp(str,"main()")==0)
+    {
+        fscanf(fp,"%s",str);
+        fscanf(fp,"%s",str);
+        while(!strcmp(str,"}")==0)
+        {
+            if(!strcmp(str,"int")==0 && !strcmp(str,"char")==0)
+            {
+                n=strlen(str);
+                for(i=0; i<n; i++)
+                    if(str[i]!='+' && str[i]!='-' && str[i]!='*' && str[i]!='/' && strcmp(str,"while")!=0)
+                        c=c+1;
+                if(c==n)
+                {
+                    c=0;
+                    cou=assignment(str,cou);
+                }
+                else
+                {
+                    kk=0;
+                    k1=0;
+                    j=0;
+                    if(!strcmp(str,"while")==0)
+                    {
+                        cou=ari(str,cou);
+                    }
+                    else
+                    {
+                        fscanf(fp,"%s",str);
+                        cou++;
+                        k3=cou;
+                        printf("\n%d\tif %s goto %d",cou,str,cou+2);
+                        cou++;
+                        k1=arithmetic(cou);
+                        printf("\n%d\tgoto %d",cou,k1);
+                        fscanf(fp,"%s",str);
+                        c=0;
+                        fscanf(fp,"%s",str);
+                        while(!strcmp(str,"}")==0)
+                        {
+                            n=strlen(str);
+                            for(i=0; i<n; i++)
+                                if(str[i]!='+' && str[i]!='-' && str[i]!='*' && str[i]!='/' && strcmp(str,"while")!=0)
+                                    c=c+1;
+                            if(c==n)
+                                cou=assignment(str,cou);
+                            else
+                                cou=ari(str,cou);
+                            fscanf(fp,"%s",str);
+                        }
+                        cou++;
+                        printf("\n%d\tgoto %d",cou,k3);
+                    }
+                }
+                fscanf(fp,"%s",str);
+                for(i=0; i<50; i++)
+                    strcpy(strr[i],"1");
+            }
+            else
+            {
+                d=fgetc(fp);
+                while(d!=';')
+                    d=fgetc(fp);
+                d=fgetc(fp);
+                fscanf(fp,"%s",str);
+            }
+        }
+        cou++;
+        printf("\n%d\texit",cou);
+    }
+}

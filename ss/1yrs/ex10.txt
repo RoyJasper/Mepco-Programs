@@ -1,0 +1,32 @@
+#include<stdio.h>
+main()
+{
+ FILE *fp1,*fp2;
+ int ch;
+ char fname1[30],fname2[30];
+ printf("Enter source file\n");
+ scanf("%s",fname1);
+ printf("Enter destination file\n");
+ scanf("%s",fname2);
+ fp1=fopen(fname1,"r");
+ fp2=fopen(fname2,"w");
+ if(fp1==NULL)
+ {
+  printf("Cannot open fname1\n");
+ }
+ else if(fp2==NULL)
+ {
+  printf("Cannot open fname2\n");
+ }
+ else
+ {
+  ch=getc(fp1);
+  while(ch!=EOF)
+  {
+   putc(ch,fp2);
+   ch=getc(fp1);
+  }
+   fclose(fp1);
+   fclose(fp2);
+  }
+}

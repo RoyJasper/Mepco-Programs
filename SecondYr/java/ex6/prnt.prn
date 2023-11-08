@@ -1,0 +1,304 @@
+**************************************************************************
+          JAVA PROGRAMS USING FILES
+**************************************************************************
+Ex.No:6                                         Roll.no:14BIT054
+Date:                                           Name:G.Rakhav Krishna
+**************************************************************************
+
+bash-3.2$ cat Crci[K[Kicket.java
+import java.io.*;
+import java.util.*;
+class Cricket
+{
+public static void main(String args[])
+{
+int sc,f,i;
+String n,c,e;
+Scanner obj=new Scanner(System.in);
+Scanner obj1 = new Scanner(System.in);
+HashMap <String,Integer> ob=new HashMap<String,Integer>();
+System.out.println("Enter the number of men:");
+int a=obj.nextInt();
+for(i=0;i<a;i++)
+{
+System.out.println("Enter the name and Score:");
+n=obj1.nextLine();
+sc=obj.nextInt();
+ob.put(n,sc);
+}
+System.out.println("Enter the name to be present or not\n");
+e=obj1.nextLine();
+System.out.println("The score is"+(ob.get(e)));
+}}
+
+bash-3.2$ c[Kjava Cricket
+Enter the number of men:
+3
+Enter the name and Score:
+rakhav
+100
+Enter the name and Score:
+krih shna
+200
+Enter the name and Score:
+raman
+300
+Enter the name to be present or not
+
+raman
+The score is300
+bash-3.2$ cat [K[K[K[Kls
+Cricket.class  Cricket.java  HashTableDemo.class  HashTableDemo.java  ListClass.class  ListClass.java  prnt.prn  VectorExample.class  Vector.java
+bash-3.2$ cat HashTableDemo.java
+import java.util.*;
+import java.io.*;
+
+public class HashTableDemo 
+{
+
+   public static void main(String args[]) 
+{
+      Hashtable balance = new Hashtable();
+      Enumeration names;
+      String name,str;
+      int score;
+      int n;
+      Scanner obj=new Scanner(System.in);
+      Scanner obj1= new Scanner(System.in);
+      System.out.println("Enter the number of players:");
+      n=obj.nextInt();
+      for(int i=0;i<n;i++)
+      {
+      System.out.println("Enter the Name and score");
+      name=obj1.nextLine();
+      score=obj.nextInt();
+      balance.put(name,score);
+      }
+      names = balance.keys();
+      while(names.hasMoreElements())
+      {
+         str = (String) names.nextElement();
+         System.out.println(str + ": " +
+         balance.get(str));
+      }
+   }
+}
+bash-3.2$ java [Kc[K HashTableDemo
+Enter the number of players:
+3
+Enter the Name and score
+rakhav
+100
+Enter the Name and score
+krishna
+200
+Enter the Name and score
+k rakkrish
+300
+rakkrish: 300
+krishna: 200
+rakhav: 100
+bash-3.2$ cat [K[K[K[Kls
+Cricket.class  Cricket.java  HashTableDemo.class  HashTableDemo.java  ListClass.class  ListClass.java  prnt.prn  VectorExample.class  Vector.java
+bash-3.2$ cat ListClass.java
+import java.io.*;
+import java.util.*;
+class ListClass
+{
+public static void main(String args[])
+{
+int i,j,k;
+Scanner obj=new Scanner(System.in);
+ArrayList <Integer> al=new ArrayList <Integer> ();
+int [] a =new int[5];
+for(i=0;i<5;i++)
+{
+System.out.println("Enter the Number:");
+a[i]=obj.nextInt();
+al.add(a[i]);
+}
+System.out.println("Enter the Element to be get");
+k=obj.nextInt();
+j=al.get(k);
+System.out.println(j);
+ListIterator <Integer> litr = null;
+litr=al.listIterator();
+
+System.out.println("Elements in forward directiton"); 
+while(litr.hasNext())
+{
+ System.out.println(litr.next()); 
+} 
+System.out.println("Elements in backward directiton"); 
+while(litr.hasPrevious())
+{
+ System.out.println(litr.previous()); 
+}
+}}
+
+bash-3.2$ java ListClass.[K
+Enter the Number:
+1
+Enter the Number:
+1
+Enter the Number:
+2
+Enter the Number:
+3
+Enter the Number:
+4
+Enter the Element to be get
+3
+3
+Elements in forward directiton
+1
+1
+2
+3
+4
+Elements in backward directiton
+4
+3
+2
+1
+1
+bash-3.2$ cat Vector.java
+import java.io.*;
+import java.util.Vector;
+import java.util.Scanner;
+class VectorExample
+{
+public static void main(String args[])
+{
+int a,b,c,d,x;
+Vector ob = new Vector ();
+Scanner obj=new Scanner (System.in);
+while(true)
+{
+System.out.println("\nEnter the Choice \n1.Add \n2.Remove \n3.Get \n4.Clear \n5.Retrieve");
+a=obj.nextInt();
+switch(a)
+{
+case 1:
+System.out.println("\nEnter the Element to be inserted");
+b=obj.nextInt();
+ob.add(b);
+break;
+case 2:
+System.out.println("\nEnter the Position");
+c=obj.nextInt();
+System.out.println("The Removed Element is :"+(ob.remove(c)));
+break;
+case 3:
+System.out.println("\nEnter the Position to be Retreived");
+x=obj.nextInt();
+System.out.println("The element at"+ x +"is"+(ob.get(x)));
+break;
+case 4:
+ob.clear();
+break;
+case 5:
+for(int j=0;j<ob.size();j++)
+System.out.println(ob.get(j));
+break;
+}}}}
+
+bash-3.2$ javac[K VectorExample
+
+Enter the Choice 
+1.Add 
+2.Remove 
+3.Get 
+4.Clear 
+5.Retrieve
+1
+
+Enter the Element to be inserted
+2
+
+Enter the Choice 
+1.Add 
+2.Remove 
+3.Get 
+4.Clear 
+5.Retrieve
+1
+
+Enter the Element to be inserted
+3
+
+Enter the Choice 
+1.Add 
+2.Remove 
+3.Get 
+4.Clear 
+5.Retrieve
+1
+
+Enter the Element to be inserted
+4
+
+Enter the Choice 
+1.Add 
+2.Remove 
+3.Get 
+4.Clear 
+5.Retrieve
+1
+
+Enter the Element to be inserted
+5
+
+Enter the Choice 
+1.Add 
+2.Remove 
+3.Get 
+4.Clear 
+5.Retrieve
+2
+
+Enter the Position
+2
+The Removed Element is :4
+
+Enter the Choice 
+1.Add 
+2.Remove 
+3.Get 
+4.Clear 
+5.Retrieve
+3
+
+Enter the Position to be Retreived
+4 2
+The element at2is5
+
+Enter the Choice 
+1.Add 
+2.Remove 
+3.Get 
+4.Clear 
+5.Retrieve
+5
+2
+3
+5
+
+Enter the Choice 
+1.Add 
+2.Remove 
+3.Get 
+4.Clear 
+5.Retrieve
+4
+
+Enter the Choice 
+1.Add 
+2.Remove 
+3.Get 
+4.Clear 
+5.Retrieve
+bash-3.2$ exit
+exit
+
+Script done on Tue 23 Feb 2016 12:38:50 PM IST

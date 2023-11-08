@@ -1,0 +1,184 @@
+Script started on Tue 08 Nov 2016 11:52:16 AM IST
+bash-3.2$ cat palindrome.c
+#include<stdio.h>
+#include<string.h>
+main()
+{
+int n,i,j,chk=1;
+char s[30];
+printf("\n enter the string :");
+scanf("%[^\n]",s);
+n=strlen(s)-1;
+for(i=0,j=n;i<n/2;i++,j--)
+if(s[i]!=s[j])
+{
+chk=0;
+break;
+}
+if(chk==1)
+printf("string is   palindrome");
+else
+printf("string is not  palindrome");
+}
+bash-3.2$ cc palindrome.c
+bash-3.2$ ./a.out
+
+ enter the string : madam
+string is palindrome
+bash-3.2$ cat delete.c
+#include <stdio.h>
+#include <string.h>
+main()
+{
+    int i, j = 0, k = 0, count = 0;
+    char str[100], key[20];
+    char str1[10][20];
+    printf("enter string:");
+    scanf("%[^\n]s",str);
+    for (i = 0; str[i]!= '\0'; i++)
+    {
+        if (str[i]==' ')
+        {
+            str1[k][j] = '\0';
+            k++;
+            j = 0;
+        }
+        else
+        {
+            str1[k][j] = str[i];
+            j++;
+        }
+    }
+    str1[k][j] = '\0';
+    printf("enter key:");
+    scanf("%s", key);
+    for (i = 0;i < k + 1; i++)
+    {
+        if (strcmp(str1[i], key) == 0)
+        {
+            for (j = i; j < k + 1; j++)
+            strcpy(str1[j], str1[j + 1]);
+            k--;
+        }
+    }
+    for (i = 0;i < k + 1; i++)
+    {
+    printf("%s",str1[i]);
+   }
+}
+                      
+bash-3.2$ cc delete.c
+bash-3.2$ ./a.out
+enter string: he is a bad boy 
+enter key: bad
+he is a boy
+bash-3.2$ cat nameprint.c
+#include <stdio.h>
+main()
+{
+     char fname[20], mname[20], lname[20];
+     printf("Enter full name (first middle last): ");
+     scanf("%s %s %s", fname, mname, lname);
+     printf("Abbreviated name: ");
+     printf("%c. %c. %s\n", fname[0], mname[0], lname);
+     return 0;
+}
+bash-3.2$ cc name print.c
+bash-3.2$ ./a.out
+Enter full name (first middle last): Bala Venkat Raman
+Abbreviated name: B. V. Raman
+bash-3.2$ cat extract.c
+#include<stdio.h>
+#include<string.h>
+main()
+{
+int n,m,i;
+char s[50];
+printf("Enter the string \n");
+scanf("%s",s);
+printf("Enter the position from which the string is to be extracted \n");
+scanf("%d",&n);
+printf("enter the no of characters to be extracted");
+scanf("%d",&m);
+for(i=n-1;i<=m;i++)
+{
+printf("%c",s[n]);
+n=n+1;
+}
+}
+
+bash-3.2$ cc extract.c
+bash-3.2$ ./a.out
+Enter the string 
+ karthik
+Enter the position from which the string is to be extracted 1
+enter the no of characters to be extracted 7
+arthi
+bash-3.2$ cat menudriven.c
+#include<stdio.h>
+#include<string.h>
+main()
+{
+int c,i=0,b,j=0,k=0,l=0,m=0,n,chk;
+char a,str[20],z[20];
+printf("Enter the sentence:");
+scanf("%s",str);
+printf("Enter the case-1:Search a character,2:Find the character,3:Display no.of occurance,4:Palindrome check,5:exit.\n");
+printf("Enter your case:");
+scanf("%d",&c);
+switch(c)
+{
+case 1:
+printf("Enter the character:");
+scanf("%c",&a);
+while(str[i]!='\0')
+if(str[i]=a)
+printf("%c is present in %d",a,i+1);
+break;
+case 2:
+printf("Enter the position:");
+scanf("%d",&b);
+printf("The character is present in %d position is %c",b,str[b-1]);
+break;
+case 3:
+printf("Enter the character:");
+scanf("%c",a);
+while(str[i]='\0')
+{
+if(str[i]=a)
+{
+j=j+1;
+}
+c=i+1;
+}
+printf("The number of occurance of %c is %d",a,i);
+break;
+case 4:
+n=strlen(str)-1;
+for(i=0,j=n;i<n/2;i++,j--)
+if(str[i]!=str[j])
+{
+chk=0;
+break;
+}
+if(chk==1)
+printf("The given string is a Palindrome.\n");
+else
+printf("The given string is not a Palindrome.\n");
+break;
+default:printf("\nProgram terminated!");
+break;
+}
+}
+
+bash-3.2$ cc menudriven.c
+bash-3.2$ ./a.out
+Enter the sentence: karthik
+Enter the case-1:Search a character,2:Find the character,3:Display no.of occurance,4:Palindrome check,5:exit.
+Enter your case: 2
+Enter the position: 3
+The character is present in 3rd position is r
+bash-3.2$ exit
+exit
+
+Script done on Tue 08 Nov 2016 11:56:59 AM IST

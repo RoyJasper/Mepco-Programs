@@ -1,0 +1,581 @@
+******************************************************************
+NAME : ROY JASPER C S                        14BIT058
+           EX 4 --> OOPS CONCEPTT IN JAVA
+-------------------------------------------------------------------
+				TO ENTER STUDENT DETAILS
+	PROGRAM:
+
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+class person
+{
+ String name,address;
+ int age;
+ public String getname()
+ {
+  return name;
+ }
+ public void setname(String a)
+ {
+  name=a;
+ }
+ public int getage()
+ {
+  return age;
+ }
+ public void setage(int age)
+ {
+  this.age=age;
+ }
+ public String getaddress()
+ {
+  return address;
+ }
+ public void setaddress(String address)
+ {
+  this.address=address;
+ }
+}
+class student extends person
+{
+ public int rno;
+ public int getno()
+ {
+  return rno;
+ }
+ public void setno(int rno)
+ {
+  this.rno=rno;
+ }
+}
+class teacher extends person
+{
+ String subject;
+ int salary;
+ public int getsalary()
+ {
+  return salary;
+ }
+ public void setsalary(int sal)
+ {
+  salary=sal;
+ }
+ public void setsubject(String sub)
+ {
+  subject=sub;
+ }
+ public String getsubject()
+ {
+  return subject;
+ }
+}
+class collegestudent extends student
+{
+ int year;
+ String major;
+ public int getyear()
+ {
+  return year;
+ }
+ public void setyear(int year)
+ {
+  this.year=year;
+ }
+ public String getmajor()
+ {
+  return major;
+ }
+ public void setmajor(String maj)
+ {
+  major=maj;
+ }
+}
+class starter
+{
+ public static void main(String args[]) throws IOException
+ {
+  Scanner obj=new Scanner(System.in);
+  teacher t= new teacher();
+  collegestudent c= new collegestudent();
+  int age,rno,year,sal;
+  String a,address,maj,sub,name;
+  System.out.println("enter the age");
+  age=obj.nextInt();
+  System.out.println("enter the rollno");
+  rno=obj.nextInt();
+  System.out.println("enter the year");
+  year=obj.nextInt();
+  System.out.println("enter the salary");
+  sal=obj.nextInt();
+  System.out.println("enter the name");
+  a=obj.nextLine();
+  name=obj.nextLine();
+  System.out.println("enter the address");
+  address=obj.nextLine();
+  System.out.println("enter the major");
+  maj=obj.nextLine();
+  System.out.println("enter the subject");
+  sub=obj.nextLine();
+  c.setname(name);
+  c.setage(age);
+  c.setaddress(address);
+  c.setno(rno);
+  c.setyear(year);
+  c.setmajor(maj);
+  t.setsubject(sub);
+  t.setsalary(sal);
+  System.out.println("name is:"+c.getname()+"\nroll no:"+c.getno()+"\nage:"+c.getage()+"\naddress:"+c.getaddress());
+  System.out.println("\nmajor:"+c.getmajor()+"\nsubject:"+t.getsubject()+"\nyear:"+c.getyear()+"\nsalary:"+t.getsalary());
+ }
+}
+
+OUTPUT:
+
+enter the age
+45
+enter the rollno
+1235
+enter the year
+2000
+enter the salary
+6000
+enter the name
+roy
+enter the address
+kknagar
+enter the major
+major
+enter the subject
+phy
+name is:roy
+roll no:1235
+age:45
+address:kknagar
+
+major:major
+subject:phy
+year:2000
+salary:6000
+----------------------------------------------------------------
+					TO CALCULATE CIRCLE AREA
+	PROGRAM:
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+class circle
+{
+ private double l;
+ private String c;
+ public circle()
+ {
+   l=10;
+  String c="red";
+ }
+ public circle(double l,String c)
+ {
+  this.l=l;
+  this.c=c;
+ }
+ public double getradius()
+ {
+  return l;
+ }
+ public double getarea()
+ {
+  return(3.14*l*l);
+ }
+}
+class testcircle
+{
+ public static void main (String args[]) throws IOException
+ {
+  double l;
+  String c;
+  Scanner obj=new Scanner(System.in);
+  System.out.println("enter the radius value");
+  l=obj.nextDouble();
+  System.out.println("enter the colour");
+  c=obj.nextLine();
+  circle c1=new circle(l,c);
+  System.out.println("radius is:"+c1.getradius());
+  System.out.println("\narea is:"+c1.getarea());
+ }
+}
+
+OUTPUT:
+enter the radius value
+5
+enter the colour
+radius is:5.0
+
+area is:78.5
+------------------------------------------------------------------------
+JAVA PROGRAM TO CALCULATE 1.VOLUME OF SPHERE 2.DISTANCE BETWEEN TWO POINTS 3.STIMULATING DIE
+
+PROGRAM:
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+class Volume
+{
+ public static void main(String args[])
+ {
+  double die,distance=0.0,area=0.0;
+  int choice,radius,x1,x2,y1,y2;
+  Scanner obj=new Scanner(System.in);
+
+  System.out.println("ENTER YOUR CHOICE\n1.VOLUME OF SPHERE\n2.DISTANCE BETWEEN TWO POINTS\n3.STIMULATING DIE");
+  choice=obj.nextInt();
+switch(choice)
+{
+ case 1:
+        System.out.println("ENTER RADIUS \n");
+        radius=obj.nextInt();
+        area=4*Math.PI*radius*radius*radius/3;
+        System.out.println("VOLUME OF SPHERE =\n"+area);
+        break;
+ case 2:
+      System.out.println("ENTER FROM POINTS as (x,y)");
+      x2=obj.nextInt();
+      y2=obj.nextInt();
+      System.out.println("ENTER TO POINTS as (x,y)");
+      x1=obj.nextInt();
+      y1=obj.nextInt();
+      distance=Math.sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)));
+      System.out.println("DISTANCE BETWEEN POINTS IS  "+distance);
+      break;
+ case 3:
+      die=Math.random()*7;
+      int a=(int)die;
+      if(a!=0)
+      System.out.println("YOUR TURN GIVES  "+a);
+      break;
+   }
+  }
+ }
+
+ OUTPUT:
+ ENTER YOUR CHOICE
+1.VOLUME OF SPHERE
+2.DISTANCE BETWEEN TWO POINTS
+3.STIMULATING DIE
+1
+ENTER RADIUS
+
+5
+VOLUME OF SPHERE =
+523.5987755982989
+
+ENTER YOUR CHOICE
+1.VOLUME OF SPHERE
+2.DISTANCE BETWEEN TWO POINTS
+3.STIMULATING DIE
+2
+ENTER FROM POINTS as (x,y)
+5
+6
+ENTER TO POINTS as (x,y)
+7
+9
+DISTANCE BETWEEN POINTS IS  3.605551275463989
+
+ENTER YOUR CHOICE
+1.VOLUME OF SPHERE
+2.DISTANCE BETWEEN TWO POINTS
+3.STIMULATING DIE
+3
+RANDOM NO IS 6
+---------------------------------------------------------
+	                  	BANKER						
+	PROGRAM:
+import java.io.*;
+import java.util.*;
+class Account
+{
+    public double bal;
+    public int acc;
+    public void deposit(double sum)
+    {
+        if(sum>0)
+            bal=bal+sum;
+        else
+            System.out.println("Cannot Deposit");
+    }
+    public void withdraw(double sum)
+    {
+        if((bal-sum)>0)
+            bal=bal-sum;
+        else
+            System.out.println("Error!!!!");
+    }
+    public double getbal()
+    {
+        return bal;
+    }
+    public int getacc()
+    {
+        return acc;
+    }
+    public void setbal(double a)
+    {
+        System.out.println(a);
+        bal=a;
+    }
+    public void setacc(int a)
+    {
+        acc=a;
+    }
+    public String toString()
+    {
+        return ("accountno:"+acc+"\n"+"balance:"+bal+"\n");
+    }
+    public   void print()
+    {
+        System.out.println(toString());
+    }
+}
+class Savings extends Account
+{
+    private int interest;
+    public void setInterest(int a)
+    {
+        interest=a;
+    }
+    public int getInterest()
+    {
+        return interest;
+    }
+    public String toString()
+    {
+        return ("accountno:"+acc+"\n"+"balance:"+bal+"\n"+"Interest:"+interest+"\n");
+    }
+    public  void print()
+    {
+        System.out.println(toString());
+    }
+}
+class Current extends Account
+{
+    private int over;
+    public void setOver(int a)
+    {
+        over=a;
+    }
+    public int getOver()
+    {
+        return over;
+    }
+    public String toString()
+    {
+        return ("accountno:"+acc+"\n"+"balance:"+bal+"\n"+"over_draft_limit:"+over+"\n");
+    }
+    public  void print()
+    {
+        System.out.println(toString());
+    }
+}
+class Bank
+{
+    public static void main(String arg[]) throws IOException
+    {
+        int s,f;
+        double d;
+        Scanner obj = new Scanner(System.in);
+        Scanner ob = new Scanner(System.in);
+        Savings sa=new Savings();
+        for(int i=0; i<2; i++)
+        {
+            System.out.println("enter the accno , balance , interest");
+            s=obj.nextInt();
+            d=obj.nextDouble();
+            f=obj.nextInt();
+            sa.setacc(s);
+            sa.setbal(d);
+            sa.setInterest(f);
+            System.out.println("enter the amount to be deposited");
+            f=obj.nextInt();
+            sa.deposit(f);
+            System.out.println("enter the amount to be withdrawn");
+            f=obj.nextInt();
+            sa.withdraw(f);
+            System.out.println("The accno , balance , interest");
+            sa.print();
+        }
+    }
+}
+
+OUTPUT:
+enter the accno , balance , interest
+2342342
+5000
+2
+5000.0
+enter the amount to be deposited
+600
+enter the amount to be withdrawn
+200
+The accno , balance , interest
+accountno:2342342
+balance:5400.0
+Interest:2
+
+enter the accno , balance , interest
+565658
+6000
+4
+6000.0
+enter the amount to be deposited
+600
+enter the amount to be withdrawn
+800
+The accno , balance , interest
+accountno:565658
+balance:5800.0
+Interest:4
+--------------------------------------------------------------------------------------
+					TO CALCULATE NEXT AND PREVIOUS TIME
+PROGRAM:
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+class time
+{
+ int h,m,s;
+ int h1,m1,s1;
+ public void sethour(int hr)
+ {
+  h=hr;
+ }
+ public void setminute(int min)
+ {
+  m=min;
+ }
+ public void setsecond(int sec)
+ {
+  s=sec;
+ }
+ public int gethour()
+ {
+  return h;
+ }
+ public int getminute()
+ {
+  return m;
+ }
+ public int getsecond()
+ {
+  return s;
+ }
+ public void nexthour()
+ {
+  if(h==23)
+  h=0;
+  else
+  h++;
+ }
+ public void nextminute()
+ {
+  if(m==59)
+  {
+   h+=1;
+   m=0;
+  }
+  else
+  m++;
+ }
+ public void nextsecond()
+ {
+  if(s==59)
+  {
+   m+=1;
+   s=0;
+  }
+  else
+  s++;
+ }
+ public void prevhour(int hr)
+ {
+  h1=hr;
+  if(h1==0)
+  h1=23;
+  else
+  h1--;
+ }
+ public void prevminute(int min)
+ {
+  m1=min;
+  if(m1==0)
+  {
+   m1=59;
+   h1--;
+  }
+  else
+  m1--;
+ }
+ public void prevsecond(int sec)
+ {
+  s1=sec;
+  if(s1==0)
+  {
+   s1=59;
+   m1--;
+  }
+  else
+  s1--;
+ }
+ public void tostring()
+ {
+  System.out.println("Hour:"+h+"\nminute:"+m+"\nsecond:"+s);
+ }
+ public void tostring1()
+ {
+  System.out.println("Hour:"+h1+"\nminute:"+m1+"\nsecond:"+s1);
+ }
+}
+class Demo
+ {
+ public static void main(String args[])throws IOException
+ {
+  time t=new time();
+  int hr,min,sec;
+  Scanner obj=new Scanner(System.in);
+  System.out.println("enter the hour");
+  hr=obj.nextInt();
+  System.out.println("enter the minute");
+  min=obj.nextInt();
+  System.out.println("enter the second");
+  sec=obj.nextInt();
+  t.sethour(hr);
+  t.setminute(min);
+  t.setsecond(sec);
+  t.nexthour();
+  t.nextminute();
+  t.nextsecond();
+  System.out.println("next time is");
+  t.tostring();
+  t.prevhour(hr);
+  t.prevminute(min);
+  t.prevsecond(sec);
+  System.out.println("previous time is");
+  t.tostring1();
+ }
+}
+
+OUTPUT:
+enter the hour
+22
+enter the minute
+56
+enter the second
+46
+next time is
+Hour:23
+minute:57
+second:47
+previous time is
+Hour:21
+minute:55
+second:45
+--------------------------------------------	
+					

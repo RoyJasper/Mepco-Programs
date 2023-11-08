@@ -1,0 +1,118 @@
+----------------------------------------------------------------------------------
+ROY JASPER C S                                                 14BIT058
+                       SMS APPLICATION MULTIPLE RECEIVERS
+----------------------------------------------------------------------------------
+CODE:
+package sms.app;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.telephony.SmsManager;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class Sms_appActivity extends Activity {
+    /** Called when the activity is first created. */
+    Button b1;
+    EditText no,txt;
+	@Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        b1=(Button)findViewById(R.id.button1);
+        txt=(EditText)findViewById(R.id.editText1);
+        no=(EditText)findViewById(R.id.editText2);
+        b1.setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View arg0) {
+				String ph=no.getText().toString();
+				String[] lol=ph.split("\\s");
+				String sms=txt.getText().toString();
+				// TODO Auto-generated method stub
+				  try {
+						SmsManager smsManager = SmsManager.getDefault();
+						for(String w:lol){
+							smsManager.sendTextMessage(w, null, sms, null, null);
+							Toast.makeText(getApplicationContext(), "SMS Sent!",
+									Toast.LENGTH_SHORT).show();
+						}
+					  } catch (Exception e) {
+						Toast.makeText(getApplicationContext(),
+							"SMS faild, please try again later! \n"+e.toString(),
+							Toast.LENGTH_LONG).show();
+						
+					  }
+
+			}
+		});
+    }
+}
+
+-------------------------------------------------------------
+XML FILE:
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="21dp"
+        android:layout_y="135dp"
+        android:text="Number ->"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="90dp"
+        android:layout_y="40dp"
+        android:text="SMS Sending"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="18dp"
+        android:layout_y="234dp"
+        android:text="Message ->"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="156dp"
+        android:layout_height="wrap_content"
+        android:layout_x="127dp"
+        android:layout_y="230dp" >
+
+        <requestFocus />
+    </EditText>
+
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="153dp"
+        android:layout_height="wrap_content"
+        android:layout_x="133dp"
+        android:layout_y="128dp" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="139dp"
+        android:layout_height="wrap_content"
+        android:layout_x="81dp"
+        android:layout_y="334dp"
+        android:text="Send it!" />
+
+</AbsoluteLayout>

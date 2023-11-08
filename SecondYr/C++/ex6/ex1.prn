@@ -1,0 +1,341 @@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Name:Roy Jasper C.S                            Roll no: 14bit058
+Ex.no:1                                        Date7.8.15
+**********************************************************************
+STUDENT  PROGRAM:
+
+#include<iostream>
+#include<string>
+using namespace std;
+class student
+{
+ private:
+  int rno,marks[6],tot;
+  string name,dept;
+  float avg;
+ public:
+  void readdetails();
+  void printdetails();
+  void calculate();
+};
+void student::readdetails()
+{
+ int i;
+ cout<<"Enter roll no \n";
+ cin>>rno;
+ cout<<"Enter name \n";
+ cin>>name;
+ cout<<"Enter dept \n";
+ cin>>dept;
+ cout<<"Enter marks \n";
+ for(i=0;i<6;i++)
+  cin>>marks[i];
+}
+void student::calculate()
+{
+ tot=0;
+ int i;
+ for(i=0;i<6;i++)
+  {
+  tot=tot+marks[i];
+  }
+ avg=tot/6;
+}
+void student::printdetails()
+{
+ int i;
+ cout<<"\nRoll no is "<<rno;
+ cout<<"\nName is"<<name;
+ cout<<"\nDept is "<<dept;
+ cout<<"\nMarks are";
+  for(i=0;i<6;i++)
+  {
+   cout<<"\t"<<marks[i];
+  }
+ cout<<"\nTotal is"<<tot;
+ cout<<"\nAvg is"<<avg;
+}
+int  main()
+{
+ int n,i;
+ student s[10];
+ cout<<"\nEnter no of students";
+ cin>>n;
+ for(i=0;i<n;i++)
+  {
+   s[i].readdetails();
+   s[i].calculate();
+   s[i].printdetails();
+  }
+ return 0;
+}
+ 
+
+OUTPUT:
+
+Enter no of students2
+Enter roll no 
+12345
+Enter name 
+roy
+Enter dept 
+it
+Enter marks 
+11
+22
+33
+44
+55
+66
+
+Roll no is 12345
+Name isroy
+Dept is it
+Marks are	11	22	33	44	55	66
+Total is231
+Avg is38
+
+Enter roll no 
+3842
+Enter name 
+jasper
+Enter dept 
+csc e
+Enter marks 
+55
+66
+77
+88
+99
+44
+
+Roll no is 3842
+Name isjasper
+Dept is cse
+Marks are	55	66	77	88	99	44
+Total is429
+Avg is71
+
+EMPLOYEE PROGRAM:
+#include<string>
+#include<iostream>
+using namespace std;
+class employee
+{
+ private:
+  int emno;
+  string name,dept;
+  float bp,da,hra,ded,gp,np;
+ public:
+  void read();
+  void print();
+  void calculate();
+};
+void employee::read()
+{
+ cout<<"Enter emp no \n";
+ cin>>emno;
+ cout<<"Enter name \n";
+ cin>>name;
+ cout<<"Enter dept \n";
+ cin>>dept;
+ cout<<"Enter basic pay \n";
+ cin>>bp;
+}
+void employee::calculate()
+{
+da=0.7*bp;
+hra=0.05*bp;
+ded=0.1*bp;
+gp=bp+da+hra;
+np=gp-ded;
+}
+void employee::print()
+{
+ cout<<"\nName is "<<name;
+ cout<<"\nNo is "<<emno;
+ cout<<"\ndept is "<<dept;
+ cout<<"\nBasic pay is "<<bp;
+ cout<<"\nDA is "<<da;
+ cout<<"\nHRA is "<<hra;
+ cout<<"\nDeduction is"<<ded;
+ cout<<"\nGrosspay is "<<gp;
+ cout<<"\nNetpay is "<<np;
+}
+int main()
+{
+ int n,i;
+ employee e[10];
+ cout<<"\n\nEnter no of Employee";
+ cin>>n;
+ for(i=0;i<n;i++)
+  {
+   e[i].read();
+   e[i].calculate();
+   e[i].print();
+  }
+ return 0;
+}
+ 
+
+OUTPUT:
+
+Enter no of Employee2
+Enter emp no 
+123454 
+Enter name 
+roy
+Enter dept 
+softear   ware
+Enter basic pay 
+20000
+
+Name is roy
+No is 12345
+dept is software
+Basic pay is 20000
+DA is 14000
+HRA is 1000
+Deduction is2000
+Grosspay is 35000
+Netpay is 33000
+
+Enter emp no 
+1234
+Enter name 
+jasper
+Enter dept 
+hardware
+Enter basic pay 
+30000
+
+Name is jasper
+No is 1234
+dept is hardware
+Basic pay is 30000
+DA is 21000
+HRA is 1500
+Deduction is3000
+Grosspay is 52500
+Netpay is 49500
+
+BANK PROGRAM:
+
+#include<string>
+#include<iostream>
+using namespace std;
+class bank
+{
+ private:
+  int acno,bal,deb,cre;
+  string name,actyp;
+ public:
+  void createacc();
+  void withdraw();
+  void display();
+  void balance();
+  void deposit();
+};
+void bank::createacc()
+{
+ cout<<"Enter acc no \n";
+ cin>>acno;
+ cout<<"Enter name \n";
+ cin>>name;
+ cout<<"Enter account type \n";
+ cin>>actyp;
+ cout<<"Enter balance \n";
+ cin>>bal;
+}
+void bank::withdraw()
+{
+ cout<<"Enter Withdraw ammount\n";
+ cin>>deb;
+ if(bal>=deb)
+  {
+   bal-=deb;
+   cout<<"Amount is withdrawn\n";
+  }
+ else
+  cout<<"Error during transation please try again\n";
+}
+void bank::balance()
+{
+ cout<<"\nBalance is"<<bal;
+}
+void bank::display()
+{
+ cout<<"\nName is "<<name;
+ cout<<"\nAccNo is "<<acno;
+ cout<<"\nAcc Type is "<<actyp;
+ cout<<"\nBalance amount is "<<bal;
+}
+void bank::deposit()
+{
+ cout<<"Enter amount to be credited";
+ cin>>cre;
+ bal+=cre;
+ cout<<"Congrats!!  Creditted";
+}
+int main()
+{
+ bank b[10];
+ int n,i;
+ cout<<"Enter no of clients\n";
+ cin>>n;
+ for(i=0;i<n;i++)
+  {
+    b[i].createacc();
+    b[i].withdraw();
+    b[i].deposit();
+    b[i].balance();
+    b[i].display();
+  }
+}
+
+
+OUTPUT:
+
+Enter no of clients
+2
+Enter acc no 
+1245
+Enter name 
+roy
+Enter account type 
+cash
+Enter balance 
+30000
+Enter Withdraw ammount
+2000
+Amount is withdrawn
+Enter amount to be credited3000
+Congrats!!  Creditted
+Balance is31000
+Name is roy
+AccNo is 1245
+Acc Type is cash
+Balance amount is 31000
+
+Enter acc no 
+23414
+Enter name 
+jasper
+Enter account type 
+cheque
+Enter balance 
+40000
+Enter Withdraw ammount
+3000
+Amount is withdrawn
+Enter amount to be credited4000
+Congrats!!  Creditted
+Balance is41000
+Name is jasper
+AccNo is 23414
+Acc Type is cheque
+Balance amount is 41000
+
+**************************************************************************************************
+
+Script done on Fri 24 Jul 2015 04:09:44 PM IST

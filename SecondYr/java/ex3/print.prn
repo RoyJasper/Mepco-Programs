@@ -1,0 +1,197 @@
+*********************************************************************
+NAME : ROY JASPER C.S                           14BIT058
+                     EX3 -> PACKAGES IN JAVA
+--------------------------------------------------------------------
+				ACCESS SPECIFERS
+package pack1;
+
+public class B {
+	public static void print(){
+		A obj=new A();
+		System.out.println("\n Public specifier "+(obj.a)+"\n Private specifier Not accessble "+"\n Protected specifier "+(obj.c)+"\n Default specifier "+(obj.d));
+	}
+
+}
+
+package pack1;
+
+public class A {
+	//public static void print(){
+		public int a=5;
+		private int b=10;
+		protected int c=15;
+		int d=20;
+	//}
+
+}
+
+package pack2;
+import pack1.A;
+import java.io.*;
+public class C {
+	public static void print2(){
+		A object=new A();
+		System.out.println((object.a)+" Public");
+		System.out.println(" Private Not accesble");
+		System.out.println(" Protected Not accesble");
+		System.out.println(" Default Not accesble");
+	}
+}
+
+import pack1.*;
+import pack2.*;
+public class Starter {
+	public static void main(String args[]){
+		B obj1=new B();
+		C obj2=new C();
+		B.print();
+		C.print2();
+	}
+}
+
+OUTPUT:
+
+  Public specifier 5
+ Private specifier Not accessble 
+ Protected specifier 15
+ Default specifier 20
+5 Public
+ Private Not accesble
+ Protected Not accesble
+ Default Not accesble
+
+
+--------------------------------------------------------------
+                    ARITHMETIC
+
+package pack;
+
+public class Sub {
+	public static int subraction(int a,int b){
+		return(a-b);
+	}
+}
+
+package pack;
+
+public class Add {
+	public static int addition(int a,int b){
+		return(a+b);
+	}
+}
+
+package pack;
+
+public class Mul {
+	public static int multiplication(int a,int b){
+		return(a*b);
+	}
+
+}
+
+package pack;
+
+public class Div {
+	public static int division(int a,int b){
+		return (a/b);
+	}
+
+}
+
+import java.io.*;
+import java.util.*;
+import pack.*;
+public class Arithmetic {
+	public static void main(String args[]){
+		int a,b;
+		Scanner obj=new Scanner(System.in);
+		System.out.println("Enter 2 nos");
+		a=obj.nextInt();
+		b=obj.nextInt();
+        Add a1=new Add();
+        Sub s1=new Sub();
+        Div d1=new Div();
+        Mul m1=new Mul();
+        System.out.println("Sub val is "+s1.subraction(a,b));
+        System.out.println("Add val is "+a1.addition(a,b));
+        System.out.println("Div val is "+d1.division(a,b));
+        System.out.println("Mul val is "+m1.multiplication(a,b));
+	}
+
+}
+
+OUTPUT:
+
+Enter 2 nos
+4
+7
+Sub val is -3
+Add val is 11
+Div val is 0
+Mul val is 28
+
+
+-----------------------------------------------------------
+
+					STUDENT
+
+package pack;
+
+public class CSE {
+	public static void display(){
+		System.out.println("No of students in CSE are 100");
+	}
+
+}
+
+package pack;
+
+public class MECH {
+	public static void display(){
+		System.out.println("No of students in MECH are 90");
+	}
+
+}
+
+package pack;
+
+public class EEE {
+	public static void display(){
+		System.out.println("No of students in EEE are 70");
+	}
+
+}
+
+package pack;
+
+public class IT {
+	public static void display(){
+		System.out.println("No of students in IT are 80");
+	}
+
+}
+
+import java.io.*;
+import pack.*;
+public class Student {
+	public static void main(String args[]){
+		CSE c=new CSE();
+		EEE e=new EEE();
+		MECH m=new MECH();
+		IT i=new IT();
+		i.display();
+		e.display();
+		m.display();
+		c.display();
+	}
+
+}
+OUTPUT:
+
+No of students in IT are 80
+No of students in EEE are 70
+No of students in MECH are 90
+No of students in CSE are 100
+
+
+-------------------------------------------------------------

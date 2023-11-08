@@ -1,0 +1,1681 @@
+--------------------------------------------------------------------EX11---------------------------------------------------------------
+STUDENT OR STAFF PAGE:
+package Applet;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+@SuppressWarnings("serial")
+public class Check extends LoginStudent implements ActionListener 
+{
+	public static void main(String[] args) throws ClassNotFoundException,SQLException, IOException
+	{
+		Check c=new Check();
+		c.connect();
+		c.createlayout();
+		c.access();	
+	}
+	public void connect() throws SQLException, ClassNotFoundException
+	{  
+		Class.forName("oracle.jdbc.driver.OracleDriver");  
+		conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","javaproj","itsme");
+	}
+    JFrame f3;
+	Connection conn;
+	JButton butt,sta,stu;
+	JLabel title;
+
+    public void createlayout() throws SQLException, ClassNotFoundException
+    	{
+    	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int width = (int) screenSize.getWidth();
+		int height = (int) screenSize.getHeight();
+		
+		f3=new JFrame();
+		f3.setContentPane(new JLabel(new ImageIcon("C:\\Users\\Roy Jasper\\Downloads\\cubes_silver_gold_form_93241_1366x768.jpg")));
+		
+		
+		title=new JLabel("<--STUDENT OR STAFF-->");
+		title.setBounds(475,1,10000,50);
+		title.setFont(new Font("Rockwell",Font.BOLD,20));
+		f3.add(title);
+		
+		butt=new JButton("Exit");
+		butt.setBounds(900,50,100,30);
+		f3.add(butt);
+		
+		sta=new JButton("Staff");
+		sta.setBounds(600,350,100, 30); 		          
+		f3.add(sta);
+
+		stu=new JButton("Student"); 
+		stu.setBounds(800,350,100, 30);  		          
+		f3.add(stu);  		          
+
+		
+		f3.setSize(width,height);
+		f3.setLayout(null);
+		f3.setVisible(true);
+		Class.forName("oracle.jdbc.driver.OracleDriver");  
+		conn= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","JavaProj","itsme"); 
+	    }
+    public void actionPerformed(ActionEvent ae) 
+	{
+		String str=ae.getActionCommand();
+		if(str.equals("Exit"))
+		{
+			f3.setVisible(false);
+			f3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			System.exit(0);
+		}
+		if(str.equals("Staff"))
+		{
+			LoginStaff s= new LoginStaff();
+			s.layout();
+			try {
+				s.connect();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			s.access();
+			f3.dispose();
+		}
+		if(str.equals("Student"))
+		{
+			LoginStudent s= new LoginStudent();
+			s.layout();
+			try {
+				s.connect();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			s.access();
+			f3.dispose();
+			f3.setVisible(false);
+		}
+		}
+	
+    public void access()
+	{
+    	butt.addActionListener(this);
+    	sta.addActionListener(this);
+    	stu.addActionListener(this);
+	}
+}
+
+STAFF LOGIN:
+package Applet;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
+
+import javax.swing.*;
+
+@SuppressWarnings("serial")
+public class LoginStaff extends JApplet implements ActionListener 
+{
+	JFrame f;
+	JLabel heading,name,pwd;
+	JButton Login,SignUp,LogOut;
+	JTextField Username;
+	JPasswordField Password;
+	Connection conn;
+	Image image;
+	String sql;
+		
+	public void connect() throws SQLException, ClassNotFoundException
+	{  
+		Class.forName("oracle.jdbc.driver.OracleDriver");  
+		conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","javaproj","itsme");
+	}
+	public void access()
+	{
+		Login.addActionListener(this);
+
+		LogOut.addActionListener(this);
+	}
+	public void layout()
+	{
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int width = (int) screenSize.getWidth();
+		int height = (int) screenSize.getHeight();
+		f=new JFrame();
+		
+		f.setContentPane(new JLabel(new ImageIcon("E:\\Pictures\\Wallpapers For Me\\white_wooden_slats-wallpaper-1366x768.jpg")));
+		
+		Container c = f.getContentPane();
+		c.setBackground(Color.WHITE);
+		heading=new JLabel("<<--STAFF SECTION-->>");
+		heading.setBounds(600,20,500,30); 
+		Font fo = new Font("Rockwell",Font.ITALIC,30);
+		heading.setFont(fo);
+		f.add(heading);
+		
+		name=new JLabel("USERNAME"); 
+		name.setBounds(100,100,300,30);       
+		f.add(name);
+		Username=new JTextField(20);
+		Username.setBounds(250, 100, 300, 30);
+		f.add(Username);
+		pwd=new JLabel("PASSWORD"); 
+		pwd.setBounds(100,200,300,30);       
+		f.add(pwd);
+		Password = new JPasswordField(20);
+		Password.setBounds(250, 200, 300, 30);	
+		f.add(Password);
+		Login=new JButton("Login");
+		Login.setBounds(600,150,100, 30); 		          
+		f.add(Login);
+
+		
+		LogOut=new JButton("Exit"); 
+		LogOut.setBounds(1000,150,100, 30);  		          
+		f.add(LogOut);  
+		
+		f.setSize(width,height);
+		f.setLayout(null); 
+		f.setVisible(true);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+	}
+
+	
+	
+	public void actionPerformed(ActionEvent ae) 
+	{
+			String str=ae.getActionCommand();			
+			
+			if(str.equals("Login"))
+			{
+				Statement st;
+				String id=""+Username.getText();
+				char[] pass=Password.getPassword();
+				try 
+				{
+					st = conn.createStatement();
+					sql=" select * from staff where sid="+id+" and pass='"+String.valueOf(pass)+"'";
+					ResultSet rs=st.executeQuery(sql);
+					if(rs.next())  
+					{
+						f.setVisible(false);
+						JOptionPane.showMessageDialog(null,"LOGIN Successful");
+						//f3.setVisible(true);
+						StaffSection en=new StaffSection();
+						en.createlayout();
+						en.access();
+						en.connect();
+
+					}
+					else
+						JOptionPane.showMessageDialog(null, "Invalid Username/password");
+				}
+				catch (Exception e1)
+				{
+
+					e1.printStackTrace();
+				}
+			}
+			if(str.equals("Exit"))
+			{
+				f.setVisible(false);
+				f.dispose();
+				System.exit(0);
+			}
+				
+	}
+}
+
+LOGIN STUDENT:
+package Applet;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
+
+import javax.swing.*;
+
+@SuppressWarnings("serial")
+public class LoginStudent extends JApplet implements ActionListener 
+{
+	JFrame f5;
+	JLabel heading,name,pwd;
+	JButton Login,SignUp,LogOut;
+	JTextField Username;
+	JPasswordField Password;
+	Connection conn;
+	Image image;
+	String sql;
+		
+	public void connect() throws SQLException, ClassNotFoundException
+	{  
+		Class.forName("oracle.jdbc.driver.OracleDriver");  
+		conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","javaproj","itsme");
+	}
+	public void access()
+	{
+		Login.addActionListener(this);
+
+		LogOut.addActionListener(this);
+	}
+	public void layout()
+	{
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int width = (int) screenSize.getWidth();
+		int height = (int) screenSize.getHeight();
+		f5=new JFrame();
+		
+		f5.setContentPane(new JLabel(new ImageIcon("E:\\Pictures\\Wallpapers For Me\\white_wooden_slats-wallpaper-1366x768.jpg")));
+		
+		Container c = f5.getContentPane();
+		c.setBackground(Color.WHITE);
+		heading=new JLabel("<<--STUDENT SECTION-->>");
+		heading.setBounds(600,20,500,30); 
+		Font fo = new Font("Rockwell",Font.ITALIC,30);
+		heading.setFont(fo);
+		f5.add(heading);
+		
+		name=new JLabel("USERNAME"); 
+		name.setBounds(100,100,300,30);       
+		f5.add(name);
+		Username=new JTextField(20);
+		Username.setBounds(250, 100, 300, 30);
+		f5.add(Username);
+		pwd=new JLabel("PASSWORD"); 
+		pwd.setBounds(100,200,300,30);       
+		f5.add(pwd);
+		Password = new JPasswordField(20);
+		Password.setBounds(250, 200, 300, 30);	
+		f5.add(Password);
+		Login=new JButton("Login");
+		Login.setBounds(600,150,100, 30); 		          
+		f5.add(Login);
+
+		
+		LogOut=new JButton("Exit"); 
+		LogOut.setBounds(1000,150,100, 30);  		          
+		f5.add(LogOut);  
+		
+		f5.setSize(width,height);
+		f5.setLayout(null); 
+		f5.setVisible(true);
+		f5.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+	}
+
+	
+	
+	public void actionPerformed(ActionEvent ae) 
+	{
+			String str=ae.getActionCommand();			
+			
+			if(str.equals("Login"))
+			{
+				Statement st;
+				String id=""+Username.getText();
+		         //String stuid=gstuid.getText();
+	            int lid=Integer.parseInt(id);
+				char pass[]=Password.getPassword();
+				try 
+				{
+					st = conn.createStatement();
+					sql=" select * from student where sid='"+id+"' and pass='"+String.valueOf(pass)+"'";
+					ResultSet rs=st.executeQuery(sql);
+					if(rs.next())  
+					{
+						f5.setVisible(false);
+						JOptionPane.showMessageDialog(null,"LOGIN Successful");
+						//f3.setVisible(true);
+						StuSect en=new StuSect();
+						en.createlayout(lid);
+						
+
+					}
+					else
+						JOptionPane.showMessageDialog(null, "Invalid Username/password");
+				}
+				catch (Exception e1)
+				{
+
+					e1.printStackTrace();
+				}
+			}
+			if(str.equals("Exit"))
+			{
+				f5.setVisible(false);
+				f5.dispose();
+				System.exit(0);
+			}
+				
+	}
+}
+STAFF SECTION:
+package Applet;
+
+
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+import link.Loginme;
+
+public class StaffSection extends Loginme implements ActionListener
+{
+    JFrame f4;
+    Connection conn;
+    JButton butt,exit,ins,mod,del,com,dis;
+    JTextField gstuid;
+    JLabel stuid;
+
+    public void createlayout() throws SQLException, ClassNotFoundException
+    {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int) screenSize.getWidth();
+        int height = (int) screenSize.getHeight();
+
+        f4=new JFrame();
+        f4.setContentPane(new JLabel(new ImageIcon("E:\\Pictures\\Wallpapers For Me\\white_wooden_slats-wallpaper-1366x768.jpg")));
+
+        butt=new JButton("Logoff");
+        butt.setBounds(900,50,100,30);
+        f4.add(butt);
+
+        ins=new JButton("InsertStafforStudent");
+        ins.setBounds(300,450,300,30);
+        f4.add(ins);
+
+        mod=new JButton("Modify");
+        mod.setBounds(300,525,150,30);
+        f4.add(mod);
+
+        exit=new JButton("Exit");
+        exit.setBounds(1200,50,100,30);
+        f4.add(exit);
+
+        stuid=new JLabel("Student ID :");
+        stuid.setBounds(100,100,300,30);
+        f4.add(stuid);
+        gstuid=new JTextField(20);
+        gstuid.setBounds(250, 100, 300, 30);
+        f4.add(gstuid);
+
+        del=new JButton("Delete");
+        del.setBounds(300,375,150,30);
+        f4.add(del);
+
+
+        dis=new JButton("Display");
+        dis.setBounds(300,225,150,30);
+        f4.add(dis);
+
+        com=new JButton("Students placed in company");
+        com.setBounds(300,300,300,30);
+        f4.add(com);
+
+        f4.setSize(width,height);
+        f4.setLayout(null);
+        f4.setVisible(true);
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        conn= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","JavaProj","itsme");
+        f4.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+    public void actionPerformed(ActionEvent ae)
+    {
+        String str=ae.getActionCommand();
+        if(str.equals("Logoff"))
+        {
+            f4.setVisible(false);
+            Check c=new Check();
+            try
+            {
+                c.connect();
+            }
+            catch (ClassNotFoundException | SQLException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            try
+            {
+                c.createlayout();
+            }
+            catch (ClassNotFoundException | SQLException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            c.access();
+        }
+        if(str.equals("Exit"))
+        {
+            f4.dispose();
+            f4.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        }
+        if(str.equals("InsertStafforStudent"))
+        {
+            Checkstfstu chk=new Checkstfstu();
+            try
+            {
+                chk.createlayout();
+            }
+            catch (ClassNotFoundException | SQLException e1)
+            {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+            try
+            {
+                chk.connect();
+            }
+            catch (ClassNotFoundException | SQLException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            chk.access();
+        }
+        if(str.equals("Modify"))
+        {
+            String stuid=gstuid.getText();
+            int qq=Integer.parseInt(stuid);
+            String sql = "select * from student where sid="+qq+"";
+            Statement st = null;
+            try
+            {
+                st = conn.createStatement();
+            }
+            catch (SQLException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            ResultSet rs = null;
+            try
+            {
+                rs = st.executeQuery(sql);
+            }
+            catch (SQLException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            int n = 0;
+            try
+            {
+                if(rs.next())
+                {
+                    Modify mm=new Modify();
+                    try
+                    {
+                        mm.createlayout(qq);
+                        n=1;
+                    }
+                    catch (ClassNotFoundException | SQLException e)
+                    {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    
+
+                }
+
+            }
+            catch (SQLException e1)
+            {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+            if(n==0)
+            {
+                JOptionPane.showMessageDialog(null,"Enter valid ID");
+            }
+
+        }
+        if(str.equals("Delete"))
+        {
+            int d = 0;
+            String stuid=gstuid.getText();
+            int qq=Integer.parseInt(stuid);
+            String sql = "delete from student where sid="+qq+"";
+            Statement st11;
+            try
+            {
+                st11 = conn.createStatement();
+            }
+            catch (SQLException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            try
+            {
+                st11 = conn.createStatement();
+                d = st11.executeUpdate(sql);
+            }
+            catch (SQLException e2)
+            {
+                e2.printStackTrace();
+            }
+            if(d==1)
+            {
+                JOptionPane.showMessageDialog(null," Student Deleted Successfully");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null,"Enter correct IDs");
+            }
+        }
+        if(str.equals("Display"))
+        {
+            Statement st = null;
+            try
+            {
+                st = conn.createStatement();
+            }
+            catch (SQLException e3)
+            {
+                // TODO Auto-generated catch block
+                e3.printStackTrace();
+            }
+            try
+            {
+                st = conn.createStatement();
+            }
+            catch (SQLException e2)
+            {
+                // TODO Auto-generated catch block
+                e2.printStackTrace();
+            }
+            String stuid=gstuid.getText();
+            int qq=Integer.parseInt(stuid);
+            String sql = "select * from student where sid="+qq+"";
+
+
+            try
+            {
+                st = conn.createStatement();
+            }
+            catch (SQLException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            ResultSet rs = null;
+            try
+            {
+                rs = st.executeQuery(sql);
+            }
+            catch (SQLException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            int n = 0;
+            try
+            {
+                if(rs.next())
+                {
+                    String name = rs.getString(2);
+                    String dept = rs.getString(4);
+                    int cgpa = rs.getInt(5);
+                    String comp = rs.getString(6);
+                    int pack = rs.getInt(7);
+                    n=1;
+                    JOptionPane.showMessageDialog(null,"Displaying Student details");
+                    JLabel jname = new JLabel("NAME :"+"                            "+name);
+                    jname.setBounds(700,225,1000,30);
+                    f4.add(jname);
+
+                    JLabel juname = new JLabel("DEPARTMENT :"+"                 "+dept);
+                    juname.setBounds(700,300, 1000, 30);
+                    f4.add(juname);
+
+                    JLabel jconame = new JLabel("CGPA :                  "+cgpa);
+                    jconame.setBounds(700,375,1000,30);
+                    f4.add(jconame);
+
+                    Component jaddr = new JLabel("COMPANY PLACED:"+"                    "+comp);
+                    jaddr.setBounds(700,450, 1000, 30);
+                    f4.add(jaddr);
+
+                    JLabel jmail = new JLabel("PACKAGE :"+"                         "+pack);
+                    jmail.setBounds(700,525,1000, 30);
+                    f4.add(jmail);
+                    f4.repaint();
+                }
+
+            }
+            catch (SQLException e1)
+            {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+            if(n==0)
+            {
+                JOptionPane.showMessageDialog(null,"Enter valid ID");
+            }
+
+        }
+        if(str.equals("Students placed in company"))
+        {
+        	Company c=new Company();
+
+        	try {
+				c.createlayout();
+			} catch (ClassNotFoundException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+        }
+    }
+    public void access()
+    {
+        exit.addActionListener(this);
+        ins.addActionListener(this);
+        mod.addActionListener(this);
+        del.addActionListener(this);
+        com.addActionListener(this);
+        dis.addActionListener(this);
+        butt.addActionListener(this);
+    }
+}
+
+ STAFF INSERTION:
+package Applet;
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
+import javax.swing.*;
+
+@SuppressWarnings("serial")
+public class InsStaff extends Check implements ActionListener 
+{
+	private static final Component f = null;
+	JFrame f2;
+	JLabel title,fname,laname,uname,addr,phno,mail,passwd;
+	JTextField []text=new JTextField[4],pass;
+	JButton b1,b2,butt,jump,canc,sub;
+	String fn,ln,un,adr,mid,sql;
+	int phnum,uid=0;
+	Connection conn;
+	public void createlayout() throws SQLException, ClassNotFoundException , NullPointerException
+	{
+		f2=new JFrame();
+
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int width = (int) screenSize.getWidth();
+		int height = (int) screenSize.getHeight();
+		
+		
+		title=new JLabel("ACCOUNT CREATION FOR STAFF");
+		title.setBounds(475,1,1000,50);
+		title.setFont(new Font("Rockwell",Font.BOLD,20));
+		f2.add(title);
+		
+		fname=new JLabel("Name");
+		fname.setBounds(100,75,300,25);
+		f2.add(fname);
+		text[0]=new JTextField(20);
+		text[0].setBounds(250,75,300,25);
+		f2.add(text[0]);
+		laname=new JLabel("Staff ID");
+		laname.setBounds(100,150,300,25);
+		f2.add(laname);
+		text[1]=new JTextField(20);
+		text[1].setBounds(250,150,300,25);
+		f2.add(text[1]);
+
+		uname=new JLabel("Password");
+		uname.setBounds(100,225,300,25);
+		f2.add(uname);
+		text[2]=new JTextField(20);
+		text[2].setBounds(250,225,300,25);
+		f2.add(text[2]);
+		passwd=new JLabel("Department");
+		passwd.setBounds(100,300,300,25);
+		f2.add(passwd);
+		text[3]=new JTextField(20);
+		text[3].setBounds(250,300,300,25);
+		f2.add(text[3]);
+		
+		sub=new JButton("Submit");
+		sub.setBounds(700,150,100, 30);
+		f2.add(sub);
+		canc=new JButton("Cancel");
+		canc.setBounds(700,300,100,30);
+		f2.add(canc);
+		
+		canc.addActionListener(this);
+		sub.addActionListener(this);
+		
+		f2.setSize(width,height);
+		f2.setLayout(null);
+		f2.setVisible(true);
+		f2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		Class.forName("oracle.jdbc.driver.OracleDriver");  
+		conn= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","JavaProj","itsme"); 
+	}
+	public void actionPerformed(ActionEvent ae)
+	{
+		
+		String str=ae.getActionCommand();
+		if(str.equals("Cancel"))
+		{   f.setVisible(true);
+			f2.setVisible(false);
+		}
+		fn=text[0].getText();
+		int id=Integer.parseInt(fn);
+		ln=text[1].getText();
+		un=text[2].getText();
+		//char pwd[]=pass.getPassword();
+		adr=text[3].getText();
+
+		if(str.equals("Submit"))
+		{
+			int d=0;
+			sql="insert into staff values("+id+",'"+ln+"','"+un+"','"+addr+"')";
+			Statement st;
+			try 
+			{
+				st = conn.createStatement();
+				 d = st.executeUpdate(sql);
+			} 
+			catch (SQLException e2) 
+			{
+				e2.printStackTrace();
+			}
+            if(d!=-1)
+			JOptionPane.showMessageDialog(null,"ACCOUNT CREATED FOR A STAFF !!");
+			f2.setVisible(false);
+			f3.setVisible(true);
+
+		}
+
+			
+		}
+	public void access()
+	{
+		//for(int i=0;i<4;i++)
+			//text[i].addActionListener(this);
+		
+		//jump.addActionListener(this);
+		///butt.addActionListener(this);
+	}
+
+
+}
+
+STUDENTS IN COMPANY:
+package Applet;
+
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+import link.Loginme;
+
+public class Company extends Loginme implements ActionListener
+{
+	JFrame f8;
+	int set=200;
+    Connection conn;
+    JButton butt,exit,dis;
+    JTextField gstuid;
+    JLabel stuid ;
+
+	public void createlayout() throws SQLException, ClassNotFoundException
+    {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int) screenSize.getWidth();
+        int height = (int) screenSize.getHeight();
+
+        f8=new JFrame();
+        f8.setContentPane(new JLabel(new ImageIcon("E:\\Pictures\\Wallpapers For Me\\white_wooden_slats-wallpaper-1366x768.jpg")));
+
+        butt=new JButton("Logoff");
+        butt.setBounds(900,50,100,30);
+        f8.add(butt);
+        butt.addActionListener(this);
+   
+        exit=new JButton("Exit");
+        exit.setBounds(1200,50,100,30);
+        f8.add(exit);
+        exit.addActionListener(this);
+        
+        dis=new JButton("Display");
+        dis.setBounds(300,225,150,30);
+        f8.add(dis);
+        dis.addActionListener(this);
+        
+        gstuid=new JTextField(20);
+        gstuid.setBounds(250, 100, 300, 30);
+        f8.add(gstuid);
+
+        stuid=new JLabel("Company :");
+        stuid.setBounds(100,100,300,30);
+        f8.add(stuid);
+        f8.setSize(width,height);
+        f8.setLayout(null);
+        f8.setVisible(true);
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        conn= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","JavaProj","itsme");
+        f8.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    
+    }
+	public void actionPerformed(ActionEvent ae)
+    {
+        String str=ae.getActionCommand();
+        if(str.equals("Logoff"))
+        {
+            f8.setVisible(false);
+            Check c=new Check();
+            try
+            {
+                c.connect();
+            }
+            catch (ClassNotFoundException | SQLException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            try
+            {
+                c.createlayout();
+            }
+            catch (ClassNotFoundException | SQLException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            c.access();
+        }
+        if(str.equals("Exit"))
+        {
+            f8.dispose();
+            f8.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        }
+        if(str.equals("Display"))
+        {
+            Statement st = null;
+            try
+            {
+                st = conn.createStatement();
+            }
+            catch (SQLException e3)
+            {
+                // TODO Auto-generated catch block
+                e3.printStackTrace();
+            }
+            try
+            {
+                st = conn.createStatement();
+            }
+            catch (SQLException e2)
+            {
+                // TODO Auto-generated catch block
+                e2.printStackTrace();
+            }
+            String stuid=gstuid.getText();
+            
+            String sql = "select * from student where company='"+stuid+"'";
+            try
+            {
+                st = conn.createStatement();
+            }
+            catch (SQLException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            ResultSet rs = null;
+            try
+            {
+                rs = st.executeQuery(sql);
+            }
+            catch (SQLException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            int n = 0;
+            try
+            {
+                while(rs.next())
+                {
+                    String name = rs.getString(2);
+                    n=1;
+                    //JOptionPane.showMessageDialog(null,"Displaying");
+                    JLabel jname = new JLabel("NAME :"+"                         "+name);
+                    jname.setBounds(700,set,1000,30);
+                    f8.add(jname); 
+                    set+=75;
+                }
+                f8.repaint();
+
+            }
+            catch (SQLException e1)
+            {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+            if(n==0)
+            {
+                JOptionPane.showMessageDialog(null,"No Students Placed");
+            }
+
+        }
+
+}
+}
+
+INSERT STUDENT:
+package Applet;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
+import javax.swing.*;
+
+
+public class InsStudent  implements ActionListener 
+{
+	JFrame f9;
+	JLabel title,fname,laname,uname,addr,phno,mail,passwd;
+	JTextField []text=new JTextField[6];
+	JTextField pass;
+	JButton b1,b2,butt,jump;
+	String fn,ln,un,adr,mid,sql;
+	int phnum,uid=0;
+	Connection conn;
+	public void createlayout() throws SQLException, ClassNotFoundException
+	{
+		f9=new JFrame();
+
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int width = (int) screenSize.getWidth();
+		int height = (int) screenSize.getHeight();
+		f9=new JFrame();
+        f9.setContentPane(new JLabel(new ImageIcon("E:\\Pictures\\Wallpapers For Me\\white_wooden_slats-wallpaper-1366x768.jpg")));
+
+		title=new JLabel("Student Insertion");
+		title.setBounds(475,1,1000,50);
+		title.setFont(new Font("Rockwell",Font.BOLD,20));
+		f9.add(title);
+
+		fname=new JLabel("Student ID");
+		fname.setBounds(100,75,300,25);
+		f9.add(fname);
+		text[0]=new JTextField(20);
+		text[0].setBounds(250,75,300,25);
+		f9.add(text[0]);
+	
+		laname=new JLabel("Name");
+		laname.setBounds(100,150,300,25);
+		f9.add(laname);
+		text[1]=new JTextField(20);
+		text[1].setBounds(250,150,300,25);
+		f9.add(text[1]);
+
+		uname=new JLabel("Password");
+		uname.setBounds(100,225,300,25);
+		f9.add(uname);
+		text[2]=new JTextField(20);
+		text[2].setBounds(250,225,300,25);
+		f9.add(text[2]);
+		passwd=new JLabel("Department");
+		passwd.setBounds(100,300,300,25);
+		f9.add(passwd);
+		pass=new JTextField(20);
+		pass.setBounds(250,300,300,25);
+		f9.add(pass);
+		addr=new JLabel("CGPA");
+		addr.setBounds(100,375,300,25);
+		f9.add(addr);
+		text[3]=new JTextField(20);
+		text[3].setBounds(250,375,300,25);
+		f9.add(text[3]);
+		phno=new JLabel("Company");
+		phno.setBounds(100,450,300,25);
+		f9.add(phno);
+		text[4]=new JTextField(20);
+		text[4].setBounds(250,450,300,25);
+		f9.add(text[4]);
+		mail=new JLabel("Package");
+		mail.setBounds(100,525,300,25);
+		f9.add(mail);
+		text[5]=new JTextField(20);
+		text[5].setBounds(250,525,300,25);
+		f9.add(text[5]);
+		b1=new JButton("Submit");
+		b1.setBounds(700,150,100, 30);
+		f9.add(b1);
+		b2=new JButton("Cancel");
+		b2.setBounds(700,300,100,30);
+		f9.add(b2);
+		
+		//for(int i=0;i<6;i++)
+			//stext[i].addActionListener(this);
+		b1.addActionListener(this);
+		b2.addActionListener(this);
+		
+		f9.setSize(width,height);
+		f9.setLayout(null);
+		f9.setVisible(true);
+		f9.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		Class.forName("oracle.jdbc.driver.OracleDriver");  
+		conn= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","JavaProj","itsme"); 
+	}
+	public void actionPerformed(ActionEvent ae)
+	{
+		
+		String str=ae.getActionCommand();
+		if(str.equals("Cancel"))
+		{   //jf.setVisible(true);
+			f9.setVisible(false);
+		}
+		fn=text[0].getText();
+		int sid = Integer.parseInt(text[0].getText());
+		String name = text[1].getText();
+		String pass2 = text[2].getText();
+		String stupass=pass.getText();
+		int cgpa = Integer.parseInt(text[3].getText());
+		String comp = text[4].getText();
+		//int pack = Integer.parseInt(text[2].getText());
+		//pack=text[5].getText();
+		int pack1 = Integer.parseInt(text[5].getText());
+		if(str.equals("Submit"))
+		{
+			int d=0;
+			uid++;
+			sql="insert into student values("+sid+",'"+name+"','"+pass2+"','"+stupass+"',"+cgpa+",'"+comp+"',"+pack1+")";Statement st;
+			try 
+			{
+				st = conn.createStatement();
+				 d = st.executeUpdate(sql);
+			} 
+			catch (SQLException e2) 
+			{
+				e2.printStackTrace();
+			}
+            if(d!=-1)
+			JOptionPane.showMessageDialog(null,"ACCOUNT CREATED FOR YOU !!");
+			f9.setVisible(false);
+			//jf.setVisible(true);
+
+		}
+		if(str.equals("Jump"))
+		{
+			//f3.setVisible(true);
+			f9.setVisible(false);
+		}
+			
+	}
+	public void access()
+	{
+			}
+
+
+}
+
+MODIFY STUDENT:
+package Applet;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+
+public class Modify implements ActionListener 
+{
+	JFrame f7;
+	Connection conn;
+	JButton butt,bk,exit,ins,mod,del,com,dis,modify;
+    JTextField gstuid;
+    JLabel stuid;
+    String m,sql;
+    int sid;
+    public void createlayout( int s) throws SQLException, ClassNotFoundException
+	{
+    	sid=s;
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	int width = (int) screenSize.getWidth();
+	int height = (int) screenSize.getHeight();
+	
+	f7=new JFrame();
+	f7.setContentPane(new JLabel(new ImageIcon("E:\\Pictures\\Wallpapers For Me\\white_wooden_slats-wallpaper-1366x768.jpg")));
+
+	butt=new JButton("Logoff");
+	butt.setBounds(900,50,100,30);
+	f7.add(butt);
+	butt.addActionListener(this);
+	
+	exit=new JButton("Exit");
+	exit.setBounds(1200,50,100,30);
+	f7.add(exit);
+	exit.addActionListener(this);
+	
+	bk=new JButton("Back");
+	bk.setBounds(400,50,100,30);
+	f7.add(bk);
+	bk.addActionListener(this);
+	
+	stuid=new JLabel("Enter new value :"); 
+	stuid.setBounds(100,100,300,30);       
+	f7.add(stuid);
+	gstuid=new JTextField(20);
+	gstuid.setBounds(250, 100, 300, 30);
+	f7.add(gstuid);
+	
+	ins=new JButton("ModifyPASS");
+	ins.setBounds(300,450,300,30);
+	f7.add(ins);
+	ins.addActionListener(this);
+	
+	mod=new JButton("ModifyDEPT");
+	mod.setBounds(300,525,150,30);
+	f7.add(mod);
+	mod.addActionListener(this);
+	
+	del=new JButton("ModifyCGPA");
+	del.setBounds(300,375,150,30);
+	f7.add(del);
+	del.addActionListener(this);
+	
+	dis=new JButton("ModifyCOMP");
+	dis.setBounds(300,225,150,30);
+	f7.add(dis);
+	dis.addActionListener(this);
+	 
+	com=new JButton("ModifyPACKAGE");
+	com.setBounds(300,300,300,30);
+	f7.add(com);
+	com.addActionListener(this);
+	
+	f7.setSize(width,height);
+	f7.setLayout(null);
+	f7.setVisible(true);
+	Class.forName("oracle.jdbc.driver.OracleDriver");  
+	conn= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","JavaProj","itsme"); 
+	f7.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
+	}
+    @Override
+	public void actionPerformed(ActionEvent ae) 
+    {
+    	String str=ae.getActionCommand();
+		if(str.equals("Logoff"))
+		{
+			f7.setVisible(false);
+			Check c=new Check();
+			try {
+				c.connect();
+			} catch (ClassNotFoundException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				c.createlayout();
+			} catch (ClassNotFoundException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			c.access();
+		}
+		if(str.equals("Exit"))
+		{
+			f7.dispose();
+			f7.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		}
+		if(str.equals("ModifyPASS"))
+		{
+			m="pass";
+			String fn = gstuid.getText();
+
+			sql="update student set "+m+" = '"+fn+"' where sid="+sid+"";
+		}
+		if(str.equals("ModifyDEPT"))
+		{
+			m="dept";
+			String fn = gstuid.getText();
+			sql="update student set "+m+" = '"+fn+"' where sid="+sid+"";
+            
+		}
+		if(str.equals("ModifyCGPA"))
+		{
+			m="cgpa";
+			String fn = gstuid.getText();
+			int id=Integer.parseInt(fn);
+			sql="update student set "+m+" = "+id+" where sid="+sid+"";
+		}
+		if(str.equals("ModifyCOMP"))
+		{
+			m="company";
+			String fn = gstuid.getText();
+			sql="update student set "+m+" = '"+fn+"' where sid="+sid+"";
+
+		}
+		if(str.equals("ModifyPACKAGE"))
+		{
+			m="package";
+			String fn = gstuid.getText();
+			sql="update student set "+m+" = '"+fn+"' where sid="+sid+"";
+		}
+		int d=0;
+		Statement st1;
+		try
+
+        {
+            st1 = conn.createStatement();
+            d = st1.executeUpdate(sql);
+        }
+        catch (SQLException e2)
+        {
+            e2.printStackTrace();
+        }
+        if(d==1)
+        	JOptionPane.showMessageDialog(null,"MODIFIED SUCCESSFULLY !!");
+        else
+        	JOptionPane.showMessageDialog(null,"NOT MODIFIED !!");
+    	if(str.equals("Back"))
+    	{
+    		StaffSection st=new StaffSection();
+    		try {
+				st.connect();
+			} catch (ClassNotFoundException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		try {
+				st.createlayout();
+			} catch (ClassNotFoundException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		st.access();
+    		f7.setVisible(false);
+    	}
+		
+	}
+}
+
+STUDENR SECTION:
+package Applet;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+public  class StuSect  implements ActionListener
+{
+    JFrame f10;
+    Connection conn;
+    JButton butt,exit,ins,mod,del,com,dis;
+    JTextField gstuid;
+    JLabel stuid;
+    int lid;
+
+    public void createlayout(int a) throws SQLException, ClassNotFoundException
+    {
+    	lid=a;
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int) screenSize.getWidth();
+        int height = (int) screenSize.getHeight();
+
+        f10=new JFrame();
+        f10.setContentPane(new JLabel(new ImageIcon("E:\\Pictures\\Wallpapers For Me\\white_wooden_slats-wallpaper-1366x768.jpg")));
+
+        butt=new JButton("Logoff");
+        butt.setBounds(900,50,100,30);
+        f10.add(butt);
+        
+        exit=new JButton("Exit");
+        exit.setBounds(1200,50,100,30);
+        f10.add(exit);
+
+        exit.addActionListener(this);
+                
+        dis=new JButton("Display");
+        dis.setBounds(300,225,150,30);
+        f10.add(dis);
+        dis.addActionListener(this);
+        butt.addActionListener(this);
+
+        f10.setSize(width,height);
+        f10.setLayout(null);
+        f10.setVisible(true);
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        conn= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","JavaProj","itsme");
+        f10.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    
+    }
+
+	@Override
+	public void actionPerformed(ActionEvent ae) 
+	{
+		String str=ae.getActionCommand();
+		if(str.equals("Logoff"))
+        {
+            f10.setVisible(false);
+            Check c=new Check();
+            try
+            {
+                c.connect();
+            }
+            catch (ClassNotFoundException | SQLException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            try
+            {
+                c.createlayout();
+            }
+            catch (ClassNotFoundException | SQLException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            c.access();
+        }
+        if(str.equals("Exit"))
+        {
+            f10.dispose();
+            f10.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        }
+        if(str.equals("Display"))
+        {
+            Statement st = null;
+            try
+            {
+                st = conn.createStatement();
+            }
+            catch (SQLException e3)
+            {
+                // TODO Auto-generated catch block
+                e3.printStackTrace();
+            }
+            try
+            {
+                st = conn.createStatement();
+            }
+            catch (SQLException e2)
+            {
+                // TODO Auto-generated catch block
+                e2.printStackTrace();
+            }
+   
+            String sql = "select * from student where sid="+lid+"";
+
+
+            try
+            {
+                st = conn.createStatement();
+            }
+            catch (SQLException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            ResultSet rs = null;
+            try
+            {
+                rs = st.executeQuery(sql);
+            }
+            catch (SQLException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            int n = 0;
+            try
+            {
+                if(rs.next())
+                {
+                    String name = rs.getString(2);
+                    String dept = rs.getString(4);
+                    int cgpa = rs.getInt(5);
+                    String comp = rs.getString(6);
+                    int pack = rs.getInt(7);
+                    n=1;
+                    JOptionPane.showMessageDialog(null,"Displaying Student details");
+                    JLabel jname = new JLabel("NAME :"+"                            "+name);
+                    jname.setBounds(700,225,1000,30);
+                    f10.add(jname);
+
+                    JLabel juname = new JLabel("DEPARTMENT :"+"                 "+dept);
+                    juname.setBounds(700,300, 1000, 30);
+                    f10.add(juname);
+
+                    JLabel jconame = new JLabel("CGPA :                  "+cgpa);
+                    jconame.setBounds(700,375,1000,30);
+                    f10.add(jconame);
+
+                    Component jaddr = new JLabel("COMPANY PLACED:"+"                    "+comp);
+                    jaddr.setBounds(700,450, 1000, 30);
+                    f10.add(jaddr);
+
+                    JLabel jmail = new JLabel("PACKAGE :"+"                         "+pack);
+                    jmail.setBounds(700,525,1000, 30);
+                    f10.add(jmail);
+                    f10.repaint();
+                }
+
+            }
+            catch (SQLException e1)
+            {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+            if(n==0)
+            {
+                JOptionPane.showMessageDialog(null,"Enter valid ID");
+            }
+
+        }
+	}
+}
+
+CHECKING STAFF OR STUDENT:
+package Applet;
+
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+@SuppressWarnings("serial")
+public class Checkstfstu extends LoginStudent implements ActionListener 
+{
+	public void connect() throws SQLException, ClassNotFoundException
+	{  
+		Class.forName("oracle.jdbc.driver.OracleDriver");  
+		conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","javaproj","itsme");
+	}
+    JFrame f6;
+	Connection conn;
+	JButton butt,sta,stu,ext;
+	JLabel title;
+
+    public void createlayout() throws SQLException, ClassNotFoundException
+    	{
+    	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int width = (int) screenSize.getWidth();
+		int height = (int) screenSize.getHeight();
+		
+		f6=new JFrame();
+		f6.setContentPane(new JLabel(new ImageIcon("C:\\Users\\Roy Jasper\\Downloads\\cubes_silver_gold_form_93241_1366x768.jpg")));
+		
+		
+		title=new JLabel("<--INERTION FOR STUDENT OR STAFF-->");
+		title.setBounds(475,1,10000,50);
+		title.setFont(new Font("Rockwell",Font.BOLD,20));
+		f6.add(title);
+		
+		butt=new JButton("Logoff");
+		butt.setBounds(900,50,100,30);
+		f6.add(butt);
+		
+		ext=new JButton("Exit");
+		ext.setBounds(1000,50,100,30);
+		f6.add(ext);
+		
+		sta=new JButton("Staff");
+		sta.setBounds(600,350,100, 30); 		          
+		f6.add(sta);
+
+		stu=new JButton("Student"); 
+		stu.setBounds(800,350,100, 30);  		          
+		f6.add(stu);  		          
+
+		
+		f6.setSize(width,height);
+		f6.setLayout(null);
+		f6.setVisible(true);
+		
+		Class.forName("oracle.jdbc.driver.OracleDriver");  
+		conn= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","JavaProj","itsme"); 
+	    }
+    public void actionPerformed(ActionEvent ae) 
+	{
+		String str=ae.getActionCommand();
+		if(str.equals("Exit"))
+		{
+			f6.setVisible(false);
+			f6.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			System.exit(0);
+		}
+		if(str.equals("Staff"))
+		{
+			InsStaff in=new InsStaff();
+			in.access();
+			try {
+				in.createlayout();
+			} catch (ClassNotFoundException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if(str.equals("Student"))
+		{
+			InsStudent i=new InsStudent();
+			try {
+				i.createlayout();
+			} catch (ClassNotFoundException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		if(str.equals("Logoff"))
+		{
+			f6.setVisible(false);
+			Check c=new Check();
+			try {
+				c.connect();
+			} catch (ClassNotFoundException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				c.createlayout();
+			} catch (ClassNotFoundException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			c.access();
+		}
+		}
+	
+    public void access()
+	{
+    	butt.addActionListener(this);
+    	sta.addActionListener(this);
+    	stu.addActionListener(this);
+	}
+
+

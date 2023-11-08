@@ -1,0 +1,276 @@
+****************************************************************************************
+EXNO:3                                                  NAME:M.VIGNESH
+DATE:28-1-16                                            REGNO:14BIT062
+****************************************************************************************
+                        CPU SCHEDULING ALGORITHM---FCFS AND SJF
+
+
+#include<stdio.h>
+#include<math.h>
+int main()
+{
+int su,p[20],j=0,k,d[20],b[20],w[20],t[20],i,v,n,wt=0,at,sum=0;
+float fw,fr;
+printf("\nENTER THE NUMBER OF PROCESSOR");
+scanf("%d",&n);
+for(i=0;i<n;i++)
+{
+printf("\nENTER THE BURST TIME FOR P%d",i+1);
+scanf("%d",&d[i]);
+}
+for(i=0;i<n;i++)
+{
+for(j=0;j<n;j++)
+{
+if(d[i]<d[j])
+{
+at=d[i];
+d[i]=d[j];
+d[j]=at;
+}
+}
+}
+j=0;
+for(i=0;i<n;i++)
+{
+su=0;
+for(k=0;k<=i;k++)
+{
+su=su+d[k];
+}
+w[j]=su;
+j++;
+}
+t[0]=0;
+t[1]=w[0];
+for(i=2;i<n;i++)
+{
+t[i]=w[i-1];
+}
+for(i=0;i<n;i++)
+{
+printf("\nTURN OVER TIME FOR PROCESSOR P%d: IS  ",i+1);
+printf("%d",w[i]);
+sum=sum+w[i];
+}
+int df=0;
+for(i=0;i<n;i++)
+{
+printf("\nWAITING TIME FOR PROCESSOR P%d: IS  ",i+1);
+printf("%d",t[i]);
+df=df+t[i];
+}
+fr=su/n;
+fw=sum/n;
+printf("\nAVERAGE TURN OVER TIME IS %f",fw);
+printf("\nAVERAGE WAITING TIME IS %f",fr);
+return 0;
+}
+bash-3.2$ cc fcfs.c
+bash-3.2$ ./a.out
+
+ENTER THE NUMBER OF PROCESSOR 5
+
+ENTER THE BURST TIME FOR P1 6
+
+ENTER THE BURST TIME FOR P2 4
+
+ENTER THE BURST TIME FOR P3 2
+
+ENTER THE BURST TIME FOR P4 8
+
+ENTER THE BURST TIME FOR P5 23 4
+
+TURN OVER TIME FOR PROCESSOR P1: IS  2
+TURN OVER TIME FOR PROCESSOR P2: IS  6
+TURN OVER TIME FOR PROCESSOR P3: IS  12
+TURN OVER TIME FOR PROCESSOR P4: IS  20
+TURN OVER TIME FOR PROCESSOR P5: IS  44
+WAITING TIME FOR PROCESSOR P1: IS  0
+WAITING TIME FOR PROCESSOR P2: IS  2
+WAITING TIME FOR PROCESSOR P3: IS  6
+WAITING TIME FOR PROCESSOR P4: IS  12
+WAITING TIME FOR PROCESSOR P5: IS  20
+AVERAGE TURN OVER TIME IS 16.000000
+AVERAGE WAITING TIME IS 8.000000bash-3.2$ ./a.outcc fcfs.c[1@at[C[C[C[C[C[C[C[1P.c[1P.c
+#include<stdio.h>
+#include<math.h>
+int main()
+{
+int su,p[20],j=0,k,d[20],b[20],w[20],t[20],i,v,n,wt=0,at,sum=0;
+float fw,fr;
+printf("\nENTER THE NUMBER OF PROCESSOR");
+scanf("%d",&n);
+for(i=0;i<n;i++)
+{
+printf("\nENTER THE BURST TIME FOR P%d",i+1);
+scanf("%d",&d[i]);
+}
+j=0;
+for(i=0;i<n;i++)
+{
+su=0;
+for(k=0;k<=i;k++)
+{
+su=su+d[k];
+}
+w[j]=su;
+j++;
+}
+t[0]=0;
+t[1]=w[0];
+for(i=2;i<n;i++)
+{
+t[i]=w[i-1];
+}
+for(i=0;i<n;i++)
+{
+printf("\nTURN OVER TIME FOR PROCESSOR P%d: IS  ",i+1);
+printf("%d",w[i]);
+sum=sum+w[i];
+}
+int df=0;
+for(i=0;i<n;i++)
+{
+printf("\nWAITING TIME FOR PROCESSOR P%d: IS  ",i+1);
+printf("%d",t[i]);
+df=df+t[i];
+}
+fr=su/n;
+fw=sum/n;
+printf("\nAVERAGE TURN OVER TIME IS %f",fw);
+printf("\nAVERAGE WAITING TIME IS %f",fr);
+return 0;
+}
+
+bash-3.2$ cat fc.c[1P./a.outcc fcfs.c[1P.c[1P.c
+bash-3.2$ .a/.[K[K[K/a.out
+
+ENTER THE NUMBER OF PROCESSOR 5
+
+ENTER THE BURST TIME FOR P1 4 
+
+ENTER THE BURST TIME FOR P2 6
+
+ENTER THE BURST TIME FOR P3 24
+
+ENTER THE BURST TIME FOR P4 6
+
+ENTER THE BURST TIME FOR P5 9
+
+TURN OVER TIME FOR PROCESSOR P1: IS  4
+TURN OVER TIME FOR PROCESSOR P2: IS  10
+TURN OVER TIME FOR PROCESSOR P3: IS  34
+TURN OVER TIME FOR PROCESSOR P4: IS  40
+TURN OVER TIME FOR PROCESSOR P5: IS  49
+WAITING TIME FOR PROCESSOR P1: IS  0
+WAITING TIME FOR PROCESSOR P2: IS  4
+WAITING TIME FOR PROCESSOR P3: IS  10
+WAITING TIME FOR PROCESSOR P4: IS  34
+WAITING TIME FOR PROCESSOR P5: IS  40
+AVERAGE TURN OVER TIME IS 27.000000
+AVERAGE WAITING TIME IS 9.000000bash-3.2$ ./a.outcc fc.c[1@at[C[C[C[C[C[1P.co.cr.ck.c
+#include<stdio.h>
+#include<stdlib.h>
+#include<sys/stat.h>
+#include<fcntl.h>
+#include<unistd.h>
+int main()
+{
+int a[2],b[2],c[2],p1,p2,p3,d,e,n,s=0,l,m=1;
+p1=pipe(a);
+p2=pipe(b);
+p3=pipe(c);
+d=fork();
+e=fork();
+if((d<0)&&(e<0))
+{
+printf("Processor creation is unsucessfully");
+exit(0);
+}
+else
+{
+if((m>0)&&(d>0))
+{
+printf("ENTER THE NUMBER");
+scanf("%d",&n);
+close(a[0]);
+write(a[1],&n,sizeof (n));
+}
+if((d==0)&&(m>0))
+{
+close(a[1]);
+read(a[0],&n,sizeof(n));
+if(n%2==0)
+{
+printf("\nEVEN");
+while(n!=0)
+{
+l=n%10;
+n=n/10;
+s=s+l;
+}
+printf("THE SUM OF DIGITS IS %d",s);
+close(b[0]);
+write(b[1],&n,sizeof (n));
+}
+else
+{
+printf("\nODD");
+close(c[0]);
+while(n!=0)
+{
+l=n%10;
+n=n/10;
+m=m*l;
+}
+printf("THE MULTIPLY OF DIGITS IS %d",m);
+write(c[1],&n,sizeof (n));
+}
+}
+if((m==0)&&(d>0))
+{
+close(b[1]);
+read(b[0],&n,sizeof (n));
+while(n!=0)
+{
+l=n%10;
+n=n/10;
+m=m*l;
+}
+printf("THE MULTIPLY OF DIGITS IS %d",m);
+}
+if((m==0)&&(d==0))
+{
+close(c[1]);
+read(c[0],&n,sizeof (n));
+while(n!=0)
+{
+l=n%10;
+n=n/10;
+s=s+l;
+}
+printf("THE SUM OF DIGITS IS %d",s);
+}
+}
+}
+
+
+bash-3.2$ cc forl[Kk.c
+bash-3.2$ ./a.out
+ENTER THE NUMBERENTER THE NUMBER 45
+
+ODDTHE MULTIPLY OF DIGITS IS 20
+[1]+  Stopped                 ./a.out
+bash-3.2$ ./a.out
+ENTER THE NUMBERENTER THE NUMBER 44
+
+EVENTHE SUM OF DIGITS IS 8
+[2]+  Stopped                 ./a.out
+bash-3.2$ exit
+exit
+There are stopped jobs.
+bash-3.2$ exit
+exit
+
+Script done on Thu 28 Jan 2016 12:21:56 PM IST

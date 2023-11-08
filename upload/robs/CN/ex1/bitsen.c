@@ -1,0 +1,51 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+main()
+{
+	FILE *fp;
+	char a[]={'0','1','1','1','1','1','1','0'},b[100];
+	int i,n,k,j,l,flag=0;
+	printf("ENTER THE BIT STRING    ");
+	scanf("%s",b);
+	fp=fopen("sender1.txt","w");
+	for(i=0;i<8;i++)
+	{
+		putc(a[i],fp);
+	}
+	n=strlen(b);
+	printf("%s",b);
+	for(i=0;i<n;i++)
+	{
+		if(b[i]=='1')
+		{
+			j=i;
+			for(;j<i+5;j++)
+			{
+				if(b[j]=='1')
+				{
+					flag=flag+1;
+				}
+			}
+			if(flag==5)
+			{
+				k=j;
+				n=n+1;
+				for(l=n-1;l>=k+1;l--)
+				{
+					b[l]=b[l-1];
+				}
+			b[l]='0';
+			i=j+1;
+			}
+		}
+	}
+	for(i=0;i<n;i++)
+	{
+		putc(b[i],fp);
+	}
+	for(i=0;i<8;i++)
+  {
+    putc(a[i],fp);
+  }
+}

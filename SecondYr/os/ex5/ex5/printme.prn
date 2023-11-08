@@ -1,0 +1,335 @@
+****************************************************************
+	 C.S.ROY JASPER                          14BIT058
+
+ 	 EX 5 --> Interprocess Communication Using Shared Memory
+_______________________________________________________________
+aim:to print the sum of first half elements and second 
+    half elements
+_______________________________________________________________
+program:
+
+#include<stdio.h>
+#include<sys/ipc.h>
+#include<sys/shm.h>
+main()
+{
+int n,s1=0,s2=0,avg,i,d,k,l,s=0,*a;
+printf("\nenter the number of element:");
+scanf("%d",&n);
+d=shmget(IPC_PRIVATE,n*sizeof(int),0766|IPC_CREAT);
+a=(int *)shmat(d,NULL,0);
+printf("\nenter the elements:");
+for(i=0;i<n;i++)
+scanf("%d",&a[i]);
+k=fork();
+l=fork();
+if(l==0)
+{
+for(i=n/2;i<n;i++)
+s2=s2+a[i];
+printf("\nsum of the last n/2 elements:%d",s2);
+}
+else
+if(k==0 && l>0)
+{
+for(i=0;i<n/2;i++)
+s1=s1+a[i];
+printf("\nSum of the  first n/2 elements:%d",s1);
+}
+else
+if(k>0 && l>0)
+{
+for(i=0;i<n;i++)
+s=s+a[i];
+avg=s/n;
+printf("\nAverage:%d\n",avg);
+}
+else
+printf("\nError\n");
+}
+
+output:
+
+enter the number of element: 5
+
+enter the elements:
+1 2 3 4 5
+
+sum of the last n/2 elements:12
+Sum of the  first n/2 elements:3
+sum of the last n/2 elements:12
+Average:3
+
+________________________________________________________________
+aim:to print whether the number is even or odd
+_______________________________________________________________
+
+program:
+
+#include<stdio.h>
+#include<sys/ipc.h>
+#include<sys/shm.h>
+main()
+{
+ int d,*p,c,n;
+ d=shmget(IPC_PRIVATE,sizeof(int),IPC_CREAT|0766);
+ p=(int*)shmat(d,NULL,0);
+ c=fork();
+ if(c<0)
+ printf("error in creation");
+ else if(c==0)
+ {
+  printf("enter a number");
+  scanf("%d",p);
+ }
+ else if(c>0)
+ {
+  getchar();
+  if(*p%2==0)
+  printf("even");
+  else
+  printf("odd");
+ }
+}
+ 
+output:
+
+enter a number 4
+
+even
+____________________________________________________________
+aim:to find the sum of first two rows of a matrix and
+    last two row of a matrix
+____________________________________________________________
+
+program:
+
+#include<stdio.h>
+#include<sys/ipc.h>
+#include<sys/shm.h>
+main()
+{
+  int d,m,vowels=0,i;
+  int *p,s[20];
+  d=shmget(IPC_PRIVATE,16*sizeof(char),IPC_CREAT|0766);
+  p=(int *)shmat(d,NULL,0);
+  if(d!=-1)
+  {
+		printf("ENTER THE ELEMENTS");
+		for(i=0;i<16;i++)
+    {
+			scanf("%d",&s[i]);
+      p[i]=s[i];
+    }
+		m=fork();
+  	if(m<0)
+    	printf("CREATION ERROR");
+  	else if(m==0)
+  	{
+    	int *n,b,g=0;
+    	for(i=0;i<8;i++)
+    	{
+      	g=g+p[i];
+    	}
+			printf("THE FIRST TOTAL IS %d",g);
+  	}
+  	else if(m>0)
+  	{
+    	int h=0,j;
+    	for(j=8;j<16;j++)
+    	{
+      	h=h+p[j];
+    	}
+    	printf("\nTHE SECOND TOTAL IS %d",h);
+  	}
+  }
+}
+
+
+output:
+
+ENTER THE ELEMENTS 
+1 1 1 1
+2 2 2 2
+3 3 3 3
+4 4 4 4
+THE FIRST TOTAL IS 12
+THE SECOND TOTAL IS 28
+______________________________________________________________
+aim:to find the number of vowels in the string
+______________________________________________________________
+
+program:
+
+#include<stdio.h>
+#include<sys/ipc.h>
+#include<sys/shm.h>
+main()
+{
+  int d,m,vowels=0,i;
+	char *p,s[20];
+  d=shmget(IPC_PRIVATE,50*sizeof(char),IPC_CREAT|0766);
+  p=(char *)shmat(d,NULL,0);
+  if(d!=-1)
+  {
+    m=fork();
+  if(m<0)
+    printf("CREATION ERROR");
+  else if(m==0)
+  {
+    int *n,b;
+    printf("ENTER THE String");
+		scanf("%s",s);
+		for(i=0;s[i]!='\0';i++)
+    {
+			p[i]=s[i];
+		}
+  }
+  else if(m>0)
+  {
+		int g;
+		scanf("%d",&g);
+		for(i=0;p[i]!='\0';i++)
+		{
+    	if(p[i]=='a'||p[i]=='e'||p[i]=='i'||p[i]=='o'||p[i]=='u')
+     		vowels++;
+		}
+		printf("THE VOWELS ARE %d",vowels);
+  }
+  }
+}
+
+
+ENTER THE String ROYJASPER
+THE VOWELS ARE 3
+____________________________________________________________
+aim:to find the sum of first half and second half elements
+____________________________________________________________
+
+program:
+
+#include<stdio.h>
+#include<sys/ipc.h>
+#include<sys/shm.h>
+main()
+{
+  int d,m,vowels=0,i,n,l;
+  int *p,s[20],*q,*r;
+	printf("ENTER THE SIZE OF ARRAY");
+	scanf("%d",&n);
+  d=shmget(IPC_PRIVATE,n*sizeof(int),IPC_CREAT|0766);
+  p=(int *)shmat(d,NULL,0);
+	d=shmget(IPC_PRIVATE,sizeof(int),IPC_CREAT|0766);
+  q=(int *)shmat(d,NULL,0);
+	r=(int *)shmat(d,NULL,0);
+	if(d!=-1)
+  {
+    printf("ENTER THE ELEMENTS");
+    for(i=0;i<n;i++)
+    {
+      scanf("%d",&s[i]);
+      p[i]=s[i];
+    }
+		*q=n;
+		*r=n;
+    m=fork();
+		l=fork();
+    if((m<0)||(l<0))
+      printf("CREATION ERROR");
+    else if((m==0)&&(l==0))
+    {
+      int n,b,g=0;
+      for(i=(*q/2);i<*q;i++)
+      {
+        g=g+p[i];
+      }
+      printf("THE FIRST TOTAL IS %d",g);
+    }
+    else if((m==0)&&(l>0))
+    {
+      int h=0,j;
+      for(j=0;j<*q/2;j++)
+      {
+        h=h+p[j];
+      }
+      printf("\nTHE SECOND TOTAL IS %d",h);
+    }
+		else if((m>0)&&(l>0))
+		{
+			int u=0,k;
+			for(k=0;k<*q;k++)
+      {
+        u=u+p[k];
+      }
+			u=u/(*r);
+      printf("\nTHE AVERAGE IS %d",u);
+	 	}
+	}
+}
+
+
+output:
+
+ENTER THE SIZE OF ARRAY 5
+ENTER THE ELEMENTS
+1 2 3 5 6
+THE FIRST TOTAL IS 14
+THE SECOND TOTAL IS 3
+THE AVERAGE IS 3
+
+another output:
+
+ENTER THE SIZE OF ARRAY 6
+ENTER THE ELEMENTS
+1 2 3 4 5 6
+THE FIRST TOTAL IS 15
+THE SECOND TOTAL IS 6
+THE AVERAGE IS 3
+__________________________________________________________________
+											surprise question
+
+aim:to find whether the given number is palindrome or not
+__________________________________________________________________
+
+program:
+
+#include<stdio.h>
+#include<sys/ipc.h>
+#include<sys/shm.h>
+main()
+{
+ int d,*a,k,n,r,q,b,s=0;
+ d=shmget(IPC_PRIVATE,sizeof(int),IPC_CREAT|0766);
+ a=(int*)shmat(d,NULL,0);
+ k=fork();
+ if(k==0)
+ {
+  printf("enter a number");
+  scanf("%d",a);
+ }
+ else if(k>0)
+ {
+  getchar();
+  b=*a;
+  while(*a!=0)
+  {
+   q=*a/10;
+   r=*a%10;
+   s=(s*10)+r;
+   *a=q;
+  } 
+ if(s==b)
+ printf("It is palindrome");
+ else
+ printf("It is not palindrome");
+ }
+}
+bash-3.2$ cc pal.c
+bash-3.2$ ./a.out
+
+enter a number 1212
+It is palindrome
+enter a number 345
+It is not palindrome
+
+

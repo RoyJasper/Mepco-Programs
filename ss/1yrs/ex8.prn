@@ -1,0 +1,279 @@
+Script started on Thu 11 Nov 2016 06:07:35 PM IST
+bash-3.2$ cat bank.c
+#include<stdio.h>
+void creation();
+void deposit();
+void withdraw();
+void bal();
+int a=0,i = 101;
+struct bank
+{
+ int no;
+ char name[20];
+ float bal;
+ float dep;
+}s[20];
+         main()
+       {
+ int ch;
+ while(1)
+ {
+printf("\n*********************");
+                              printf("\n BANKING ");
+                              printf("\n*********************");
+                              printf("\n1-Creation");
+                              printf("\n2-Deposit");
+                              printf("\n3-Withdraw");
+                              printf("\n4-Balance Enquiry");
+                              printf("\n5-Exit");
+                              printf("\nEnter your choice");
+                              scanf("%d",&ch);
+                              switch(ch)
+                               {
+                                           case 1: creation();
+                                                         break;
+                                             case 2: deposit();
+                                                        break;
+                                             case 3: withdraw();
+                                                         break;
+                                             case 4:bal()
+                                                       break;
+                                              case 5:break; 
+                                              defalut: printf("Enter 1-5 only");
+                                        }
+                         }
+                       }    
+          void creation()
+        {
+                   printf("\n*************************************");
+                   printf("\n ACCOUNT CREATION ");
+                   printf("\n*************************************");
+                   printf("\nYour Account Number is :%d",i);
+                              s[a].no = i;
+                   printf("\nEnter your Name:");
+                              scanf("%s",s[a].name);
+                   printf("\nYour Deposit is Minimum Rs.500");
+                              s[a].dep=500;
+                              a++;
+                              i++;
+         }
+              void deposit()
+        {
+                   int no,b=0,m=0;          
+                   float aa;
+                   printf("\n*************************************");
+                   printf("\n DEPOSIT ");
+                   printf("\n*************************************");
+                   printf("\nEnter your Account Number");
+                   scanf("%d",&no);
+                   for(b=0;b<i;b++)
+                       {
+                           if(s[b].no == no)
+                               m = b;
+                       }
+                           if(s[m].no == no)
+                             {
+                                        printf("\n Account Number : %d",s[m].no);
+                                        printf("\n Name : %s",s[m].name);
+                                        printf("\n Deposit : %f",s[m].dep);
+                                        printf("\n How Much Deposited Now:");
+                                        scanf("%f",&aa);
+                                        s[m].dep+=aa;
+                                        printf("\nDeposit Amount is :%f",s[m].dep);
+                             }
+                            else
+                             {
+                                       printf("\nACCOUNT NUMBER IS INVALID");
+                              }
+         }
+             void withdraw()
+         {
+                    int no,b=0,m=0;
+                    float aa;
+                    printf("\n*************************************");
+                    printf("\n WITHDRAW ");
+                    printf("\n*************************************");
+                    printf("\nEnter your Account Number");
+                    scanf("%d",&no);
+                    for(b=0;b<i;b++)
+                        {
+                               if(s[b].no == no)
+                                 m = b;
+                        }
+                              if(s[m].no == no)                                 {
+                                       printf("\n Account Number : %d",s[m].no);
+                                        printf("\n Name : %s",s[m].name);
+                                       printf("\n Deposit : %f",s[m].dep);
+                                        printf("\n How Much Withdraw Now:");
+                                        scanf("%f",&aa);
+                                      if(s[m].dep<aa+500)
+                                         {
+                      printf("\nCANNOT WITHDRAW YOUR ACCOUNT HAS MINIMUM BALANCE");
+                   
+                                           }
+                                          else
+                                           {
+                                                  s[m].dep-=aa; 
+                                  printf("\nThe Balance Amount is:%f",s[m].dep);
+                                            }
+                                 }
+                               else
+                                {
+                                {
+                                      printf("INVALID");
+          }
+     void bal()
+          {
+                  int no,b=0,m=0;
+                  float aa;
+                  printf("\n*************************************");
+                  printf("\n BALANCE ENQUIRY ");
+                  printf("\n*************************************");
+                  printf("\nEnter your Account Number");
+                  scanf("%d",&no);
+                  for(b=0;b<i;b++)
+                      {
+                           if(s[b].no == no)
+                             m = b;
+                      }
+                           if(s[m].no==no)
+                              {
+                                    printf("\n Account Number : %d",s[m].no);
+                                    printf("\n Name : %s",s[m].name);
+                                    printf("\n Deposit : %f",s[m].dep);
+                              }
+                             else
+                             {
+           printf("INVALID");
+                              }
+            }
+}
+}
+bash-3.2$ cc bank.c
+bash-3.2$ ./a.out
+
+*********************
+ BANKING 
+*********************
+1-Creation
+2-Deposit
+3-Withdraw
+4-Balance Enquiry
+5-Exit
+Enter your choice:1
+
+*************************************
+ ACCOUNT CREATION 
+*************************************
+Your Account Number is :101
+Enter your Name:Dharun
+
+Your Deposit is Minimum Rs.500
+*********************
+ BANKING 
+*********************
+1-Creation
+2-Deposit
+3-Withdraw
+4-Balance Enquiry
+5-Exit
+Enter your choice:2
+
+*************************************
+ DEPOSIT 
+*************************************
+Enter your Account Number101
+
+ Account Number : 101
+ Name : Dharun
+ Deposit : 500.000000
+ How Much Deposited Now:1000
+
+Deposit Amount is :1500.000000
+*********************
+ BANKING 
+*********************
+1-Creation
+2-Deposit
+3-Withdraw
+4-Balance Enquiry
+5-Exit
+Enter your choice:3
+
+*************************************
+ WITHDRAW 
+*************************************
+Enter your Account Number101
+
+ Account Number : 101
+ Name : Dharun
+ Deposit : 1500.000000
+ How Much Withdraw Now:400
+
+The Balance Amount is:1100.000000
+*********************
+ BANKING 
+*********************
+1-Creation
+2-Deposit
+3-Withdraw
+4-Balance Enquiry
+5-Exit
+Enter your choice:5
+bash-3.2$ cat mark.c
+#include<stdio.h>
+struct student
+{
+int age;
+char name[100];
+int m1;
+int m2;
+}s[5];
+main()
+{
+int i,t[45];
+for(i=0;i<5;i++)
+{printf("enter the age,name,m1,m2:");
+scanf("%d %s %d %d",&s[i].age,s[i].name,&s[i].m1,&s[i].m2);
+t[i]=s[i].m1+s[i].m2;
+}
+for(i=0;i<5;i++){
+printf("age=%d \nname=%s \nm1=%d \nm2=%d \ntotal=%d\n",s[i].age,s[i].name,s[i].m1,s[i].m2,t[i]);
+}
+}
+bash-3.2$ cc mark.c
+bash-3.2$ ./a.out
+enter the age,name,m1,m2:17 Dharun 45 78
+enter the age,name,m1,m2:18 Mani 45 89
+enter the age,name,m1,m2:15 Santosh 99 98
+enter the age,name,m1,m2:14 Litish 45 78
+enter the age,name,m1,m2:15 Caran 75 64
+age=17 
+name=Dharun 
+m1=45 
+m2=78 
+total=123
+age=18 
+name=Mani 
+m1=45 
+m2=89 
+total=134
+age=15
+name=Santosh 
+m1=99 
+m2=98 
+total=197
+age=14 
+name=Litish 
+m1=45 
+m2=78 
+total=123
+age=15 
+name=Caran 
+m1=75 
+m2=64 
+total=139
+bash-3.2$ exit
+exit
+
+Script done on Thu 10 Nov 2016 06:09:49 PM IST

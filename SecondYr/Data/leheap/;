@@ -1,0 +1,41 @@
+#include"head.h"
+int main()
+{
+  int ch,x,p,i;
+  Heap h;
+  printf("Enter the capacity:");
+  scanf("%d",&x);
+  h=create(x);
+  if(h==NULL)
+    return 0;
+  do
+  {
+    printf("\n1.Insert\n2.Display\nEnter your choice:");
+    scanf("%d",&ch);
+    switch(ch)
+    {
+      case 1:
+          printf("Enter no of elements:");
+          scanf("%d",&p);
+          if(x>p)
+          {
+          printf("Enter the elements:");
+          for(i=0;i<p;i++)
+          {
+           scanf("%d",&x);
+            if(insert(x,h)==NULL)
+            {
+              printf("\nCannot insert Heap Full");
+            }
+          }
+         }
+         else
+           printf("Error");
+         break;
+      case 2:
+          printf("The elements are");
+          display(h);
+    }
+  }while(ch<3);
+return 1;
+}

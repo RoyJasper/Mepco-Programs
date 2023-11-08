@@ -1,0 +1,182 @@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NAME: ROY JASPER                  14BIT058
+              SIMPLE JAVA PROGRAMS
+-----------------------------------------------------
+
+PROGRAM TO CHECK INTEGER: 
+
+import java.io.*;
+import java.util.*;
+class CheckInt
+{
+ public static void main (String args[]) throws IOException
+ {
+  int number;
+  System.out.println("Enter number");
+ // Scanner obj=new Scanner (System.in);
+ // number=obj.nextInt();
+  InputStreamReader obj=new InputStreamReader(System.in);
+  BufferedReader obj1=new BufferedReader(obj);
+  number=Integer.parseInt(obj1.readLine());
+  if(number%2!=0)
+   System.out.println("Weired number");
+  else if((number>20)&&(number%2==0))
+   System.out.println("Not Weired number");
+  else if((number<=5)&&(number%2==0)&&(number>=2))
+   System.out.println("Not Weired number");
+  else if ((number>=6)&&(number%2==0)&&(number<=20))
+   System.out.println("Weired number");
+  else
+     System.out.println("Invalid number");
+ }
+}
+
+OUTPUT:
+
+Enter number
+3
+Weired number
+
+Enter number
+60
+Not Weired number
+----------------------------------------------------------
+PROGRAM TO ADD DIFFERENT DATATYPES:
+
+import java.io.*;
+import java.util.*;
+class Datatypes
+{
+ public static void main (String args[]) throws IOException
+ {
+  int firstno,secondno;
+  float firstfloat,secondfloat;
+  double firstdouble,seconddouble;
+  //Scanner obj=new Scanner (System.in);
+  System.out.println("Enter 2 integers");
+  InputStreamReader obj1=new InputStreamReader(System.in);
+  BufferedReader obj=new BufferedReader(obj1);
+  firstno=Integer.parseInt(obj.readLine());
+  secondno=Integer.parseInt(obj.readLine());
+ // firstno=obj.nextInt();
+ // secondno=obj.nextInt();
+  firstno=firstno+secondno;
+  System.out.println("Enter 2 Float");
+  firstfloat=Float.parseFloat(obj.readLine());
+  secondfloat=Float.parseFloat(obj.readLine());
+ // firstfloat=obj.nextFloat();
+  //secondfloat=obj.nextFloat();
+  firstfloat=firstfloat+secondfloat;
+  System.out.println("Enter 2 Double Values");
+  //firstname=obj.nextLine();
+  //secondname=obj.nextLine();
+  firstdouble=Double.parseDouble(obj.readLine());
+  seconddouble=Double.parseDouble(obj.readLine());
+  firstdouble=firstdouble+seconddouble;
+  System.out.println("Added integer value is "+firstno);
+  System.out.println("Added float value is "+firstfloat); 
+  System.out.println("Added double value  is "+firstdouble); 
+ }
+}
+
+OUTPUT:
+
+Enter 2 integers
+44
+77
+Enter 2 Float
+25.21
+36.25
+Enter 2 Double Values
+5465464564
+4556645846
+Added integer value is 121
+Added float value is 61.46
+Added double value  is 1.002211041E10
+-----------------------------------------------------
+PROGRAM TO CALCULATE GRADE FOR STUDENT:
+
+import java.io.*;
+import java.util.*;
+class Student
+{
+ public static void main (String args[]) throws IOException
+ {
+  int quiz,midterm,finalscore;
+  float percentage;
+  InputStreamReader obj1=new InputStreamReader(System.in);
+  BufferedReader obj=new BufferedReader(obj1);
+  System.out.println("Enter quiz,midterm and final scores");
+  quiz=Integer.parseInt(obj.readLine());
+  midterm=Integer.parseInt(obj.readLine());
+  finalscore=Integer.parseInt(obj.readLine());
+  percentage=((quiz+midterm+finalscore)/3);
+  System.out.println("Average is "+percentage);
+  if(percentage>=90)
+    System.out.println("Grade is A ");
+ else  if((percentage>=70)&&(percentage<90))
+    System.out.println("Grade is B ");
+ else  if((percentage>=50)&&(percentage<70))
+    System.out.println("Grade is C ");
+ else
+   System.out.println("Grade is F ");
+ }
+}
+
+OUTPUT:
+
+Enter quiz,midterm and final scores
+66
+77
+99
+Average is 80.0
+Grade is B 
+
+----------------------------------------------------
+PROGRAM FOR DISCOUNT CALCULATION:
+
+import java.io.*;
+import java.util.*;
+class Revenue
+{
+ public static void main (String args[]) throws IOException
+ {
+  int quantity,revenue,unitprice;
+  int discount,temp,disc=0;
+  InputStreamReader obj1=new InputStreamReader(System.in);
+  BufferedReader obj=new BufferedReader(obj1);
+  System.out.println("Enter quantity");
+  quantity=Integer.parseInt(obj.readLine());
+  System.out.println("Enter price");
+  unitprice=Integer.parseInt(obj.readLine());
+  temp=unitprice*quantity;
+  if((quantity>=100)&&(quantity<=120))
+  {
+   disc=((temp*10)/100);
+   discount=10;
+  }
+  else if(quantity>120)
+  {
+   disc=((temp*15)/100);
+   discount=15;
+  }
+  else
+   discount=0;
+  temp=temp-disc;
+  System.out.println("The revenue from sale : "+temp+"$");
+  System.out.println("After discount amount : "+disc+" Discount "+discount+"%");
+ 
+ }
+}
+
+OUTPUT:
+
+Enter quantity
+114
+Enter price
+56
+The revenue from sale : 5746$
+After discount amount : 638 Discount 10%
+
+
+Script done on Tue 12 Jan 2016 12:16:54 PM IST

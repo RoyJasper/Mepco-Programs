@@ -1,0 +1,350 @@
+****************************************************************************
+AUTHOR NAME  :P.SIVA SANKARAN
+ROLL NO      :14BIT059
+EXERCISE NAME:PROGRAM USING TEMPLATES
+EXERCISE NO  :9
+***************************************************************************
+PROGRAM USING TEMPLATES EMPLOYEE CLASS
+**************************************
+#include<iostream>
+#include<string>
+using namespace std;
+class employee
+{
+ public:
+ int eid;
+ string name;
+ string dept;
+ float bp,da,hra,ded;
+ float sal;
+ void getdetails()
+ {
+  cout<<"\nenter name:  ";
+  cin>>name;
+  cout<<"enter depart:  ";
+  cin>>dept;
+  cout<<"enter employee id:  ";
+  cin>>eid;
+  cout<<"enter basic pay:  ";
+  cin>>bp;
+  }
+ void calculate()
+ {
+  da=bp*0.7;
+  hra=bp*0.5;
+  ded=bp*0.02;
+  sal=(bp+da+hra-ded);
+  }
+ void printdetails()
+ {
+  
+  cout<<"\nname  :  "<<name;
+  cout<<"\nemp id: "<<eid;
+  cout<<"\ndepart:  "<<dept;
+  cout<<"\nsalary:  "<<sal;
+  
+  }
+ };
+template <typename type>
+void search(type e[],int k,int n,string ename,string edept)
+{
+ type c;
+ int j;
+ for(int i=0;i<n;i++)
+ {
+  if((e[i].eid==k)||(e[i].name==ename)||(e[i].dept==edept))
+  {
+  cout<<"\nsearch found at"<<i+1;
+  }
+  else j++;
+  if(j==n)
+  cout<<"not found\n";
+   }
+  }
+ main()
+{
+ employee e[10];
+ static int n,u,a;
+ cout<<"enter no of employees\n";
+ cin>>n;
+ for(int i=0;i<n;i++)
+ {
+  cout<<"enter "<<i+1<<" details\n";
+  e[i].getdetails();
+  e[i].calculate();
+  }
+  do
+  {
+  int k;
+  string ename,edept;
+  cout<<"\nenter choice to search\n1.employee id\n2.name\n3.dept\n4.display\n5.exit\n";
+  cin>>a;
+  switch(a)
+  {
+  case 1:
+  cout<<"\nenter employee id no to search\n";
+  cin>>k;
+  search <employee> (e, k, n, "", "");
+  break;
+  case 2:
+  cout<<"\nenter name to search\n";
+  cin>>ename;
+  search <employee> (e, 555, n, ename, "");
+  break;
+  case 3:
+  cout<<"\nenter department to search\n";
+  cin>>edept;
+  search <employee> (e, 555, n, "", edept);
+  break;
+  case 4:
+  for(int i=0;i<n;i++)
+  {
+  cout<<i+1<<" employee details";
+  e[i].printdetails();
+   }
+  break;
+  case 5:
+  exit(0);
+    }
+   }
+   while(1);
+ }
+OUTPUT
+*******
+enter no of employees
+2
+enter 1 details
+
+enter name:  siva
+enter depart:  it
+enter employee id:  1
+enter basic pay:  1 100000
+enter 2 details
+
+enter name:  ravi
+enter depart:  it
+enter employee id:  2
+enter basic pay:  50000
+
+enter choice to search
+1.employee id
+2.name
+3.dept
+4.display
+5.exit
+1
+
+enter employee id no to search
+1
+
+search found at1
+enter choice to search
+1.employee id
+2.name
+3.dept
+4.display
+5.exit
+2
+
+enter name to search
+ravi
+
+search found at2
+enter choice to search
+1.employee id
+2.name
+3.dept
+4.display
+5.exit
+3
+
+enter department to search
+ur
+not found
+
+enter choice to search
+1.employee id
+2.name
+3.dept
+4.display
+5.exit
+4 3
+
+enter department to search
+it
+
+search found at1
+search found at2
+enter choice to search
+1.employee id
+2.name
+3.dept
+4.display
+5.exit
+4
+1 employee details
+name  :  siva
+emp id: 1
+depart:  it
+salary:  2180002 employee details
+name  :  ravi
+emp id: 2
+depart:  it
+salary:  109000
+enter choice to search
+1.employee id
+2.name
+3.dept
+4.display
+5.exit
+5
+PROGRAM USING TEMPLATES IN STUDENT CLASS
+*****************************************
+#include<iostream>
+#include<string>
+using namespace std;
+class student
+{
+ public:
+ int r;
+ string name;
+ string dept;
+ int mark[6];
+ int total;
+ void getdetails()
+ {
+  cout<<"\nenter name:\t";
+  cin>>name;
+  cout<<"enter department:\t";
+  cin>>dept;
+  cout<<"enter rollno:\t";
+  cin>>r;
+  cout<<"enter marks\n";
+  for(int i=0;i<3;i++)
+  {
+   cout<<"enter "<<i+1<<" mark\t";
+   cin>>mark[i];
+   }
+  }
+ void calculate()
+ {
+  total=0;
+  for(int i=0;i<3;i++)
+  {
+   total=total+mark[i];
+   }
+  }
+ void printdetails()
+ {
+  cout<<"\nname:\t"<<name;
+  cout<<"\nrollno:\t"<<r;
+  cout<<"\ndepart:\t"<<dept;
+  cout<<"\nmarks\n";
+  for(int i=0;i<3;i++)
+  {
+   cout<<"\nmark "<<i+1<<" "<<mark[i];
+   }
+  cout<<"\ntotal:\t"<<total;
+
+  }
+ };
+template <typename type>
+void bubblesort(type s[],int k,int n)
+{
+ type c;
+ int up,low,mid;
+ for(int i=0;i<n;i++)
+ {
+  for(int j=i+1;j<n;j++)
+  {
+   if(&s[i]>&s[j])
+   {
+    c=s[i];
+    s[i]=s[j];
+    s[j]=c;
+    }
+   }
+  }
+low=0;
+up=n-1;
+while(low<=up)
+{
+ mid=(low+up)/2;
+ if(s[mid].r==k)
+ {
+  cout<<"\nsearch found at"<<mid+1;
+  exit(0);
+  }
+ else
+  if(k<s[mid].r)
+  low=mid-1;
+  else
+  low=mid+1;
+  }
+  cout<<"\nnot found\n";
+ }
+ main()
+{
+ student s[10];
+ int n,k,u;
+ cout<<"enter no of students\n";
+ cin>>n;
+ for(int i=0;i<n;i++)
+ {
+  s[i].getdetails();
+  s[i].calculate();
+  s[i].printdetails();
+  }
+  cout<<"\nenter rollno to search \n";
+  cin>>k;
+  for(int j=0;j<n;j++)
+  { s[j].r==k;
+  break;}
+  bubblesort <student> (s, k, n);
+ }
+
+OUTPUT
+*******
+enter no of students
+2
+
+enter name:	
+siva
+enter department:	it
+enter rollno:	1
+enter marks
+enter 1 mark	100
+enter 2 mark	100
+enter 3 mark	100
+
+name:	siva
+rollno:	1
+depart:	it
+marks
+
+mark 1 100
+mark 2 100
+mark 3 100
+total:	300
+enter name:	ravi
+enter department:	it
+enter rollno:	2
+enter marks
+enter 1 mark	98
+enter 2 mark	99
+enter 3 mark	100
+
+name:	ravi
+rollno:	2
+depart:	it
+marks
+
+mark 1 98
+mark 2 99
+mark 3 100
+total:	297
+enter rollno to search 
+1
+
+search found at1
+*******************************BYE BYE*****************************************

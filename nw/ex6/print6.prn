@@ -1,0 +1,340 @@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ROY JASPER C S 							14BIT058
+		EX 6 -> CONCURRENT CLIENT SERVER PROGRAMMING
+----------------------------------------------------------------------------------
+				CONCAT STRINGS
+SERVER:
+#include<stdio.h>
+#include<string.h>
+#include<sys/types.h>
+#include<sys/socket.h>
+#include<netinet/in.h>
+#include<arpa/inet.h>
+#include<unistd.h>
+#include<stdlib.h>
+struct sockaddr_in server,client1,client2,client3;
+int doit(int ss);
+main()
+{
+    int f=0,sd,b,pid,bn;
+    char s2[100],s1[40];
+    sd=socket(AF_INET,SOCK_DGRAM,0);
+    server.sin_family=AF_INET;
+    printf("enter the port number:");
+    scanf("%d",&bn);
+    server.sin_port=htons(bn);
+    int cc=0;
+    server.sin_addr.s_addr=htonl(INADDR_ANY);
+    b=bind(sd,(struct sockaddr*)&server,sizeof(server));
+    if(b==0)
+        printf("\nbinding successful");
+    int n,i;
+    for(i=0; i<3; i++)
+    {
+        if((pid=fork())<0)
+        {
+            printf("\nchild creation not created");
+        }
+        else if(pid==0)
+        {
+            printf("\nchild process created");
+            n=doit(sd);
+        }
+        else
+            break;
+    }
+    close(sd);
+}
+
+int doit(int sd)
+{
+    int i;
+    char ss[50],s1[40],s2[50];
+    for(i=0; i<3; i++)
+    {
+        if(i==0)
+        {
+            int dd=sizeof(client1);
+            recvfrom(sd,s1,sizeof(s1),0,(struct sockaddr *)&client1,&dd);
+            printf("%s\n",s1);
+            printf("msg received\n");
+        }
+        if(i==1)
+        {
+            int dd=sizeof(client2);
+            recvfrom(sd,s2,sizeof(s2),0,(struct sockaddr *)&client2,&dd);
+            printf("%s\n",s2);
+            strcat(s1,s2);
+        }
+        if(i==2)
+        {
+            int dd=sizeof(client3);
+            recvfrom(sd,ss,sizeof(ss),0,(struct sockaddr *)&client3,&dd);
+            printf("%s\n",ss);
+            sendto(sd,s1,sizeof(s1),0,(struct sockaddr*)&client3,sizeof(client3));
+            printf("msg sended %s\n",s1);
+        }
+    }
+
+    return 0;
+
+}
+
+CLIENT 1:
+#include<stdio.h>
+#include<string.h>
+#include<sys/types.h>
+#include<sys/socket.h>
+#include<netinet/in.h>
+#include<arpa/inet.h>
+#include<unistd.h>
+#include<stdlib.h>
+
+main()
+
+{
+
+    int sd;
+
+    char s2[100];
+
+    struct sockaddr_in server;
+
+    sd=socket(AF_INET,SOCK_DGRAM,0);
+
+    server.sin_family=AF_INET;
+
+    int bn;
+
+
+    printf("enter the port no:");
+
+    scanf("%d",&bn);
+
+    server.sin_port=htons(bn);
+
+    server.sin_addr.s_addr=htonl(INADDR_ANY);
+
+    char ch[40];
+
+    printf("enter the string:");
+
+    scanf("%s",&s2);
+
+    sendto(sd,s2,sizeof(s2),0,(struct sockaddr*)&server,sizeof(server));
+
+
+    close(sd);
+
+}
+
+CLIENT 2:
+#include<stdio.h>
+#include<string.h>
+#include<sys/types.h>
+#include<sys/socket.h>
+#include<netinet/in.h>
+#include<arpa/inet.h>
+#include<unistd.h>
+#include<stdlib.h>
+
+main()
+
+{
+
+    int sd,n;
+
+    char s2[100];
+
+    struct sockaddr_in server;
+
+    sd=socket(AF_INET,SOCK_DGRAM,0);
+
+    server.sin_family=AF_INET;
+
+
+    printf("enter port no:");
+
+    scanf("%d",&n);
+
+    server.sin_port=htons(n);
+
+    server.sin_addr.s_addr=htonl(INADDR_ANY);
+
+    printf("enter the string:");
+
+    scanf("%s",&s2);
+
+    sendto(sd,s2,sizeof(s2),0,(struct sockaddr*)&server,sizeof(server));
+
+    close(sd);
+
+}
+
+CLIENT 3:
+#include<stdio.h>
+#include<string.h>
+#include<sys/types.h>
+#include<sys/socket.h>
+#include<netinet/in.h>
+#include<arpa/inet.h>
+#include<unistd.h>
+#include<stdlib.h>
+
+main()
+
+{
+
+    int sd;
+
+    char s2[100];
+
+    struct sockaddr_in server;
+
+    sd=socket(AF_INET,SOCK_DGRAM,0);
+
+    int n;
+
+    server.sin_family=AF_INET;
+
+    printf("enter the  port number:");
+
+    scanf("%d",&n);
+
+    server.sin_port=htons(n);
+
+    server.sin_addr.s_addr=htonl(INADDR_ANY);
+
+    int bb=sizeof(server);
+
+
+    strcpy(s2,"client 3");
+
+    sendto(sd,s2,sizeof(s2),0,(struct sockaddr*)&server,sizeof(server));
+
+    recvfrom(sd,s2,sizeof(s2),0,(struct sockaddr *)&server,&bb);
+
+    printf("msg received\n");
+
+    printf("\nThe concatenated message is:%s\n",s2);
+
+    close(sd);
+
+}
+
+OUTPUT:
+
+Server running....
+
+Binding Successfull
+
+Received message is : roy
+
+Received message is : jasper
+
+CLIENT 1:
+Enter message to send : roy
+
+CLIENT 2:
+Enter message to send : jasper
+
+CLIENT 3:
+Received From server : royjasper
+---------------------------------------------------------------------
+				JAVA CLIENT SERVER USING THREADS
+SERVER:
+
+import java.io.*;
+import java.util.*;
+import java.net.*;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+
+class Server
+{
+
+    private static int port = 3404;
+
+
+    public static void main(String args[])
+    {
+        try
+        {
+            final ExecutorService service = Executors.newCachedThreadPool();
+            ServerSocket serversock=new ServerSocket(3204);
+            while(true)
+            {
+                Socket  socket=serversock.accept();
+                service.submit(new MyClass(socket));
+            }
+        }
+        catch(IOException e) {}
+    }
+}
+
+class MyClass implements Runnable
+{
+
+    Socket socket;
+
+    public MyClass(Socket s)
+    {
+        socket = s;
+    }
+
+    public void run()
+    {
+        try
+        {
+            DataInputStream in = new DataInputStream(socket.getInputStream());
+            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+            int x = in.readInt();
+            out.write(2*x);
+            socket.close();
+        }
+        catch(IOException e) {}
+    }
+}
+
+CLIENT:
+import java.io.*;
+import java.net.*;
+
+class Client
+{
+    public static void main(String argv[]) throws Exception
+    {
+        String sentence;
+        String modifiedSentence;
+        BufferedReader inFromUser = new BufferedReader( new InputStreamReader(System.in));
+        Socket clientSocket = new Socket("localhost", 3204);
+        DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
+        BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        while(true)
+        {
+            sentence = inFromUser.readLine();
+            outToServer.writeBytes(sentence + '\n');
+            modifiedSentence = inFromServer.readLine();
+            System.out.println("FROM SERVER: " + modifiedSentence);
+            clientSocket.close();
+            System.exit(-1);
+        }}
+}
+
+OUTPUT:
+
+SERVER: 
+
+Enter a no :
+ 12
+
+CLIENT:
+
+Received : 24
+-------------------------------------------------------------------------

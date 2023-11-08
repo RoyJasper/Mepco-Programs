@@ -1,0 +1,68 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+struct node
+{
+	char stack[50];
+	int size;
+};
+typedef struct node stacks;
+stacks initialize(stacks s)
+{
+	int i;
+	for(i=0;i<50;i++)
+		s.stack[i]='\0';
+	s.size=0;
+	return s;
+}
+stacks push(stacks s,char a)
+{
+	s.stack[s.size]=a;
+	s.size++;
+	return s;
+}
+stacks pop(stacks s)
+{
+	s.size--;
+	s.stack[s.size]='\0';
+	return s;
+}
+void display(stacks s)
+{
+		printf("%s\n",s.stack);
+}
+main()
+{
+	stacks s;
+	int nn,n,m,i,j,k;
+	char t[50],tt[50][50][50],ss[50][50];
+	s=initialize(s);
+	printf("ENTER THE NO OF I's");
+	scanf("%d",&n);
+	printf("ENTER THE NO OF TERMINAL & NON TERMINAL");
+	scanf("%d",&m);
+//	printf("ENTER THE TERMINAL & NON TREMINAL");
+//	scanf("%s",t);
+//	printf("ENTER THE NO OF STRINGS");
+//	scanf("%d",&nn);
+//	for(i=0;i<nn;i++)
+//		scanf("%s",ss[i]);
+	printf("ENTER THE VALUES IN TABLE");
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<m;j++)
+		{
+			scanf("%s",tt[i][j]);
+		}
+	}
+	for(i=0;i<n;i++)
+  {
+    for(j=0;j<m;j++)
+    {
+      	printf("%s",tt[i][j]);
+			printf("\t");
+    }
+		printf("\n");
+  }
+}
+

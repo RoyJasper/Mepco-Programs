@@ -1,0 +1,183 @@
+************************************************************************************
+NAME:D.BALAN                                   ROLLNO:14BIT040
+DATE:                                          EXNO:6
+*************************************************************************************
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.util.*;
+import java.io.*; 
+public class Client
+{
+ 
+    private static Socket socket;
+ 
+    public static void main(String args[])
+    {
+        try
+        {
+            String host = "localhost";
+            int port = 1988;
+            InetAddress address = InetAddress.getByName(host);
+            socket = new Socket(address, port);
+            Scanner obj1=new Scanner(System.in);
+            OutputStream os = socket.getOutputStream();
+            OutputStreamWriter osw = new OutputStreamWriter(os);
+            BufferedWriter bw = new BufferedWriter(osw);
+ 
+            String number ;
+            number=obj1.next();
+            
+            String sendMessage = number + "\n";
+            bw.write(sendMessage);
+            bw.flush();
+            System.out.println("Message sent to the server : "+sendMessage);
+            InputStream is = socket.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(isr);
+            String message = br.readLine();
+            System.out.println("Message received from the server : " +message);
+        }
+        catch (Exception exception)
+        {
+            exception.printStackTrace();
+        }
+        finally
+        {
+
+            try
+            {
+                socket.close();
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+[14bit062@mepcolinux:~/net/ex7]cat MyServer.java
+cat: MyServer.java: No such file or directory
+[14bit062@mepcolinux:~/net/ex7]cat MultiThreadServer.java
+import java.io.IOException;
+import java.io.PrintStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class MultiThreadServer implements Runnable {
+   Socket csocket;
+   MultiThreadServer(Socket csocket) {
+      this.csocket = csocket;
+   }
+
+   public static void main(String args[]) 
+   throws Exception {
+      ServerSocket ssock = new ServerSocket(1234);
+      System.out.println("Listening");
+      while (true) {
+         Socket sock = ssock.accept();
+         System.out.println("Connected");
+         new Thread(new MultiThreadServer(sock)).start();
+      }
+   }
+   public void run() {
+      try {
+         PrintStream pstream = new PrintStream
+         (csocket.getOutputStream());
+         pstream.send();
+         }
+         pstream.close();
+         csocket.close();
+      }
+      catch (IOException e) {
+         System.out.println(e);
+      }
+   }
+}
+
+
+
+#include<stdio.h>
+#include<string.h>
+#include<sys/types.h>
+#include<sys/socket.h>
+#include<netinet/in.h>
+#include<arpa/inet.h>
+#include<unistd.h>
+#include<stdlib.h>
+struct sockaddr_in server,client1,client2,client3;
+int doit(int ss);
+main()
+{
+ int f=0,sd,b,pid,bn;
+char s2[100],s1[40];
+sd=socket(AF_INET,SOCK_DGRAM,0);
+server.sin_family=AF_INET;
+printf("enter the port number:");
+scanf("%d",&bn);
+server.sin_port=htons(bn);
+int cc=0;
+server.sin_addr.s_addr=htonl(INADDR_ANY);
+b=bind(sd,(struct sockaddr*)&server,sizeof(server));
+if(b==0)
+printf("\nbinding successful");
+int n,i;
+listen(sd, 3);
+puts("Waiting for incoming connections...");
+for(i=0;i<3;i++){
+if((pid=fork())<0)
+{
+printf("\nchild creation not created");
+}
+else if(pid==0)
+{
+printf("\nchild process created");
+n=doit(sd);
+}
+else
+break;
+}
+close(sd);
+}
+
+int doit(int sd)
+{
+int i;
+char s3[50],s1[40],s2[50];
+for(i=0;i<3;i++)
+{
+if(i==0)
+{
+c = sizeof(struct sockaddr_in);
+cl = accept(sd, (struct sockaddr *)&client1, (socklen_t*)&c);
+recvfrom(cl,s1,2000,0);
+printf("%s\n",s1);
+send(cl,s1,2000,0);
+}
+if(i==1)
+{
+c = sizeof(struct sockaddr_in);
+cl = accept(sd, (struct sockaddr *)&client2, (socklen_t*)&c);
+recv(cl,s1,2000,0);
+printf("%s\n",s1);
+send(cl,s1,2000,0);
+
+}
+if(i==2)
+{
+c = sizeof(struct sockaddr_in);
+cl = accept(sd, (struct sockaddr *)&client2, (socklen_t*)&c);
+recv(cl,s1,2000,0);
+printf("%s\n",s1);
+send(cl,s1,2000,0);
+
+}
+}
+return 0;
+}
+

@@ -1,0 +1,101 @@
+Script started on Tue 08 Nov 2016 02:32:50 PM IST
+bash-3.2$ cat sd.c
+#include<stdio.h>
+#include<math.h>
+main()
+{
+float num[50],sd;
+int n,i;
+float avg,sum=0;
+printf("Enter the number of numbers:\n");
+scanf("%d",&n);
+printf("Enter set of numbers:\n");
+for(i=0;i<n;i++)
+  {
+  scanf("%f",&num[i]);
+  sum=sum+num[i];
+  }
+avg=sum/n;
+for(i=0,sum=0;i<n;i++)
+  sum=sum+pow(num[i]-avg,2);
+sd=pow(sum/n,0.5);
+printf("Standard Deviation is %f \n",sd);
+}
+
+bash-3.2$ cc cat sd.c -lm
+bash-3.2$ ./a.out
+Enter the number of numbers:
+5
+Enter set of numbers:
+1
+2
+3
+4
+5
+Standard Deviation is 1.414214 
+bash-3.2$ cat acceptance.c
+#include<stdio.h>
+main()
+{
+char acceptance[60];
+int i,count,n;
+printf("Enter the no. of students:\n");
+scanf("%d",&n);
+printf("Enter acceptance of each student as Y/N:\n");
+for(i=0,count=0;i<n;i++)
+ {
+ scanf(" %c",&acceptance[i]);
+ if(acceptance[i]=='y'||acceptance[i]=='Y')
+  count++;
+ else
+  count=count+0;
+ }
+printf("No. of students accepted is %d\n",count);
+}
+
+bash-3.2$ cc acceptance.c
+bash-3.2$ ./a.out
+Enter the no. of students:
+6
+Enter acceptance of each student as Y/N:
+y
+
+n
+y
+n
+y
+n
+No. of students accepted is 3
+bash-3.2$ cat gpa.c
+#include<stdio.h>
+main()
+{
+ int n,i,j;
+ float gpa[60],temp;
+ printf("Enter no. of students in class:");
+ scanf("%d",&n);
+ printf("Enter gpa of students:");
+ for(i=0;i<n;i++)
+  scanf("%f",&gpa[i]);
+  for(i=0;i<n-1;i++)
+   for(j=0;j<n-1;j++)
+    if(gpa[j]<gpa[j+1])
+    {
+     temp=gpa[j];
+     gpa[j]=gpa[j+1];
+     gpa[j+1]=temp;
+    }
+    printf("Top 5 gpa's are:"); 
+  for(i=0;i<5;i++)
+  printf(" % 0.1f,",gpa[i]);
+ printf("\b");
+}
+                            
+bash-3.2$ cc gpa.c
+bash-3.2$ ./a.out
+Enter no. of students in class:6
+Enter gpa of students:9.5 6.5 9.8 9.5 2.5 8.5
+Top 5 gpa's are:  9.8,  9.5,  9.5,  8.5,  6.5,bash-3.2$ exit
+exit
+
+Script done on Tue 08 Nov 2016 02:38:27 PM IST

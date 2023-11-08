@@ -1,0 +1,111 @@
+**************************************************************
+EX.NO:08		NAME: RAHUL RAJAN D
+DATE:08/9/16		ROLLNO: 14BIT053
+**************************************************************
+	IMPLEMENTATION OF RARP
+**************************************************************
+CLIENT:
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<sys/socket.h>
+#include<unistd.h>
+#include<netinet/in.h>
+#include<sys/types.h>
+int main()
+{
+ int sd,b,ad,f,l,len;
+ char msg[100],msg1[100];
+ struct sockaddr_in server,client;
+ server.sin_family=AF_INET;
+ printf("ENTER THE PORT NO:");
+ scanf("%d",&f);
+ server.sin_port=htons(f);
+ server.sin_addr.s_addr=htonl(INADDR_ANY);
+ sd=socket(AF_INET,SOCK_STREAM,0);
+ b=connect(sd,(struct sockaddr *) &server,sizeof(server));
+ if(b>=0)
+  printf("CONNECT SUCCESS");
+ printf("\nEnter a H/W address");
+ scanf("%s",msg);
+ send(sd,msg,sizeof(msg),0);
+ recv(sd,msg1,50,0);
+ printf("\nThe IP ADDRESS is: %s",msg1);
+ close(sd);
+}
+
+SERVER:
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<sys/socket.h>
+#include<unistd.h>
+#include<netinet/in.h>
+#include<sys/types.h>
+int main()
+{
+ int sd,b,ad,lac,l,len,f,check,i,flag;
+ char msg[100];
+ char ch,line[100],line1[100],line2[100],line3[100],line4[100],line5[100],line6[1000];
+ struct sockaddr_in server,client;
+ char *t="/proc/net/arp";
+ FILE *fp;
+ fp=fopen(t,"r");
+ server.sin_family=AF_INET;
+ printf("ENTER THE PORT NUMBER");
+ scanf("%d",&f);
+ server.sin_port=htons(f);
+ server.sin_addr.s_addr=htonl(INADDR_ANY);
+ sd=socket(AF_INET,SOCK_STREAM,0);
+ if(sd>=0)
+  printf("SOCKET SUCCESS");
+ else
+  printf("ERROR");
+ b=bind(sd,(struct sockaddr *) &server,sizeof(server));
+ if(b>=0)
+  printf("BIND SUCCESS");
+ else
+  printf("BIND ERROR");
+ l=listen(sd,5);
+ if(l>=0)
+  printf("LISTEN SUCCESS");
+ len=sizeof(client);
+ ad=accept(sd,(struct sockaddr *) &client,&len);
+ if(ad>=0)
+  printf("ACCEPT SUCCESS");
+ recv(ad,msg,100,0);
+ printf("\nThe message is %s",msg);
+ for(i=0;i<9;i++)
+ {
+  fscanf(fp,"%s",line);
+ }
+ check=fscanf(fp,"%s%s%s%s%s%s",line,line1,line2,line3,line4,line5);
+ while(check>0)
+ {
+  if(strcmp(msg,line3)==0)
+  {
+   flag=1; 
+   break;
+  }
+  check=fscanf(fp,"%s%s%s%s%s%s",line,line1,line2,line3,line4,line5);
+ }
+ send(ad,line,100,0);
+ close(sd);
+ return 0;
+}
+
+OUTPUT:
+CLIENT:
+ENTER THE PORT NO:8806
+CONNECT SUCCESS
+Enter a H/W address=00:50:56:e6:e6:1a
+
+The IP ADDRESS is: 192.168.72.254
+
+SERVER:
+ENTER THE PORT NUMBER:8806
+SOCKET SUCCESS
+BIND SUCCESS
+LISTEN SUCCESS
+ACCEPT SUCCESS
+The message is 00:50:56:e6:e6:1a

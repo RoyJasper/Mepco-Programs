@@ -1,0 +1,42 @@
+Script started on Sat 19 Nov 2016 05:55:10 PM IST
+bash-3.2$ cat text.c
+#include<stdio.h>
+main()
+{
+ FILE *fpold,*fpnew;
+ char ch;
+ char fnameold[30];
+ char fnamenew[30];
+ printf("Enter the existing file name");
+ scanf("%s",fnameold);
+ printf("Enter new file name");
+ scanf("%s",fnamenew);
+ fpold=fopen(fnameold,"r");
+ if(fpold==NULL)
+  printf("Existing file cannot be opened\n");
+ else
+ {
+  fpnew=fopen(fnamenew,"w");
+  if(fpnew==NULL)
+   printf("Error in creating new file\n");
+  else
+  {
+   while((ch=getc(fpold))!=EOF)
+     putc(ch,fpnew);
+   fclose(fpnew);
+  }
+  fclose(fpold);
+ }
+}
+bash-3.2$ cat ashok.c
+a.r.rahman is  best music directer in world
+bash-3.2$ cc text.c
+BASH-3.2$./a.out
+Enter the existing file nameashok.c
+Enter new file namekumar.c
+bash-3.2$ cat kumar.c
+a.r.rahman is  best music directer in world
+bash-3.2$ exit
+exit
+
+Script done on Sat 19 Nov 2016 05:57:22 PM IST

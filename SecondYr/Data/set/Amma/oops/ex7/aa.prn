@@ -1,0 +1,358 @@
+******************************************************************************
+AUTHOR NAME  :P.SIVA SANKARAN
+ROLL NO      :14BIT059
+EXERCISE NO  :7
+EXERCISE NAME:PROGRAM USING OPERATOR OVERLOADING
+*****************************************************************************
+MATRIX PROGRAM
+***************
+#include<iostream>
+using namespace std;
+class matrix
+{
+ public:
+ int ele[3][3];
+ matrix()
+ { 
+ }
+ matrix(int tm[3][3])
+ {
+  for(int i=0;i<3;i++)
+  {
+   for(int j=0;j<3;j++)
+   {
+    ele[i][j]=tm[i][j];
+   }
+  }
+ }
+ matrix operator+(matrix tm)
+ {
+  matrix c;
+  for(int i=0;i<3;i++)
+  {
+   for(int j=0;j<3;j++)
+   {
+    c.ele[i][j]=ele[i][j]+tm.ele[i][j];
+   }
+  }
+  return c;
+ }
+  matrix operator-(matrix tm)
+ {
+  matrix c;
+  for(int i=0;i<3;i++)
+  {
+   for(int j=0;j<3;j++)
+   {
+    c.ele[i][j]=ele[i][j]-tm.ele[i][j];
+ }
+
+  }
+  return c;
+ }
+ matrix operator*(matrix tm)
+ {
+  matrix c;
+  for(int i=0;i<3;i++)
+  {
+   for(int j=0;j<3;j++)
+   {
+    c.ele[i][j]=0;
+    for(int k=0;k<3;k++)
+    {
+     c.ele[i][j]=c.ele[i][j]+ele[i][k]*tm.ele[k][j];
+    }
+   }
+  }
+ return c;
+ }
+ void display()
+ {
+  cout<<"the resultant matrix is\n";
+  for(int i=0;i<3;i++)
+  {
+   for(int j=0;j<3;j++)
+   {
+    cout<<ele[i][j];
+cout<<"\t";
+   }
+   cout<<"\n";
+  }
+ }
+};
+ int main()
+ {
+  int i,j,a[3][3],b[3][3],n;
+  cout<<"enter the elements of A matrix\n";
+  for(i=0;i<3;i++)
+  {
+   for(j=0;j<3;j++)
+   cin>>a[i][j];
+  }
+  cout<<"enter the elements of B matrix\n";
+  for(i=0;i<3;i++)
+  {
+   for(j=0;j<3;j++)
+   cin>>b[i][j];
+  }
+  matrix x(a);
+  matrix y(b);
+  matrix z;
+  while(1)
+  {
+   cout<<"\n************* welcome to matrix operation  *************\n";
+   cout<<"\nenter your choice\n1.addition\n2.subtraction\n3.multiplication\n";
+   cout<<"4.exit\n";
+	 cin>>n;
+   switch(n)
+   {
+    case 1:
+           z=x+y;
+           z.display();
+           break;
+    case 2:
+           z=x-y;
+           z.display();
+           break;
+    case 3:
+           z=x*y;
+           z.display();
+           break;
+   case 4: exit(0);
+    default:
+           cout<<"\ninvalid input";
+           break;
+   }
+  }
+ }
+OUTPUT
+******
+enter the elements of A matrix
+1
+2
+3
+4
+5
+6
+7
+8
+9
+enter the elements of B matrix
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+************* welcome to matrix operation  *************
+
+enter your choice
+1.addition
+2.subtraction
+3.multiplication
+4.exit
+1
+the resultant matrix is
+2	4	6	
+8	10	12	
+14	16	18	
+
+************* welcome to matrix operation  *************
+
+enter your choice
+1.addition
+2.subtraction
+3.multiplication
+4.exit
+2
+the resultant matrix is
+0	0	0	
+0	0	0	
+0	0	0	
+
+************* welcome to matrix operation  *************
+
+enter your choice
+1.addition
+2.subtraction
+3.multiplication
+4.exit
+3
+the resultant matrix is
+30	36	42	
+66	81	96	
+102	126	150	
+
+************* welcome to matrix operation  *************
+
+enter your choice
+1.addition
+2.subtraction
+3.multiplication
+4.exit
+4
+OVERLOADING COUT $ CIN OPERATOR
+********************************
+#include<iostream>
+using namespace std;
+class employee
+{
+int eno;
+string ename;
+string dept;
+int salary;
+public:
+friend ostream& operator << (ostream&,employee&);
+friend istream& operator >> (istream&,employee&);
+};
+ostream& operator << (ostream &tout,employee &te)
+{
+tout<<"\n employee  name is      "<<te.eno;
+tout<<"\n employee name   is     "<<te.ename;
+tout<<"\n employee department is    "<<te.dept;
+tout<<"\n employee salary is        "<<te.salary;
+return tout;
+}
+istream& operator >> (istream &tin,employee &te)
+{
+cout<<"\n enter the name      :";
+tin>>te.ename;
+cout<<"\n enter the number    :";
+tin>>te.eno;
+cout<<"\n enter the depaertment   :";
+tin>>te.dept;
+cout<<"\n enter the salary        :";
+tin>>te.salary;
+return tin;
+}
+int  main()
+{
+employee e;
+cin>>e;
+cout<<"\n******************************************************";
+cout<<"\n employee details\n";
+cout<<"\n******************************************************";
+cout<<e;
+cout<<"\n******************************************************";
+return 0;
+}
+OUTPUT
+**********
+
+ enter the name      :siva
+
+ enter the number    :1
+
+ enter the depaertment   :it
+
+ enter the salary        :50000
+
+******************************************************
+ employee details
+
+******************************************************
+ employee  name is      1
+ employee name   is     siva
+ employee department is    it
+ employee salary is        50000
+******************************************************
+
+OVERLOADING +,-,PRE++,++POST
+*****************************
+#include<iostream>
+#include<string>
+using namespace std;
+class vector
+{
+int v[3];
+public:
+	vector operator +()
+	{
+	for(int i=0;i<3;i++)
+	v[i]=+v[i];
+	}
+	vector operator -()
+	{	
+	for(int i=0;i<3;i++)
+	v[i]=-v[i];
+	}
+  vector operator ++()
+  {
+  for(int i=0;i<3;i++)
+  v[i]=++v[i];
+  }
+	vector operator ++(int dum)
+	{
+	for(int i=0;i<3;i++)
+	v[i]=v[i]++;
+	}
+  vector(int tv[3])
+  {
+  for(int i=0;i<3;i++)
+  v[i]=tv[i];
+  }
+void display()
+ {
+cout<<"\n resultant values  are\n   ";
+for(int i=0;i<3;i++)
+{
+cout<<v[i];
+cout<<"\t";
+}
+cout<<"\n ";
+}
+};
+int main()
+{
+int t[3];
+cout<<"\n enter the 3 elements\n     ";
+for(int i=0;i<3;i++)
+cin>>t[i];
+vector vo(t);
++vo;
+cout<<"\n over loading + operator \n";
+vo.display();
+-vo;
+cout<<"\n over loading - operator  \n";
+vo.display();
+++vo;
+cout<<"\n over loading ++ operator  \n";
+vo.display();
+cout<<"\n over loading operator ++\n";
+vo++;
+vo.display();
+return 0;
+}
+
+OUTPUT
+******
+
+ enter the 3 elements
+     1
+2
+3
+
+ over loading + operator 
+
+ resultant values  are
+   1	2	3	
+ 
+ over loading - operator  
+
+ resultant values  are
+   -1	-2	-3	
+ 
+ over loading ++ operator  
+
+ resultant values  are
+   0	-1	-2	
+ 
+ over loading operator ++
+
+ resultant values  are
+   1	0	-1	
+

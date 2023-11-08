@@ -1,0 +1,190 @@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+14BIT058 				ROY JASPER C S
+		FILE TRANSFER PROTOCOL
+-----------------------------------------------------------
+
+CLIENT:
+#include <stdio.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <string.h>
+
+int main()
+{
+    int cs,port;
+    char str[20],u[20],p[20],fil[20];
+    struct sockaddr_in saddr;
+    socklen_t alen;
+    printf("\n Enter port : ");
+    scanf("%d",&port);
+    cs = socket(PF_INET, SOCK_STREAM, 0);
+
+
+    saddr.sin_family = AF_INET;
+
+    saddr.sin_port = htons(port);
+
+    // saddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+
+    memset(saddr.sin_zero, '\0', sizeof saddr.sin_zero);
+
+
+    alen = sizeof saddr;
+    connect(cs, (struct sockaddr *) &saddr, alen);
+
+    printf("\n Enter Username  : ");
+    scanf("%s",u);
+    printf("\n Enter Password  : ");
+    scanf("%s",p);
+    printf("\n Enter File name  : ");
+    scanf("%s",fil);
+    send(cs,u,100,0);
+    send(cs,p,100,0);
+    send(cs,fil,100,0);
+    loop:
+    recv(cs,str,100,0);
+    {
+        if(strcmp("Retry",str)==0)
+        {
+            printf("\n Error in Authorisation Retry.... \n Enter USername :  ");
+            scanf("%s",u);
+            printf("\n Enter Password  : ");
+            scanf("%s",p);
+            send(cs,u,100,0);
+            send(cs,p,100,0);
+            send(cs,fil,100,0);
+            goto loop;
+        }
+        if(strcmp("Failure",str)==0)
+        {
+            printf("\n TOTAL FAILL ");
+            return(1);
+        }
+    }
+}
+---------------------------------------
+SERVER:
+#include <stdio.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <string.h>
+int validornot(char[],char[]);
+int main()
+{
+    int wsoc,port,soc,cou=0;
+    char ch,str[20],u[20],p[20],fil[20];
+    FILE *fp,*fpt;
+    struct sockaddr_in saddr;
+    struct sockaddr_storage serv;
+    socklen_t alen;
+    printf("\n Enter port : ");
+    scanf("%d",&port);
+
+    wsoc = socket(PF_INET, SOCK_STREAM, 0);
+
+
+    saddr.sin_family = AF_INET;
+
+    saddr.sin_port = htons(port);
+
+    // saddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+
+    memset(saddr.sin_zero, '\0', sizeof saddr.sin_zero);
+
+
+    bind(wsoc, (struct sockaddr *) &saddr, sizeof(saddr));
+
+
+    if(listen(wsoc,5)==0)
+        printf("Listening\n");
+    else
+        printf("Error\n");
+
+
+    alen = sizeof serv;
+    soc = accept(wsoc, (struct sockaddr *) &serv, &alen);
+char x;
+    int j;
+loop:
+    recv(soc,u,100,0);
+    recv(soc,p,100,0);
+    recv(soc,fil,100,0);
+   // printf(" %s %s %s ",u,p,fil);
+
+    j=validornot(u,p);
+    if(j==0)
+    {
+        fp=fopen(fil,"r+");
+        if(!fp)
+        printf("FILE FAIl");
+        x=fgetc(fp);
+        while(x!=EOF)
+        {
+            if(x==' ')
+            {
+                fseek(fp,-1,SEEK_CUR);
+                fprintf(fp,",");
+            }
+            //printf("%c",x);
+            x=fgetc(fp);
+        }
+        fclose(fp);
+        //printf("<<<\n in f loop\n\n\n");
+    }
+    else
+    {
+        cou++;
+        if(cou==3)
+        {
+            send(soc,"Failure",100,0);
+            //goto loop;
+        }
+        else
+        {
+            send(soc,"Retry",100,0);
+            j=0;
+            goto loop;
+    }}
+
+}
+int validornot(char u[20], char p[10])
+{
+    FILE *fp;
+    char tp[10],tu[10];
+    fp=fopen("undpass.txt","r+");
+    fscanf(fp,"%s",tu);
+    fscanf(fp,"%s",tp);
+   // rewind(fp);
+   printf(" in file : %s %s ",tu,tp);
+    if((strcmp(tu,u)==0)&&(strcmp(tp,p)==0))
+    {
+        return 0;
+    }
+    else
+        return 1;
+}
+------------------------------------------------------
+OPTPUT:
+
+CLIENT:
+ Enter port : 4949
+
+ Enter Username  : roy
+
+ Enter Password  : jas
+
+ Enter File name  : fileop
+
+SERVER:
+ Enter port : 4949
+Listening
+---------------------------------------------------
+OPTPUT FILE:
+asdasd,sdasdaas,dasdasd
+-----------------------------------------------------
+PASSWORD FILE:
+roy jas
+roy jas
+roy jas
+roy jas
+-----------------------------------------------------

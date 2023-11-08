@@ -1,0 +1,200 @@
+Script started on Thu 03 Sep 2015 01:35:11 PM IST
+bash-3.2$ cst [K[K[Kat all.c
+
+#include<stdio.h>
+#include<stdlib.h>
+struct HeapNode
+{
+  int *a;
+  int size;
+  int capacity;
+};
+typedef struct HeapNode * Heap;
+Heap create(int capacity);
+Heap insert(int x, Heap h);
+int deleteMax(Heap h);
+int isFull(Heap h);
+int isEmpty(Heap h);
+void display(Heap);
+int main()
+{
+  int ch,x,p,i;
+  Heap h;
+  printf("Enter the capacity:");
+  scanf("%d",&x);
+  h=create(x);
+  if(h==NULL)
+    return 0;
+  do
+  {
+    printf("\n1.Insert\n2.Delete Max\n3.Display\nEnter your choice:");
+    scanf("%d",&ch);
+    switch(ch)
+    {
+      case 1:
+          printf("Enter no of elements:");
+          scanf("%d",&p);
+					if(x>p)
+{
+          printf("Enter the elements:");
+          for(i=0;i<p;i++)
+          {
+            scanf("%d",&x);
+            if(insert(x,h)==NULL)
+            {
+              printf("\nCannot insert Heap Full");
+            }
+          }}
+         else
+           printf("Error");
+          break;
+      case 2:
+          printf("The deleted element is \t");
+          printf("%d",deleteMax(h));
+          break;
+      case 3:
+					printf("The elements are");
+          display(h);
+    }
+  }while(ch<4);
+return 1;
+}
+
+
+Heap create(int capacity)
+{
+  Heap temp=(Heap)malloc(sizeof(struct HeapNode));
+  if(temp==NULL)
+  {
+    printf("\nError: cannot create Heap.\n");
+    return NULL;
+  }
+  temp->a=(int *)malloc(sizeof(int)*(capacity));
+  temp->size=0;
+  temp->capacity=capacity;
+  return temp;
+}
+Heap insert(int x,Heap h)
+{
+  int i;
+  if(!isFull(h))
+  {
+    h->size++;
+    for(i=h->size;h->a[i/2]<x&&i!=1;i=i/2)
+      h->a[i]=h->a[i/2];
+    h->a[i]=x;
+    return h;
+  }
+  else
+  {
+    return NULL;
+  }
+}
+int deleteMax(Heap h)
+{
+  int child,maxElement,lastElement,i;
+  if(!isEmpty(h))
+  {
+    maxElement=h->a[1];
+    lastElement=h->a[h->size--];
+    for(i=1;i*2<=h->size;i=child)
+    {
+      child=i*2;
+      if(child!=h->size&&h->a[child+1]>h->a[child])
+        child+=1;
+      if(lastElement<h->a[child])
+        h->a[i]=h->a[child];
+      else
+        break;
+    }
+    h->a[i]=lastElement;
+    return maxElement;
+  }
+  else
+  {
+    printf("Error:Heap Empty");
+    return 0;
+  }
+}
+int isFull(Heap h)
+{
+  return (h->size==h->capacity?1:0);
+}
+int isEmpty(Heap h)
+{
+  return (h->size==0?1:0);
+}
+void display(Heap h)
+{
+  int i=1;
+  for(i=1;i<=h->size;i++)
+    printf("%d ",h->a[i]);
+}
+bash-3.2$ cat all.c[1P all.c[1P all.c[1P all.cc all.cc all.c
+bash-3.2$ ./a.out
+Enter the capacity:6
+
+1.Insert
+2.Delete Max
+3.Display
+Enter your choice:1
+Enter no of elements:1 4 7 9 3 6 
+Enter the elements:
+1.Insert
+2.Delete Max
+3.Display
+Enter your choice:bash-3.2$ 2
+bash: 2: command not found
+bash-3.2$ 2./a.outcc all.c
+bash-3.2$ cc all.c2[K./a.out
+Enter the capacity:7
+
+1.Insert
+2.Delete Max
+3.Display
+Enter your choice:1 6 3 9 5 1 6 9 5 2
+Enter no of elements:Enter the elements:4
+
+1.Insert
+2.Delete Max
+3.Display
+Enter your choice:
+[1]+  Stopped                 ./a.out
+bash-3.2$ ./a.out
+Enter the capacity:1 7
+
+1.Insert
+2.Delete Max
+3.Display
+Enter your choice:1
+Enter no of elements:1 3 6 8 9 5           6
+Enter the elements:1 4 8 9 6 7 2
+
+1.Insert
+2.Delete Max
+3.Display
+Enter your choice:The deleted element is 	9
+1.Insert
+2.Delete Max
+3.Display
+Enter your choice:2
+The deleted element is 	8
+1.Insert
+2.Delete Max
+3.Display
+Enter your choice:3
+The elements are7 6 4 1 
+1.Insert
+2.Delete Max
+3.Display
+Enter your choice:
+[2]+  Stopped                 ./a.out
+bash-3.2$ xit
+bash: xit: command not found
+bash-3.2$ exit
+exit
+There are stopped jobs.
+bash-3.2$ exit
+exit
+
+Script done on Thu 03 Sep 2015 01:37:26 PM IST

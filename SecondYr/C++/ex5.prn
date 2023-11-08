@@ -1,0 +1,432 @@
+
+
+2015-09-16 15:31                     14bit058                     Page 1
+
+
+                                                        
+********************************************************
+USER NAME      :14bit058
+DATE AND TIME  :Wed Sep 16 15:31:17 IST 2015
+SERVER NAME    :mepcolinux.mepcoeng.ac.in
+JOB NAME       :ex5.prn
+PRINT FROM     :172.16.24.79
+*********************************************************
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NAME: ROY JASPER                      DATE: 11.9.2015
+EXERCISE 5:
+***********************************************************************
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& 
+      TO CALCULATE TOTAL NO OF DAYS BETWEEN 2 DATES
+_______________________________________________________________
+
+#include<iostream>
+#include<string>
+using namespace std;
+class day
+{
+ private:
+ int d,m,y;
+ public:
+ day()
+ {
+  d=0;
+  m=0;
+  y=0;
+ }
+day(int td,int tm,int ty)
+{
+ d=td;
+ m=tm;
+ y=ty;
+}
+void calculate(day);
+int years(int);
+int months(int,int);
+};
+int day::years(int tty)
+{
+ if(tty%4==0)
+ return 366;
+ else
+ return 365;
+}
+int day::months(int ttm,int tty)
+{
+ if((ttm==4)||(ttm==6)||(ttm==9)||(ttm==11))
+ return 30;
+ else if((ttm==2)&&(tty%4==0))
+ return 29;
+ else if((ttm==2)&&(tty%4!=0))
+ return 28;
+ else
+ return 31;
+}
+void day::calculate(day d2)
+{
+ int a,b,c,e=0,f,g=0,h,i,j,k,l,p=0,q=0;
+ if((m==d2.m)&&(y==d2.y))
+
+
+
+
+
+
+
+2015-09-16 15:31                     14bit058                     Page 2
+
+
+ {
+  if(d>d2.d)
+   a=d-d2.d;
+   else
+   a=d2.d-d;
+   cout<<"total number of days between them is"<<a<<"days";
+ }
+  else if((d==d2.d)&&(m==d2.m))
+  {
+   a=0;
+   while(y!=d2.y)
+   {
+    a=years(y+1)+a;
+    y++;
+   }
+   cout<<"total number of days between them is"<<a<<"days";
+  }
+  else if((d==d2.d)&&(y==d2.y))
+  {
+   b=months(m,y);
+   c=b-d;
+   m++;
+   while(m!=d2.m)
+   {
+     e=e+months(m,y);
+     m++;
+   }
+    a=c+e+d2.d;
+    cout<<"total number of days between them is"<<a<<"days";
+  }
+else if(y==d2.y)
+{
+ p=months(m,y);
+ p=p-d;
+ m++;
+ while(m!=d2.m)
+{
+ q=q+months(m,y);
+ m++;
+}
+a=p+q+d2.d-1;
+cout<<"total number of days between them is"<<a<<"days";
+}
+else
+{
+ f=months(m,y);
+ g=f-d;
+ m++;
+// cout<<g<<"\n";
+ h=0;
+ while(m!=13)
+ {
+  h=h+months(m,y);
+  m++;
+ }
+// cout<<h<<"\n";
+ i=0;
+ y++;
+ while(y!=d2.y)
+ {
+  i=i+years(y);
+  y++;
+
+
+
+
+
+
+
+2015-09-16 15:31                     14bit058                     Page 3
+
+
+ }
+ // cout<<i<<"\n";
+  j=1;
+  k=0;
+   while(j!=d2.m)
+     {
+      k=k+months(j,d2.y);
+      j++;
+     }
+   //  cout<<k<<"\n";
+     a=h+i+k+d2.d+g-1;
+     cout<<"total number of days between them is:"<<a<<"days";
+    }
+}
+    int main()
+    {
+    int td,tm,ty;
+    cout<<"enter the first date";
+    cin>>td>>tm>>ty;
+    day d1(td,tm,ty);
+    cout<<"enter the second date";
+    cin>>td>>tm>>ty;
+    day d2(td,tm,ty);
+    d1.calculate(d2);
+    }
+
+OUTPUT:
+
+enter the first date3 4     4 5 2001  15        29 2 2014
+enter the second date12 5 2016
+total number of days between them is:802days
+
+
+enter the first date8    8 5 2014
+enter the second date 6 2 2054
+total number of days between them is:14518day
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+                    QUEUE PROGRAM
+_______________________________________________________
+PROGRAM:
+
+#include<iostream>
+#include<string>
+using namespace std;
+class queue
+{
+ private:
+ int a[20];
+ int front,rear;
+ public:
+ queue()
+ {
+  front=0;
+  rear=0;
+ }
+ void enqueue(int x)
+ {
+  if(rear==20)
+  cout<<"\nqueue is full";
+  else
+  a[rear]=x;
+  rear++;
+
+
+
+
+
+
+
+2015-09-16 15:31                     14bit058                     Page 4
+
+
+ }
+ int dequeue()
+ {
+  int y;
+  if(rear==front)
+  cout<<"\nqueue is empty";
+  else
+  {
+   y=a[front];
+   a[front]='\0';
+   front++;
+   cout<<"\ndeleted element is"<<y;
+  }
+ }
+};
+int main()
+{
+ queue q;
+ int choice,x;
+ while(1)
+ {
+  cout<<"\nEnter your choice\n1.queue\n2.dequeue\n3.exit";
+  cin>>choice;
+  switch(choice)
+  {
+   case 1:
+          cout<<"\nenter the value";
+          cin>>x;
+          q.enqueue(x);
+          break;
+   case 2:
+          q.dequeue();
+          break;
+   case 3:
+          exit(0);
+  }
+ }
+}
+
+OUTPUT:
+
+bash-3.2$ ./a.out
+
+Enter your choice
+1.queue
+2.dequeue
+3.exit1
+
+enter the value3
+
+Enter your choice
+1.queue
+2.dequeue
+3.exit1
+
+enter the value4
+
+Enter your choice
+1.queue
+2.dequeue
+3.exit1
+
+
+
+
+
+
+
+
+2015-09-16 15:31                     14bit058                     Page 5
+
+
+enter the value5
+
+Enter your choice
+1.queue
+2.dequeue
+3.exit1
+
+enter the value7
+
+Enter your choice
+1.queue
+2.dequeue
+3.exit1
+
+enter the value8
+
+Enter your choice
+1.queue
+2.dequeue
+3.exit2
+
+deleted element is3
+Enter your choice
+1.queue
+2.dequeue
+3.exit2
+
+deleted element is4
+Enter your choice
+1.queue
+2.dequeue
+3.exit2
+
+deleted element is5
+Enter your choice
+1.queue
+2.dequeue
+3.exit2
+
+deleted element is7
+Enter your choice
+1.queue
+2.dequeue
+3.exit2
+
+deleted element is8
+Enter your choice
+1.queue
+2.dequeue
+3.exit2
+
+queue is empty
+Enter your choice
+1.queue
+2.dequeue
+3.exit3
+bash-3.2$ exit
+exit
+There are stopped jobs.
+bash-3.2$ exit
+exit
+
+
+
+
+
+
+
+
+2015-09-16 15:31                     14bit058                     Page 6
+
+
+Script done on Fri 11 Sep 2015 02:37:44 PM IST
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

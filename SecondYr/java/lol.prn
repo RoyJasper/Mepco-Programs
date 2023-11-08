@@ -1,0 +1,326 @@
+************************************************************************
+EXNO:13                                            NAME:C.S.Roy Jasper
+                        ROLLNO:14BIT058
+************************************************************************
+import java.io.*;
+import java.util.*;
+class MyClass <T extends Number>
+{
+public void add ( T a,T b)
+{
+System.out.println("ADDITION :"+(a.doubleValue()+b.doubleValue()));
+}
+public void Sub ( T a,T b)
+{s
+System.out.println("SUBTRACTION :"+(a.doubleValue()-b.doubleValue()));
+}
+public void Mul ( T a,T b)
+{
+System.out.println("MULTIPLICATION :"+(a.doubleValue()*b.doubleValue()));
+}
+}
+class Myclass
+{
+public static void main(String args[])
+{
+Scanner in=new Scanner(System.in);
+MyClass <Integer> a = new MyClass<Integer> ();
+MyClass <Float> c = new MyClass<Float> ();
+int x1,x2;
+float y1,y2;
+System.out.println("\nEnter the Two Numbers As Integer");
+x1=in.nextInt();
+x2=in.nextInt();
+System.out.println("\nEnter the Two Numbers As Float");
+y1=in.nextFloat();
+y2=in.nextFloat();
+a.add(x1,x2);
+c.add(y1,y2);
+a.Sub(x1,x2);
+a.Mul(x1,x2);
+c.Sub(y1,y2);
+c.Mul(y1,y2);
+}}
+
+bash-3.2$ cat Order.java
+	package image;
+	import javax.swing.*;
+
+import java.awt.event.*;
+
+    public class Order implements ActionListener{
+    JFrame f;
+    JMenuBar mb;
+    JMenu file,edit,help;
+    JMenuItem cut,copy,paste,selectAll,h,newq,save;
+    JTextArea ta;
+    JLabel order,meal,options;
+    JButton cancel,place;
+    JTextField ordert;
+    JRadioButton in,out;
+    ButtonGroup eat;
+    JComboBox mealt;
+    String food[]={"Hamburger","Noodles","Springroll","Rice","Pizza","Barbeque","Kabap","Smiles","Burger"};
+
+    Order(){
+    f=new JFrame();
+
+    mealt=new JComboBox();
+    mealt.setBounds(610,50,100,30);
+    for(int i=0;i<9;i++)
+    mealt.addItem(food[i]);
+    f.add(mealt);
+    cut=new JMenuItem("cut");
+    copy=new JMenuItem("copy");
+    paste=new JMenuItem("paste");
+    selectAll=new JMenuItem("selectAll");
+    h=new JMenuItem("HELP");
+    cut.addActionListener(this);
+    copy.addActionListener(this);
+    paste.addActionListener(this);
+    selectAll.addActionListener(this);
+    order=new JLabel("ORDER TYPE:");
+    order.setBounds(100,50,100,30);
+    f.add(order);
+    ordert=new JTextField(20);
+    ordert.setBounds(210,50,100,30);
+    f.add(ordert);S
+    cancel=new JButton("Cancel");
+    cancel.setBounds(500,500,150,30);
+    f.add(cancel);
+    place=new JButton("Place Order");
+    place.setBounds(700,500,150,30);
+    f.add(place);
+
+    meal=new JLabel("MEAL TYPE:");
+    meal.setBounds(500,50,100,30);
+    f.add(meal);
+    options=new JLabel("OPTIONS");
+    options.setBounds(400,150,100,30);
+    f.add(options);
+    in=new JRadioButton("eat in");
+    in.setBounds(200,250,100,30);
+    f.add(in);
+    out=new JRadioButton("Take out");
+    out.setBounds(200,300,100,30);
+    f.add(out);
+    eat=new ButtonGroup();
+    eat.add(in);
+    eat.add(out);
+    mb=new JMenuBar();
+    mb.setBounds(5,5,100,40);
+
+    file=new JMenu("File");
+    edit=new JMenu("Edit");
+    help=new JMenu("Help");
+    newq =new JMenuItem("new");
+    save=new JMenuItem("save");
+    file.add(newq);
+    file.add(save);
+    edit.add(cut);edit.add(copy);edit.add(paste);edit.add(selectAll);
+    help.add(h);
+    newq.addActionListener(this);
+    save.addActionListener(this);
+    mb.add(file);
+    mb.add(edit);
+    mb.add(help);
+
+    ta=new JTextArea();
+    ta.setText("Write any Special \nRequest here");
+   // ta.setBounds(5,60,460,460);
+    JScrollPane jsp = new JScrollPane(ta,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+	jsp.setBounds(500,200,300,200);
+    f.add(mb);
+    f.add(jsp);
+    f.setName("NOTE PAD");
+    f.setLayout(null);
+    f.setSize(1000,700);
+    f.setVisible(true);
+    place.addActionListener(this);
+    cancel.addActionListener(this);
+
+    }
+
+    public void actionPerformed(ActionEvent e) {
+    if(e.getSource()==cut)
+    ta.cut();
+    if(e.getSource()==paste)
+    ta.paste();
+    if(e.getSource()==copy)
+    ta.copy();
+    if(e.getSource()==selectAll)
+    ta.selectAll();
+    if(e.getSource()==h)
+    {
+    f.setVisible(false);
+    ta.setText("VERSION V.1");
+    f.add(ta);
+    f.setVisible(true);
+    }
+    if(e.getSource()==newq)
+    {
+    	Order o=new Order();
+    }
+    if(e.getSource()==place)
+    {
+    	JOptionPane.showMessageDialog(null, "ORDER ACCEPTED");
+    	f.setVisible(false);
+    }
+    if(e.getSource()==cancel)
+    {
+    	JOptionPane.showMessageDialog(null, "ORDER CANCELLED");
+    	f.setVisible(false);
+    }
+
+    }
+
+    public static void main(String[] args) {
+        new Order();
+    }
+    }
+bash-3.2$ cat People/java[K[K[K[K[K.java
+import java.util.Scanner;
+
+public class People<T,T1>
+{
+	public T name;
+	public T rollno;
+	public T department;
+	public T1 mark1;
+	public T1 mark2;
+	public T1 mark3;
+	public T1 mark4;
+	public T1 mark5;
+	public T1 mark6;
+	public People(T tname,T troll,T depart,T1 m1,T1 m2,T1 m3,T1 m4,T1 m5,T1 m6)
+	{
+		this.name=tname;
+		this.rollno=troll;
+		this.department=depart;
+		mark1=m1;
+		mark2=m2;
+		mark3=m3;
+		mark4=m4;
+		mark5=m5;
+		mark6=m6;
+	}
+	public People(T tname,T troll)
+	{
+		this.name=tname;
+		this.rollno=troll;
+	}
+	public T1 getTotal()
+	{
+		if(mark1 instanceof Integer)
+		return (T1) (Integer) ((Integer)mark1+(Integer)mark2+(Integer)mark3+(Integer)mark4+(Integer)mark5+(Integer)mark6);
+		if(mark1 instanceof Double)
+		return (T1) (Double) ((Double)mark1+(Double)mark2+(Double)mark3+(Double)mark4+(Double)mark5+(Double)mark6);
+
+		return null;
+	}
+	public T1 getSalary()
+	{
+		//if(mark2 instanceof Double)
+		 return (T1) (Double) ((Double)mark1+((Double)(mark2)* (Double)mark1)+((Double)mark3*(Double)mark1)-(Double)mark4);
+		 //return null;
+	}
+	public T getname(){return name;}
+	public T getroll(){return rollno;}
+	public T getdepart(){return department;}
+	public void setname(T tname){name=tname;}
+	public void setrollno(T troll){rollno=troll;}
+
+	public static void main(String args[])
+	{
+		String nam,roll,departm;
+		int[] mar=new int[6];
+		Double[] mart=new Double[6];
+		do
+		{
+		System.out.println("\nENTER \n1.UG STUDENT\t<String,Integer>\n2.PG STUDENT\t<String,Float>\n3.EMPLOYEE\t<String,Double>");
+		Scanner in=new Scanner(System.in);
+		int choice =in.nextInt();
+		in.nextLine();
+		switch(choice)
+		{
+		case 1:
+				System.out.println("ENTER UG STUDENT NAME:");
+				nam=in.nextLine();
+				System.out.println("ENTER UG STUDENTROLL No:");
+				roll=in.nextLine();
+				System.out.println("ENTER UG DEPARTMENT:");
+				departm=in.nextLine();
+				System.out.println("ENTER MARKS");
+				for(int i=0;i<6;i++)
+				{
+					mar[i]=in.nextInt();
+				}
+				People<String,Integer> ug=new People(nam,roll,departm,mar[0],mar[1],mar[2],mar[3],mar[4],mar[5]);
+				System.out.println("NAME:		"+ug.getname());
+				System.out.println("ROLLNO:		"+ug.getroll());
+				System.out.println("DEPARTMENT: "+ug.getdepart());
+				System.out.println("TOTAL MARK:	"+ug.getTotal());
+				break;
+		case 2:
+			System.out.println("ENTER PG STUDENT NAME:");
+			nam=in.nextLine();
+			System.out.println("ENTER PG STUDENT ROLL No:");
+			roll=in.nextLine();
+			System.out.println("ENTER PG DEPARTMENT:");
+			departm=in.nextLine();
+			System.out.println("ENTER MARKS");
+			for(int i=0;i<6;i++)
+			{
+				mart[i]=in.nextDouble();
+			}
+			People<String,Double> pg=new People(nam,roll,departm,mart[0],mart[1],mart[2],mart[3],mart[4],mart[5]);
+			System.out.println("NAME:  		"+pg.getname());
+			System.out.println("ROLLNO:  	"+pg.getroll());
+			System.out.println("DEPARTMENT: "+pg.getdepart());
+			System.out.println("TOTAL MARK:	"+pg.getTotal());
+			break;
+		case 3:
+			System.out.println("ENTER STAFF NAME:");
+			nam=in.nextLine();
+			System.out.println("ENTER STAFF ID:");
+			roll=in.nextLine();
+			System.out.println("ENTER STAFF WORKING DEPARTMENT:");
+			departm=in.nextLine();
+			System.out.println("ENTER BASIC");
+			mart[0]=in.nextDouble();
+			System.out.println("ENTER HRA");
+			mart[1]=in.nextDouble();
+			System.out.println("ENTER DA");
+			mart[2]=in.nextDouble();
+			System.out.println("ENTER PF");
+			mart[3]=in.nextDouble();
+			mart[4]=0.0;
+			mart[5]=0.0;
+			People<String,Double> emp=new People(nam,roll,departm,mart[0],mart[1],mart[2],mart[3],mart[4],mart[5]);
+			System.out.println("NAME: 		"+emp.getname());
+			System.out.println("ROLLNO:  	"+emp.getroll());
+			System.out.println("DEPARTMENT: "+emp.getdepart());
+			System.out.println("SALARY:  "+emp.getSalary());
+			break;
+		}
+	}
+	while(true);
+	}
+
+}
+bash-3.2$ java Myca[Klass
+
+Enter the Two Numbers As Integer
+10 20
+
+Enter the Two Numbers As Float
+20.9 10.7
+ADDITION :30.0
+ADDITION :31.59999942779541
+SUBTRACTION :-10.0
+MULTIPLICATION :200.0
+SUBTRACTION :10.199999809265137
+MULTIPLICATION :223.62999193191536
+
+
+Script done on Mon 18 Apr 2016 10:24:56 AM IST

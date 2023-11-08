@@ -1,0 +1,15 @@
+>java Sample
+
+>java DispSub
+
+>java Myclass
+
+java Prime
+
+>java Prob1
+
+java Problem
+
+>java Ran
+
+>java Timer

@@ -1,0 +1,276 @@
+********************************************************************************
+EXNO:08															NAME:RAHUL RAJAN D
+DATE:23.9.2015											ROLLNO:14BIT053
+********************************************************************************
+		IMPLEMENTATION OF HASHING USING
+					SEPERATE CHAINING
+********************************************************************************
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+struct node
+{
+int data;
+struct node *next;
+};
+typedef struct node *list;
+struct table
+{
+int tablesize;
+list *l;
+};
+typedef struct table *hash;
+hash create(int);
+hash delet(int,hash);
+hash insert(int,hash);
+int search(int,hash);
+void display(hash);
+bash-3.2$ cat hashimp.c
+#include"hashhead.h"
+int z=0;
+hash create(int n)
+{
+int i;
+hash h;
+h=(hash)malloc(sizeof(hash));
+h->tablesize=n;
+h->l=(list*)malloc(n*sizeof(list));
+for(i=0;i<n;i++)
+{
+h->l[i]=(list)malloc(sizeof(list));
+h->l[i]->next=NULL;
+}
+return h;
+}
+hash insert(int e,hash head)
+{
+int z,b,u;
+u=e;
+b=e%10;
+if(head->l[b]->next==NULL)
+{
+list temp;
+temp=(list)malloc(sizeof(struct node));
+temp->data=u;
+head->l[b]->next=temp;
+temp->next=NULL;
+z=z+1;
+}
+else
+{
+list temp,t;
+temp=(list)malloc(sizeof(struct node));
+t=head->l[b];
+while(t->next!=NULL)
+{
+t=t->next;
+}
+temp->data=u;
+temp->next=NULL;
+t->next=temp;
+}
+return head;
+}
+hash delet(int x,hash head)
+{
+int result,y;
+list t,k;
+result=search(x,head);
+if(result==1)
+{
+y=x%10;
+t=head->l[y];
+while(t->next!=NULL)
+{
+if(t->next->data==x)
+{
+k=t->next;
+t->next=t->next->next;
+free(k);
+}
+else
+t=t->next;
+}
+printf("IT IS DELETED");
+}
+else
+printf("IT IS NOT PRESENT");
+return head;
+}
+void display(hash t)
+{
+  int i;
+	//hash t=head;
+  for(i=0;i<t->tablesize;i++)
+  {
+  printf("\n%d->",i);
+	list temp=t->l[i];
+    while(temp!=NULL)
+		{ 
+      printf("%d\t",temp->data);
+			temp=temp->next;
+		}
+  }
+//return head;
+}
+int search(int a,hash head)
+{
+int i;
+for(i=0;i<head->tablesize;i++)
+{
+while(head->l[i]!=NULL)
+{
+if(head->l[i]->data==a)
+{
+return 1;
+}
+else
+{
+head->l[i]=head->l[i]->next;
+}
+}
+return 0;
+}
+}
+
+bash-3.2$ cat hashapp.c
+#include"hashhead.h"
+main()
+{
+hash head,t1;
+int size,h,choice,t[10],i;
+printf("ENTER THE SIZE OF TABLE");
+scanf("%d",&size);
+head=create(size);
+while(1)
+{
+printf("1.INSERT 2.DELETE 3.DISPLAY 4.EXIT ENTER THE CHOICE");
+scanf("%d",&choice);
+switch(choice)
+{
+case 1:printf("ENTER THE ELEMENT TO BE INSERT");
+scanf("%d",&h);
+printf("starting add is %p",head);
+head=insert(h,head);
+break;
+case 2:	printf("ENTER THE ELEMENT TO BE INSERT");
+scanf("%d",&h);
+head=delet(h,head);
+break;
+case 3:
+//hash t1;
+/*for(i=0;i<size;i++)
+{
+t[i]=head->l[i];
+}*/
+t1=head;
+display(t1);
+/*for(i=0;i<size;i++)
+{
+head->l[i]=t[i];
+}*/
+break;
+case 4: exit(0);
+break;
+}
+}
+}
+
+bash-3.2$ cc hashimp.c -c
+bash-3.2$ cc hashapp.c hashimp.o
+bash-3.2$ ./a.out
+ENTER THE SIZE OF TABLE 10
+1.INSERT 
+2.DELETE 
+3.DISPLAY 
+4.EXIT 
+ENTER THE CHOICE 1
+ENTER THE ELEMENT TO BE INSERT 25
+1.INSERT 
+2.DELETE 
+3.DISPLAY 
+4.EXIT 
+ENTER THE CHOICE 1
+ENTER THE ELEMENT TO BE INSERT 35
+1.INSERT 
+2.DELETE 
+3.DISPLAY 
+4.EXIT 
+ENTER THE CHOICE 1
+ENTER THE ELEMENT TO BE INSERT 7
+1.INSERT 
+2.DELETE 
+3.DISPLAY 
+4.EXIT 
+ENTER THE CHOICE 1
+ENTER THE ELEMENT TO BE INSERT 9
+1.INSERT 
+2.DELETE 
+3.DISPLAY 
+4.EXIT 
+ENTER THE CHOICE 1
+ENTER THE ELEMENT TO BE INSERT 44
+1.INSERT 
+2.DELETE 
+3.DISPLAY 
+4.EXIT 
+ENTER THE CHOICE 1
+ENTER THE ELEMENT TO BE INSERT 65
+1.INSERT 
+2.DELETE 
+3.DISPLAY 
+4.EXIT 
+ENTER THE CHOICE 1
+ENTER THE ELEMENT TO BE INSERT 121
+1.INSERT 
+2.DELETE 
+3.DISPLAY 
+4.EXIT 
+ENTER THE CHOICE 1
+ENTER THE ELEMENT TO BE INSERT 11
+1.INSERT 
+2.DELETE 
+3.DISPLAY 
+4.EXIT 
+ENTER THE CHOICE 3
+0->0	
+1->0	121	11	
+2->0	
+3->0	
+4->0	44	
+5->0	25	35	65	
+6->0	
+7->0	7	
+8->0	
+9->0	9	
+1.INSERT 
+2.DELETE 
+3.DISPLAY 
+4.EXIT 
+ENTER THE CHOICE 2
+ENTER THE ELEMENT TO BE INSERT 121
+IT IS PRESENT
+1.INSERT 
+2.DELETE 
+3.DISPLAY 
+4.EXIT 
+ENTER THE CHOICE 3
+0->
+1->0	11	
+2->0	
+3->0	
+4->0	44	
+5->0	25	35	65	
+6->0	
+7->0	7	
+8->0	
+9->0	9	
+1.INSERT 
+2.DELETE 
+3.DISPLAY 
+4.EXIT 
+ENTER THE CHOICE 4
+bash-3.2$ exit
+exit
+
+Script done on Wed 30 Sep 2015 12:16:17 PM IST

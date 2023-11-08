@@ -1,0 +1,214 @@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+14BIT058 				ROY JASPER C S
+		DOMAIN NAME SERVER
+-----------------------------------------------------------
+
+CLIENT:
+ 	
+#include"header.h"
+int main(void)
+{
+    int sd,len,ch;
+    char msg[100],hname[20];
+    struct sockaddr_in ser;
+    memset(&ser,0,sizeof(ser));
+    ser.sin_family=AF_INET;
+    ser.sin_addr.s_addr=htonl(INADDR_ANY);
+    ser.sin_port=htons(8980);
+    sd=socket(AF_INET,SOCK_DGRAM,0);
+    len=sizeof(ser);
+    do
+    {
+        printf("\n1 - > Get Host by Name\n2 - > Get Host by Address\n3 - > Get server by name\n4 - > Get Server by port \n5 - > Exit\n\nEnter your choice:");
+        scanf("%d",&ch);
+        sendto(sd,&ch,sizeof(ch),0,&ser,sizeof(ser));
+        switch(ch)
+        {
+        case 1:
+            printf("\n Host name:");
+            scanf("%s",hname);
+            sendto(sd,hname,sizeof(hname),0,&ser,sizeof(ser));
+            recvfrom(sd,msg,sizeof(msg),0,NULL,NULL);
+            printf("Address are:\n");
+            while(strcmp(msg,"Empty")!=0)
+            {
+                printf("%s\n",msg);
+                recvfrom(sd,msg,sizeof(msg),0,NULL,NULL);
+            }
+            break;
+        case 2:
+            printf("\n Address:");
+            scanf("%s",msg);
+            sendto(sd,msg,sizeof(msg),0,&ser,sizeof(ser));
+            recvfrom(sd,hname,sizeof(hname),0,NULL,NULL);
+            printf("The Host Name is %s",hname);
+            break;
+        case 3:
+            printf("\nEnter Server Name and prototype :");
+            scanf("%s %s",hname,msg);
+            sendto(sd,hname,sizeof(hname),0,&ser,sizeof(ser));
+            sendto(sd,msg,sizeof(msg),0,&ser,sizeof(ser));
+            recvfrom(sd,&len,sizeof(len),0,NULL,NULL);
+            printf("The port no is %d",len);
+            break;
+        case 4:
+            printf("\n Port number and prototype:");
+            scanf("%d %s",&len,msg);
+            sendto(sd,&len,sizeof(len),0,&ser,sizeof(ser));
+            sendto(sd,msg,sizeof(msg),0,&ser,sizeof(ser));
+            recvfrom(sd,hname,sizeof(hname),0,NULL,NULL);
+            printf("The server name is %s",hname);
+            break;
+        }
+    }
+    while(ch!=5);
+    close(sd);
+    return 0;
+}
+---------------------------------------------
+SERVER: 
+#include"header.h"
+int main(void)
+{
+    int i,sd,len,clen,ch;
+    struct sockaddr_in ser;
+    struct sockaddr clt;
+    struct hostent*hp;
+    struct in_addr **addr_list;
+    struct in_addr ip;
+    struct servent*sp;
+    char buffer[100],hname[20];
+    memset(&ser,0,sizeof(ser));
+    ser.sin_family=AF_INET;
+    ser.sin_port=htons(8980);
+    ser.sin_addr.s_addr=htonl(INADDR_ANY);
+    sd=socket(AF_INET,SOCK_DGRAM,0);
+    bind(sd,&ser,sizeof(ser));
+    clen=sizeof(clt);
+    do
+    {
+        recvfrom(sd,&ch,sizeof(ch),0,&clt,&clen);
+//		printf("\n1]gethostbyname\n2]gethostbyaddress\n3]getservbyname\n4]getsservbyport\n5]Exit\n\nEnter your choice:");
+//		scanf("%d",&ch);
+        switch(ch)
+        {
+        case 1:
+            recvfrom(sd,hname,sizeof(hname),0,&clt,&clen);
+            hp=gethostbyname(hname);
+            addr_list = (struct in_addr **)hp->h_addr_list;
+            for(i = 0; addr_list[i] != NULL; i++)
+            {
+                strcpy(buffer,inet_ntoa(*addr_list[i]));
+                sendto(sd,buffer,sizeof(buffer),0,&clt,clen);
+            }
+            strcpy(buffer,"Empty");
+            sendto(sd,buffer,sizeof(buffer),0,&clt,clen);
+            break;
+        case 2:
+            recvfrom(sd,buffer,sizeof(buffer),0,&clt,&clen);
+            inet_aton(buffer,&ip);
+            hp=gethostbyaddr((const void*)&ip,sizeof(ip),AF_INET);
+//				strcpy(hname,hp->h_name);
+            sendto(sd,hp->h_name,sizeof(hname),0,&clt,clen);
+            break;
+        case 3:
+            recvfrom(sd,hname,sizeof(hname),0,&clt,&clen);
+            recvfrom(sd,buffer,sizeof(buffer),0,&clt,&clen);
+            printf("%s\t%s",hname,buffer);
+            sp=getservbyname(hname,buffer);
+            len=ntohs(sp->s_port);
+            sendto(sd,&len,sizeof(len),0,&clt,clen);
+            break;
+        case 4:
+            recvfrom(sd,&len,sizeof(len),0,&clt,&clen);
+            recvfrom(sd,buffer,sizeof(buffer),0,&clt,&clen);
+            printf("%d\t%s",len,buffer);
+            sp=(struct servent*)getservbyport(htons(len),buffer);
+//				strcpy(hname,sp->s_name);
+            sendto(sd,sp->s_name,sizeof(hname),0,&clt,clen);
+            break;
+        }
+    }
+    while(ch!=5);
+    close(sd);
+    return 0;
+}
+-------------------------------------
+HEADERS:
+
+#include<stdio.h>
+
+#include<stdlib.h>
+
+#include<sys/types.h>
+
+#include<netdb.h>
+
+#include<errno.h>
+
+#include<signal.h>
+
+#include<unistd.h>
+
+#include<arpa/inet.h>
+
+#include<string.h>
+
+#include<sys/wait.h>
+
+#include<sys/socket.h>
+
+#include<netinet/in.h>
+
+#include<time.h>
+-----------------------------------
+OUTPUT:
+1 - > Get Host by Name
+2 - > Get Host by Address
+3 - > Get server by name
+4 - > Get Server by port 
+5 - > Exit
+
+Enter your choice:1
+
+ Host name:localhost
+Address are:
+127.0.0.1
+
+1 - > Get Host by Name
+2 - > Get Host by Address
+3 - > Get server by name
+4 - > Get Server by port 
+5 - > Exit
+
+Enter your choice:2
+
+ Address:127.0.0.1
+The Host Name is localhost
+1 - > Get Host by Name
+2 - > Get Host by Address
+3 - > Get server by name
+4 - > Get Server by port 
+5 - > Exit
+
+Enter your choice:3
+
+Enter Server Name and prototype :ftp tcp
+The port no is 21
+1 - > Get Host by Name
+2 - > Get Host by Address
+3 - > Get server by name
+4 - > Get Server by port 
+5 - > Exit
+
+Enter your choice:4
+
+ Port number and prototype:21 tcp
+The server name is ftp
+1 - > Get Host by Name
+2 - > Get Host by Address
+3 - > Get server by name
+4 - > Get Server by port 
+5 - > Exit
+---------------------------------------------
+

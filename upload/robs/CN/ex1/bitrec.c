@@ -1,0 +1,68 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+main()
+{
+	FILE *fp;
+	char d,b[100];
+	int i,n,c=0,k,j,flag=0;
+	fp=fopen("sender1.txt","r");
+	d=fgetc(fp);
+	i=0;
+	while(d!=EOF)
+	{
+		b[i]=d;
+		i++;
+		d=getc(fp);
+	}
+	n=i;
+	if(b[0]=='0'&&b[1]=='1'&&b[2]=='1'&&b[3]=='1'&&b[4]=='1'&&b[5]=='1'&&b[6]=='1'&&b[7]=='0')
+	{
+		c=1;
+	}
+	if(c!=1)
+	{
+		printf("START ERROR");
+	}
+	else
+	{
+		if(b[n-9]=='0'&&b[n-8]=='1'&&b[n-7]=='1'&&b[n-6]=='1'&&b[n-5]=='1'&&b[n-4]=='1'&&b[n-3]=='1'&&b[n-2]=='0')
+  	{
+    	d=1;
+  	}
+  	if(d!=1)
+  	{
+    	printf("END ERROR");
+  	}
+		else
+		{
+			n=n-9;
+			for(i=8;i<n;i++)
+			{
+				if(b[i]=='1')
+    		{
+      		j=i;
+      		for(;j<i+5;j++)
+      		{
+        		if(b[j]=='1')
+        		{
+          		flag=flag+1;
+        		}
+      		}
+      		if(flag==5)
+      		{
+            for(k=n-1;k>=j+1;k--)
+            {
+            	b[k-1]=b[k];
+            }
+            n=n-1;
+					}
+				}
+			}
+			for(i=8;i<n;i++)
+			{
+				printf("%c",b[i]);
+			}
+		}
+	}
+}

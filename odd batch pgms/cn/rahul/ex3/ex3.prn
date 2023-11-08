@@ -1,0 +1,284 @@
+*******************************************************************************
+EX NO: 3								NAME:RAHUL RAJAN D
+DATE:21.7.16				 		ROLLNO:14BIT053
+*******************************************************************************
+	ERROR DETECTION USING HAMMING CODE
+*******************************************************************************
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int po(int a,int b)
+{
+	int c=1,i;
+	if(b==0)
+	{
+		return 1;
+	}
+	else
+	{
+		for(i=1;i<=b;i++)
+		{
+			c=c*a;
+		}
+		return c;
+	}
+}
+main()
+{
+	FILE *fp;
+	int count,d[50],c[50][50],j,r,n,i,cc,bb,k;
+	char a[50],b[50],e[50],f[50];
+	fp=fopen("medium.txt","w");
+	printf("ENTER THE STRING");
+	scanf("%s",a);
+	n=strlen(a);
+	i=0;
+	while(1)
+	{
+		bb=po(2,i);
+		cc=n+1+i;
+		if(bb>=cc)
+			break;
+		i++;
+	}
+	r=i;
+	n=n+r;
+	k=1;
+	i=po(2,0);
+	j=i;
+	for(;k<=r;)
+	{
+		b[j]='$';
+		j=po(2,i);
+//		printf("%d\t",j);
+		i++;
+		k++;
+	}
+	printf("%s%d\n",a,n);
+	k=strlen(a)-1;
+	for(i=1;i<=n;i++)
+	{
+		if(b[i]=='$')
+			continue;
+		else
+		{
+			b[i]=a[k];
+			k--;
+		}
+	}
+//	for(i=1;i<=n;i++)
+//		printf("%c\t",b[i]);
+//	printf("\n%d\n",n);
+	for(i=1;i<=r;i++)
+	{
+		k=0;
+		j=po(2,i);
+		count=0;
+		for(;j<=n;j++)
+		{
+			c[i][k]=j;
+			k++;
+			count++;
+			if(count==po(2,i))
+			{
+				count=0;
+				j=j+po(2,i);
+			}
+		}
+		d[i]=k;
+	}
+	k=0;
+	for(i=1;i<=n;i=i+2)
+	{
+		c[0][k]=i;
+		k++;
+	}
+	d[0]=k;
+//	for(i=0;i<r;i++)
+//		for(j=0;j<d[i];j++)
+//			printf("%d\t",c[i][j]);
+//	d[0]=k;
+	for(i=0;i<r;i++)
+	{
+		count=0;
+		for(j=0;j<d[i];j++)
+		{
+			e[j]=b[c[i][j]];
+//			printf("%c\t",e[j]);
+			if(e[j]=='1')
+				count++;
+		}
+		if((count%2)!=0)
+		{
+			f[i]='1';
+	//		printf("%c",f[i]);
+		}
+		else
+			f[i]='0';
+		printf("\n");
+	}
+	printf("%s",f);
+	k=0;
+	for(i=0;i<n;i++)
+	{
+		if(b[i]=='$')
+		{
+			b[i]=f[k];
+			k++;
+		}
+	}
+	for(i=1;i<=n;i++)
+	{
+		putc(b[i],fp);
+	}
+	printf("SENDED");
+}
+bash-3.2$ cc sender.c
+bash-3.2$ ./a.out
+ENTER THE STRING10001101
+1000110112
+
+
+
+
+0111SENDEDbash-3.2$ cat[K[K[Kvi medium.rt[K[Ktxt
+[?1049h[?1h=[1;43r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[43;1H"medium.txt" "medium.txt" [noeol] 1L, 12C[1;1H011101110001
+[1m[34m~                                                                                                                                                                       [3;1H~                                                                                                                                                                       [4;1H~                                                                                                                                                                       [5;1H~                                                                                                                                                                       [6;1H~                                                                                                                                                                       [7;1H~                                                                                                                                                                       [8;1H~                                                                                                                                                                       [9;1H~                                                                                                                                                                       [10;1H~                                                                                                                                                                       [11;1H~                                                                                                                                                                       [12;1H~                                                                                                                                                                       [13;1H~                                                                                                                                                                       [14;1H~                                                                                                                                                                       [15;1H~                                                                                                                                                                       [16;1H~                                                                                                                                                                       [17;1H~                                                                                                                                                                       [18;1H~                                                                                                                                                                       [19;1H~                                                                                                                                                                       [20;1H~                                                                                                                                                                       [21;1H~                                                                                                                                                                       [22;1H~                                                                                                                                                                       [23;1H~                                                                                                                                                                       [24;1H~                                                                                                                                                                       [25;1H~                                                                                                                                                                       [26;1H~                                                                                                                                                                       [27;1H~                                                                                                                                                                       [28;1H~                                                                                                                                                                       [29;1H~                                                                                                                                                                       [30;1H~                                                                                                                                                                       [31;1H~                                                                                                                                                                       [32;1H~                                                                                                                                                                       [33;1H~                                                                                                                                                                       [34;1H~                                                                                                                                                                       [35;1H~                                                                                                                                                                       [36;1H~                                                                                                                                                                       [37;1H~                                                                                                                                                                       [38;1H~                                                                                                                                                                       [39;1H~                                                                                                                                                                       [40;1H~                                                                                                                                                                       [41;1H~                                                                                                                                                                       [42;1H~                                                                                                                                                                       [1;1H[?12l[?25h[?25l[m[43;1H[K[43;1H:[?12l[?25hwq[?25l"medium.txt" "medium.txt" 1L, 13C written
+[?1l>[?12l[?25h[?1049lbash-3.2$ cat medim.[K[Kum.txt
+011101110001
+bash-3.2$ v[Kcat receiver.c
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int po(int a,int b)
+{
+  int c=1,i;
+  if(b==0)
+  {
+    return 1;
+  }
+  else
+  {
+    for(i=1;i<=b;i++)
+    {
+      c=c*a;
+    }
+    return c;
+  }
+}
+main()
+{
+	FILE *fp;
+	int flag=0,count,d[50],c[50][50],j,r,n,i,cc,bb,k,l;
+  char a[50],b[50],e[50],f[50],dd,ccc[50];
+	fp=fopen("medium.txt","r");
+	dd=fgetc(fp);
+	i=1;
+	while(dd!=EOF)
+	{
+		a[i]=dd;
+		i++;
+		dd=fgetc(fp);
+	}
+	n=i-2;
+//	for(i=1;i<=n;i++)
+	//	printf("%c",a[i]);
+	i=1;
+	while(1)
+	{
+		bb=po(2,i);
+		if(bb>=n)
+			break;
+		i++;
+	}
+	r=i;
+	for(i=1;i<=r;i++)
+  {
+    k=0;
+    j=po(2,i);
+    count=0;
+    for(;j<=n;j++)
+    {
+      c[i][k]=j;
+      k++;
+      count++;
+      if(count==po(2,i))
+      {
+        count=0;
+        j=j+po(2,i);
+      }
+    }
+    d[i]=k;
+  }
+  k=0;
+  for(i=1;i<=n;i=i+2)
+  {
+    c[0][k]=i;
+    k++;
+  }
+  d[0]=k;
+//	for(i=0;i<r;i++)
+//	{
+//		for(j=0;j<d[i];j++)
+//		{
+//			printf("%d",c[i][j]);
+//		}
+//		printf("\n");
+//	}
+	l=0;
+	flag=0;
+//	printf("%d",r);
+	for(i=0;i<r;i++)
+	{
+		count=0;
+		for(j=0;j<d[i];j++)
+		{
+			if(a[c[i][j]]=='1')
+			{
+	//			printf("%c",a[c[i][j]]);
+				count++;
+			}
+		}
+		if((count%2)==0)
+		{
+			ccc[l]='0';
+			l++;
+			flag=flag+1;
+	//		printf("%d",flag);
+		}
+		else
+		{
+			ccc[l]='1';
+			l++;
+		}
+//		printf("\n");
+	}
+//	printf("%d",flag);
+	if(flag!=r)
+		printf("ERROR IS:%s",ccc);
+	else
+	{
+		k=1;
+  	i=po(2,0);
+  	j=i;
+  	for(;k<=r;)
+  	{
+    	a[j]='$';
+    	j=po(2,i);
+    	i++;
+    	k++;
+  	}
+		for(i=n;i>=1;i--)
+		{
+			if(a[i]!='$')
+				printf("%c",a[i]);
+		}
+	}
+}
+
+bash-3.2$ cc receiver.c
+bash-3.2$ ./a.oout[K[K[K[Kout
+10001101bash-3.2$ exit
+exit
+
+Script done on Thu 28 Jul 2016 12:10:48 PM IST

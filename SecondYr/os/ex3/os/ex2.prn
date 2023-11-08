@@ -1,0 +1,251 @@
+*********************************************************************
+EXNO:2                                              NAME:M.VIGNESH
+DATE:21-1-16                                        ROLLNO:14BIT062
+*********************************************************************
+           PROCESS CREATION AND MANAGEMENT USING PIPES
+*********************************************************************
+#include<sys/types.h>
+#include<unistd.h>
+#include<fcntl.h>
+#include<sys/stat.h>
+#include<stdio.h>
+#include<sys/wait.h>
+#include<stdlib.h>
+int main()
+{
+int d,a[2],n,p;
+p=pipe(a);
+d=fork();
+if(d==-1)
+{
+printf("ERROR IN PROCESSOR CREATION");
+exit(0);
+}
+else if(d==0)
+{
+printf("ENTER TH NUMBER");
+scanf("%d",&n);
+close(a[0]);
+write(a[1],&n,sizeof(n));
+}
+else
+{
+close(a[1]);
+read(a[0],&n,sizeof(n));
+if(n%2==0)
+printf("%d IS EVEN",n);
+else
+printf("%d IS ODD",n);
+return 0;
+}}
+bash-3.2$ cc 2b.c
+bash-3.2$ ./a.out
+ENTER TH NUMBER 45
+45 IS ODDbash-3.2$ ./a.out
+ENTER TH NUMBER 88
+88 IS EVENbash-3.2$ .
+
+
+#include<unistd.h>
+#include<fcntl.h>
+#include<sys/stat.h>
+#include<stdio.h>
+#include<sys/wait.h>
+#include<stdlib.h>
+int main()
+{
+int d,a[2],n,p,b[20],i,sum=0;
+int avg;
+p=pipe(a);
+d=fork();
+if(d==-1)
+{
+printf("ERROR IN PROCESSOR CREATION");
+exit(0);
+}
+else if(d==0)
+{
+close(a[0]);
+printf("\nENTER THE SIZEOF THE ARRAY");
+scanf("%d",&n);
+write(a[1],&n,sizeof(n));
+for(i=0;i<n;i++)
+{         
+printf("\nENTER THE ELEMENT");
+scanf("%d",&b[i]);
+}
+for(i=0;i<n;i++)
+write(a[1],&b[i],sizeof(b[i]));
+}       
+else      
+{            
+close(a[1]);
+read(a[0],&n,sizeof(n));
+printf("\n%d",n);
+for(i=0;i<n;i++)
+{   
+read(a[0],&b[i],sizeof(b[i]));
+printf("\n%d",b[i]);
+sum=sum+b[i];
+} 
+avg=(sum/n);
+printf("THE SUM IS %d",sum); 
+printf("THE AVERAGE IS %d",avg);
+}
+return 0;
+}
+
+bash-3.2$ cc 2e.c
+bash-3.2$ .a/.out
+ENTER THE SIZEOF THE ARRAY 5
+
+ENTER THE ELEMENT 3
+ENTER THE ELEMENT 5
+
+ENTER THE ELEMENT 6
+
+ENTER THE ELEMENT 8
+
+ENTER THE ELEMENT 2
+ 5
+ 
+3
+5
+6
+8
+2
+THE SUM IS 24
+THE AVERAGE IS 4bash-3.2$ ./a.outcc 2e.c[1@at[C[C[C[C[C[1P.cf.c
+
+
+#include<sys/types.h>
+#include<sys/stat.h>
+#include<stdio.h>
+#include<sys/wait.h>
+#include<stdlib.h>
+#include<unistd.h>
+#include<fcntl.h>
+int main()
+{
+int l,a[2],p,fp1,ln=1,wr=0,vw=0,ca=0;
+char ch;
+p=pipe(a);
+l=fork();
+if(l==-1)
+{
+printf("ERROR IN PROCESSOR CREATION");
+exit(0);
+}
+else if(l==0)
+{
+fp1=open("read.txt",O_RDONLY);
+if(fp1==-1)
+{
+printf("FILE OPENING IS TEDIOUS");
+exit(0);
+}
+else
+{
+while(read(fp1,&ch,1)>0)
+{
+if(ch==' ')
+{
+wr=wr+1;
+}
+if(ch=='\n')
+{
+ln=ln+1;
+}
+if(ch=='a'||ch=='e'||ch=='i'||ch=='o'||ch=='u')
+{
+vw++;
+}
+ca++;
+}
+close(a[0]);
+write(a[1],&wr,sizeof(wr));
+write(a[1],&ln,sizeof(ln));
+write(a[1],&vw,sizeof(vw));
+write(a[1],&ca,sizeof(ca));
+}
+}
+else
+{
+close(a[1]);
+read(a[0],&wr,sizeof(wr));
+printf("\nTHE NUMBER OF WORDS ARE %d",wr);
+read(a[0],&ln,sizeof(ln));
+printf("\nTHE NUMBER OF LINES ARE %d",ln);
+read(a[0],&vw,sizeof(vw));
+printf("\nTHE NUMBER OF VOWELS ARE %d",vw);
+read(a[0],&ca,sizeof(ca));
+printf("\nTHE NUMBER OF CHARACTERS ARE %d",ca);
+return 0;
+}
+}
+
+bash-3.2$ .a/.[K[K[K[Kcat read.txt
+good morning i am vignesh i am from madurai currently doing my b.tech IT in mepco schlenk engg clg sivakasi i want to complete my engg as soon as possible my aim in my life is to become a hod of the mepco schlenk engg clg i like my hostel my very much i like my friend chinnavel veryyyyy much in my hostel
+bash-3.2$ cc 2f.c
+bash-3.2$ .a/.[K[K[K/a.out
+
+THE NUMBER OF WORDS ARE 62
+THE NUMBER OF LINES ARE 2
+THE NUMBER OF VOWELS ARE 81
+THE NUMBER OF CHARACTERS ARE 306bash-3.2$ exi[K[K[Kcc[K[Kcat 2a.c
+
+
+
+#include<sys/types.h>
+#include<unistd.h>
+#include<fcntl.h>
+#include<sys/stat.h>
+#include<stdio.h>
+#include<sys/wait.h>
+#include<stdlib.h>
+int main()
+{
+int l,m;
+l=fork();
+m=fork();
+if((l<0)&&(m<0))
+{
+printf("\nThe Processor ID creation is unsucessfully");
+exit(0);
+}
+else
+{
+if(l>0)
+{
+printf("\nThe Processor B is being Working");
+exit(0);
+}
+else if(l==0)
+{
+printf("\nThe Processor C is being Working");
+exit(0);
+}
+else if((l>0)&&(m==0))
+{
+printf("\nThe Processor D is being Working");
+exit(0);
+}
+else if((l==0)&&(m==0))
+{
+printf("\nThe Processor A is being Working");
+exit(0);
+}
+else
+return 0;
+}
+}
+bash-3.2$ ./a.[K[K[K[Kcc 2a.c
+bash-3.2$ ./a.out
+
+The Processor C is being Working
+The Processor C is being Working
+The Processor B is being Working
+The Processor B is being Workingbash-3.2$ exit
+exit
+
+Script done on Thu 21 Jan 2016 11:30:54 AM IST

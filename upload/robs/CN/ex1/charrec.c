@@ -1,0 +1,93 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+main()
+{
+	FILE *fp;
+	int i=0,n,e=0,c=0,f=0,j,k;
+	char b[100],d;
+	fp=fopen("sender.txt","r");
+	d=fgetc(fp);
+	while(d!=EOF)
+	{
+		b[i]=d;
+		i++;
+		d=fgetc(fp);
+	}
+//	printf("%s",b);
+	n=i;
+	if(b[0]=='s')
+	{
+		if(b[1]=='t')
+		{
+			if(b[2]=='x')
+			{
+				c=1;
+			}
+		}
+	}
+	if(c!=1)
+	{
+		printf("STX ERROR");
+	}
+	else
+	{
+	//	printf("%d",n);
+		if(b[n-3]=='e')
+		{
+			if(b[n-2]=='t')
+    	{
+      	if(b[n-1]=='x')
+      	{
+        	e=1;
+      	}
+    	}
+  	}
+  	if(e!=1)
+  	{
+    	printf("ETX ERROR");
+  	}
+		else
+		{
+			n=n-3;
+			for(i=3;i<n;i++)
+			{
+				if(b[i]=='d')
+				{
+					if(b[i+1]=='l')
+    			{
+      			if(b[i+2]=='e')
+      			{
+							if(b[i+3]=='e'||b[i+3]=='d')
+							{
+								if(b[i+4]=='t'||b[i+4]=='l')
+								{
+									if(b[i+5]=='x'||b[i+5]=='e')
+									{
+										f=1;
+									}
+								}
+							}
+							if(f!=1)
+							{
+								printf("DLE ERROR");
+							}
+							else
+							{
+        				j=i;
+								for(k=j+3;k<n;k++)
+								{
+									b[k-3]=b[k];
+								}
+								n=n-3;
+      				}
+						}
+    			}
+  			}
+			}
+			for(i=3;i<n;i++)
+				printf("%c",b[i]);
+		}
+	}
+	fclose(fp);
+}

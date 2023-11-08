@@ -1,0 +1,6 @@
+ALPHA    DATA    B    6    BB8
+BETA    DATA    w    2    BBE
+CODE    CODE    S    0    5000
+DATA    DATA    S    0    BB8
+GAMMA    DATA    w    2    BC2
+RESULT    DATA    w    2    BC0

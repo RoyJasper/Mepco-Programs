@@ -1,0 +1,59 @@
+Script started on Mon 21 Nov 2016 11:1sh-3.2$ cat permanent.c
+{
+ int rollno;
+ int m1,m2;
+ char name[25];
+}studdet;
+main()
+{
+ int i;
+ studdet s1;
+ FILE*fp;
+ int n;
+ printf("Enter the no of students");
+ scanf("%d",&n);
+ fp=fopen("student.dat","wb");
+ for(i=0;i<n;i++)
+ {
+  printf("Enter rollno,name,m1,m2");
+  scanf("%d %s %d %d",&s1.rollno,s1.name,&s1.m1,&s1.m2);
+  fwrite(&s1,sizeof(s1),1,fp);
+ }
+ fclose(fp);
+ fp=fopen("student.dat","rb");
+ fread(&s1,sizeof(s1),1,fp);
+ printf("List of students who have passed\n");
+ printf("rollno\tname\tmark1\tmark2\n");
+ while(!feof(fp))
+ {
+  if(s1.m1>=45&&s1.m2>=45)
+  printf("%d\t%s\t%d\t%d\n",s1.rollno,s1.name,s1.m1,s1.m2);
+  fread(&s1,sizeof(s1),1,fp);
+ }
+ fclose(fp);
+} 
+  
+
+bash-3.2$ cc permanent.c
+bash-3.2$ ./a.out
+Enter the no of students3
+Enter rollno,name,m1,m2101
+ashok
+95
+95
+Enter rollno,name,m1,m2102
+asok
+44
+25
+Enter rollno,name,m1,m2ku  103
+kumar
+1--
+List of students who have passed
+rollno	name	mark1	mark2
+101	ashok	95	95
+bash-3.2$ 99
+bash: 99: command not found
+bash-3.2$ exit
+exit
+
+Script done on Mon 21 Nov 2016 11:14:14 PM IST

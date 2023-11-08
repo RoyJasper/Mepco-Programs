@@ -1,0 +1,105 @@
+Script started on Tue 08 Nov 2016 12:17:34 PM IST
+bash-3.2$ cat swapcr.c
+#include<stdio.h>
+main()
+{
+int x,y;
+printf("enter the values of x and y");
+scanf("%d%d",&x,&y);
+void swap(int *,int *);
+printf("%d%d\n",x,y);
+swap(&x,&y);
+printf("%d%d\n",x,y);
+}
+void swap(int *a,int *b)
+{
+int temp;
+temp=*a;
+*a=*b;
+*b=temp;
+}
+bash-3.2$ cc swapcr.c
+bash-3.2$ ./a.out
+enter the values of x and y 43 64
+before swap: 42 64
+after swap: 64 42
+bash-3.2$ cat sortingcr.c
+#include<stdio.h>
+main()
+{int a[5],i,j,c;
+ int *ip[5];
+ printf("Give five values:\n");
+ for(i=0;i<5;i++)
+ scanf("%d",&a[i]);
+ for(i=0;i<5;i++)
+ ip[i]=&a[i];
+ for(i=0;i<5;i++)
+ for(j=i+1;j<5;j++)
+ if(*ip[i]>*ip[j])
+ {c=*ip[j];
+  *ip[j]=*ip[i];
+  *ip[i]=c;
+ }
+ printf("Ascending order:\n");
+ for(i=0;i<5;i++)
+ printf("%d ",*ip[i]);printf("\n");
+ printf("Descending order is:\n");
+ for(i=4;i>=0;i--)
+ printf("%d ",*ip[i]);printf("\n");
+}
+bash-3.2$ cc sortingcr.c
+bash-3.2$ ./a.out
+Give five values:
+3 9 1 7 2 
+Ascending order:
+1 2 3 7 9 
+Descending order is:
+9 7 3 2 1 
+bash-3.2$ cat fibocr.c
+#include<stdio.h>
+main()
+{
+int i,*ptr,num,t1,t2,fib[20];
+printf("enter number of terms");
+scanf("%d",&num);
+ptr=fib;
+t1=-1;
+t2=1;
+for(i=0;i<num;i++)
+{
+*ptr=t1+t2;
+t1=t2;
+t2=*ptr;
+printf("%d\n",*ptr);
+}
+}
+bash-3.2$ cc fibocr.c
+bash-3.2$ ./a.out
+enter number of terms 4
+0
+1
+1
+2
+bash-3.2$ cat dynamic.c
+#include<stdio.h>
+#include<stdlib.h>
+main()
+{
+int n,i,*a;
+printf("enter the number of elements:\n");
+scanf("%d",&n);
+a=(int *)malloc(n*sizeof(int));
+printf("enter the array elememts one by one");
+for (i=0;i<n;i++)
+scanf("%d",&a[i]);
+for (i=n-1;i>0;i--)
+printf("%d\t",a[i]);
+}
+bash-3.2$ cc dynamic.c
+bash-3.2$ ./a.out
+enter the number of elements:
+3 4 5 6
+enter the array elememts one by one6	5	bash-3.2$ exit
+exit
+
+Script done on Tue 08 Nov 2016 12:21:25 PM IST

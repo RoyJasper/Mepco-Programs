@@ -1,0 +1,87 @@
+Script started on Tue 25 Oct 2016 05:48:55 PM IST
+bash-3.2$ cat swap.c
+#include<stdio.h>
+main()
+{
+int a,b,c;
+printf("enter two numbers\n");
+scanf("%d %d",&a,&b);
+c=a;
+a=b;
+b=c;
+printf("%dand%d are swapped",a,b);
+}
+bash-3.2$ cc swap.c
+bash-3.2$ ./a.out
+enter two numbers
+ 2 4
+4and2 are swappedbash-3.2$ cat distance.c
+#include<stdio.h>
+#include<math.h>
+main()
+{
+int x1,y1,x2,y2,a,b,c,d,e,f;
+printf("enter the value x1");
+printf("enter the value x2");
+printf("enter the value y1");
+printf("enter the value y2");
+scanf("%d%d%d%d",&x1,&x2,&y1,&y2);
+a=x1-x2;
+b=a*a;
+c=y1-y2;
+e=b*f;
+d=sqrt(b+e);
+printf("%d",d);
+}
+bash-3.2$ cc distance.c -lm
+bash-3.2$ ./a.out
+enter the value x1enter the value x2enter the value y1enter the value y2 2 3 4 5
+1
+bash-3.2$ cat area.c
+#include<stdio.h>
+main()
+{float r,a,c;
+printf("Give the radius of the circle\n");
+scanf("%f",&r);
+a=3.14*r*r;
+c=2*3.14*r;
+printf("Area of the circle is %f and circumference of circle is %f",a,c);
+}
+bash-3.2$ cc area.c
+bash-3.2$ ./a.out
+Give the radius of the circle
+2
+Area of the circle is 12.560000 and circumference of circle is 12.560000
+bash-3.2$ cat profit.c
+#include<stdio.h>
+main()
+{int a=40,pg=50,s1,s2,p;
+float pp;
+s1=140*a+120*pg;s2=150*a+140*pg;
+p=s2-s1;
+pp=(p*100)/s2;
+printf("The profit is %d and profit percentage is %f\n",p,pp);
+}
+bash-3.2$ cc profit.c
+bash-3.2$ ./a.out
+The profit is 1400 and profit percentage is 10.000000
+bash-3.2$ cat salary.c
+#include<stdio.h>
+main()
+{
+int bp,da,hra,a=1000,gs;
+printf("Give the Basic Pay amount\n");
+scanf("%d",&bp);
+hra=(bp*0.1);
+da=(bp*0.5);
+gs=hra+da+a+bp;
+printf("The gross salary is Rs:%d\n",gs);
+}
+bash-3.2$ cc salary.c
+bash-3.2$ ./a.out
+Give the Basic Pay amount
+8000
+The gross salary is Rs:13800
+bash-3.2$ exit
+exit
+Script done on Tue 25 Oct 2016 05:53:23 PM IST

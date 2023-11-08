@@ -1,0 +1,3 @@
+int fou
+char ad 
+float flt

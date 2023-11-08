@@ -1,0 +1,405 @@
+*****************************************************************
+ROY JASPER C S   							14BIT058
+			         APPLET --> EX10
+-----------------------------------------------------------------
+TO CREATE BORDER LAYOUT
+
+//package image;
+import java.awt.*;  
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.*;  
+  
+public  class BorderLayout implements ActionListener, LayoutManager {  
+
+JFrame f;
+int i=0;
+JButton bu[]=new JButton[17];
+String s[]={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q"};
+BorderLayout(){  
+    f=new JFrame();  
+    for(i=0;i<17;i++)
+    bu[i]=new JButton(s[i]);
+       
+ 
+    bu[0].setBounds(0,0,200,50);
+    bu[1].setBounds(0,50,67,50);
+    bu[2].setBounds(67,50,67,50);
+    bu[3].setBounds(134,50,66,50);
+    bu[4].setBounds(0,100,200,50);
+    for(i=5;i<11;i++)
+    {
+    	if(i<8)
+    	bu[i].setBounds(i-i,((i-5))*50+150,150,50);
+    	else
+    	bu[i].setBounds(i-i+150,((i-8)*50)+150,150,50);
+    }
+    for(i=11;i<17;i++)
+    bu[i].setBounds(200,(i-11)*30,100,30);
+    bu[15].setBounds(200,120,100,30);
+    for(i=0;i<17;i++)
+    {
+    	f.add(bu[i]);
+    	bu[i].addActionListener(this);
+    }
+    f.setSize(300,340); 
+    f.setVisible(true);  
+}  
+public void actionPerformed(ActionEvent ae)
+{
+	for(i=0;i<17;i++)
+	{
+	if(ae.getSource()==bu[i])
+		JOptionPane.showMessageDialog(null,"PRESSED BUTTON IS "+s[i]);
+	}
+}
+public static void main(String[] args) {  
+    new BorderLayout();  
+}
+@Override
+public void addLayoutComponent(String arg0, Component arg1) {
+	// TODO Auto-generated method stub
+	
+}
+@Override
+public void layoutContainer(Container arg0) {
+	// TODO Auto-generated method stub
+	
+}
+@Override
+public Dimension minimumLayoutSize(Container arg0) {
+	// TODO Auto-generated method stub
+	return null;
+}
+@Override
+public Dimension preferredLayoutSize(Container arg0) {
+	// TODO Auto-generated method stub
+	return null;
+}
+@Override
+public void removeLayoutComponent(Component arg0) {
+	// TODO Auto-generated method stub
+	
+}  
+}  
+-----------------------------------------------------------------
+LINE MOVE:
+
+//package image;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.Graphics;
+public class LineMove extends Canvas implements ActionListener
+{
+  JFrame fr;
+  JButton left,right;
+  Graphics g;
+  JLabel lab,move;
+  int i=0,j=0;
+  public void init()
+  {
+		fr=new JFrame("LET'S START GAME");
+		Container c = fr.getContentPane();
+		c.setBackground(Color.white);
+		Font font = new Font("Segoe Print", Font.BOLD,20);
+		left=new JButton("LEFT");
+		right=new JButton("RIGHT");
+		lab=new JLabel("______________________________________________________________");
+		move =new JLabel("______________");
+		lab.setFont(font);
+		lab.setBounds(0,350,500,30);
+		move.setBounds(300,320,400,20);
+		move.setFont(font);
+		fr.add(lab);
+		fr.add(move);
+		left.setBounds(75,400,100,30);
+		fr.add(left);
+		right.setBounds(225,400,100,30);
+		fr.add(right);
+		left.addActionListener(this);
+		right.addActionListener(this);
+		//g.drawLine(0, 400,300,300);
+		fr.setSize(500,500);//400 width and 500 height  
+		fr.setLayout(null);//using no layout managers  
+		fr.setVisible(true); 	
+		//g.setColor(Color.black);
+		 // g.drawLine(500, 400,800,900);
+		 // g.drawString("HELLO",40,40);
+		
+  }
+  int k=300;
+@Override
+public void actionPerformed(ActionEvent ae)
+{   
+	String str=ae.getActionCommand();
+	if(str.equals("LEFT") && k!=0)
+	{  
+		k=k-30;
+	   //fr.setVisible(false);
+	   move.setBounds(k,320,400,20);
+	   fr.add(move);
+	   fr.setVisible(true);
+		
+	    }
+	
+	if(str.equals("RIGHT") && k<=360)
+	{
+		k=k+30;
+		   //fr.setVisible(false);
+		   move.setBounds(k,320,400,20);
+		   fr.add(move);
+		   fr.setVisible(true);
+	    }
+	}
+	
+
+public static void main(String args[])
+{
+	
+	LineMove b=new LineMove();
+	b.init();
+	
+	
+}
+}
+-----------------------------------------------------------------
+STIMULATING NOTEPAD:
+
+//	package image;
+	import javax.swing.*;  
+
+import java.awt.event.*;  
+      
+    public class Notepad implements ActionListener{  
+    JFrame f;  
+    JMenuBar mb;  
+    JMenu file,edit,help;  
+    JMenuItem cut,copy,paste,selectAll,h;  
+    JTextArea ta;  
+          
+    Notepad(){  
+    f=new JFrame();  
+      
+    cut=new JMenuItem("cut");  
+    copy=new JMenuItem("copy");  
+    paste=new JMenuItem("paste");  
+    selectAll=new JMenuItem("selectAll");  
+      h=new JMenuItem("HELP");
+    cut.addActionListener(this);  
+    copy.addActionListener(this);  
+    paste.addActionListener(this);  
+    selectAll.addActionListener(this);  
+      
+    mb=new JMenuBar();  
+    mb.setBounds(5,5,100,40);  
+      
+    file=new JMenu("File");  
+    edit=new JMenu("Edit");  
+    help=new JMenu("Help");  
+      
+    edit.add(cut);edit.add(copy);edit.add(paste);edit.add(selectAll);  
+      help.add(h);
+      
+    mb.add(file);mb.add(edit);mb.add(help);  
+      
+    ta=new JTextArea();  
+    ta.setBounds(5,60,460,460);  
+      
+    f.add(mb);f.add(ta);  
+     f.setName("NOTE PAD");
+    f.setLayout(null);  
+    f.setSize(500,500);  
+    f.setVisible(true);  
+    }  
+      
+    public void actionPerformed(ActionEvent e) {  
+    if(e.getSource()==cut)  
+    ta.cut();  
+    if(e.getSource()==paste)  
+    ta.paste();  
+    if(e.getSource()==copy)  
+    ta.copy();  
+    if(e.getSource()==selectAll)  
+    ta.selectAll();
+    if(e.getSource()==h)
+    {
+    f.setVisible(false);
+    ta.setText("VERSION V.1");
+    f.add(ta);
+    f.setVisible(true);  
+    }
+    }  
+      
+    public static void main(String[] args) {  
+        new Notepad();  
+    }  
+    }  
+-----------------------------------------------------------------
+ONLINE TEST:
+
+//package image;
+import java.awt.*;  
+import java.awt.event.*;  
+import javax.swing.*;  
+  
+class OnlineTest extends JFrame implements ActionListener  
+{  
+    JLabel l;  
+    JRadioButton jb[]=new JRadioButton[5];  
+    JButton b1,b2;  
+    ButtonGroup bg;  
+    int count=0,current=0,x=1,y=1,now=0;  
+    int m[]=new int[10];      
+    OnlineTest(String s)  
+    {  
+        super(s);  
+        l=new JLabel();  
+        add(l);  
+        bg=new ButtonGroup();  
+        for(int i=0;i<5;i++)  
+        {  
+            jb[i]=new JRadioButton();     
+            add(jb[i]);  
+            bg.add(jb[i]);  
+        }  
+        b1=new JButton("Next");  
+        b2=new JButton("Result");  
+        b1.addActionListener(this);  
+        b2.addActionListener(this);  
+        add(b1);add(b2);  
+        set();  
+        l.setBounds(30,40,450,20);  
+        jb[0].setBounds(50,80,100,20);  
+        jb[1].setBounds(50,110,100,20);  
+        jb[2].setBounds(50,140,100,20);  
+        jb[3].setBounds(50,170,100,20);  
+        b1.setBounds(100,240,100,30);  
+        b2.setBounds(270,240,100,30);  
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
+        setLayout(null);  
+        setLocation(250,100);  
+        setVisible(true);  
+        setSize(600,350);  
+    }  
+    public void actionPerformed(ActionEvent e)  
+    {  
+        if(e.getSource()==b1)  
+        {  
+            if(check())  
+                count=count+1;  
+            current++;  
+            set();    
+            if(current==9)  
+            {  
+                b1.setEnabled(false);  
+                b2.setText("Result");  
+            }  
+        }  
+
+      
+        if(e.getActionCommand().equals("Result"))  
+        {  
+            if(check())  
+                count=count+1;  
+            current++;  
+            //System.out.println("correct ans="+count);  
+            JOptionPane.showMessageDialog(this,"correct ans="+count);  
+            System.exit(0);  
+        }  
+    }  
+    void set()  
+    {  
+        jb[4].setSelected(true);  
+        if(current==0)  
+        {  
+            l.setText("Que1: Which one among these is not a primitive datatype?");  
+            jb[0].setText("int");jb[1].setText("Float");jb[2].setText("boolean");jb[3].setText("char");   
+        }  
+        if(current==1)  
+        {  
+            l.setText("Que2: Which class is available to all the class automatically?");  
+            jb[0].setText("Swing");jb[1].setText("Applet");jb[2].setText("Object");jb[3].setText("ActionEvent");  
+        }  
+        if(current==2)  
+        {  
+            l.setText("Que3: Which package is directly available to our class without importing it?");  
+            jb[0].setText("swing");jb[1].setText("applet");jb[2].setText("net");jb[3].setText("lang");  
+        }  
+        if(current==3)  
+        {  
+            l.setText("Que4: String class is defined in which package?");  
+            jb[0].setText("lang");jb[1].setText("Swing");jb[2].setText("Applet");jb[3].setText("awt");  
+        }  
+        if(current==4)  
+        {  
+            l.setText("Que5: Which institute is best for java coaching?");  
+            jb[0].setText("Utek");jb[1].setText("Aptech");jb[2].setText("SSS IT");jb[3].setText("jtek");  
+        }  
+        if(current==5)  
+        {  
+            l.setText("Que6: Which one among these is not a keyword?");  
+            jb[0].setText("class");jb[1].setText("int");jb[2].setText("get");jb[3].setText("if");  
+        }  
+        if(current==6)  
+        {  
+            l.setText("Que7: Which one among these is not a class? ");  
+            jb[0].setText("Swing");jb[1].setText("Actionperformed");jb[2].setText("ActionEvent");  
+                        jb[3].setText("Button");  
+        }  
+        if(current==7)  
+        {  
+            l.setText("Que8: which one among these is not a function of Object class?");  
+            jb[0].setText("toString");jb[1].setText("finalize");jb[2].setText("equals");  
+                        jb[3].setText("getDocumentBase");         
+        }  
+        if(current==8)  
+        {  
+            l.setText("Que9: which function is not present in Applet class?");  
+            jb[0].setText("init");jb[1].setText("main");jb[2].setText("start");jb[3].setText("destroy");  
+        }  
+        if(current==9)  
+        {  
+            l.setText("Que10: Which one among these is not a valid component?");  
+            jb[0].setText("JButton");jb[1].setText("JList");jb[2].setText("JButtonGroup");  
+                        jb[3].setText("JTextArea");  
+        }  
+        l.setBounds(30,40,450,20);  
+        for(int i=0,j=0;i<=90;i+=30,j++)  
+            jb[j].setBounds(50,80+i,200,20);  
+    }  
+    boolean check()  
+    {  
+        if(current==0)  
+            return(jb[1].isSelected());  
+        if(current==1)  
+            return(jb[2].isSelected());  
+        if(current==2)  
+            return(jb[3].isSelected());  
+        if(current==3)  
+            return(jb[0].isSelected());  
+        if(current==4)  
+            return(jb[2].isSelected());  
+        if(current==5)  
+            return(jb[2].isSelected());  
+        if(current==6)  
+            return(jb[1].isSelected());  
+        if(current==7)  
+            return(jb[3].isSelected());  
+        if(current==8)  
+            return(jb[1].isSelected());  
+        if(current==9)  
+            return(jb[2].isSelected());  
+        return false;  
+    }  
+    public static void main(String s[])  
+    {  
+        new OnlineTest("Online Test Of Java");  
+    }  
+}
+---------------------------------------------

@@ -1,0 +1,298 @@
+Script started on Wed 09 Nov 2016 11:34:12 AM IST
+bash-3.2$ cat 6del.c
+#include<stdio.h>
+#include<string.h>
+main()
+{
+ char s[50],w[20],t[50],d[20];
+ int i,j;
+ printf("Enter the sentence:\n");
+ gets(s);
+ printf("Enter the word to be deleted:");
+ scanf("%s",d);
+ i=0;
+ while(s[i]!='\0')
+ {
+  j=0;
+ while(1)
+ {
+  if(s[i]==' '||s[i]=='\0')
+ break;
+ w[j++]=s[i++];
+ }
+ w[j]='\0';
+  if(strcmp(w,d)!=0)
+ {strcat(t,w);
+ strcat(t," ");}
+  if(s[i]!='\0')
+ i++;}
+ printf("\n after deletion the sentence is as follows\n");
+ puts(t);
+ }
+bash-3.2$ cc 6del.c
+bash-3.2$ ./a.out 
+Enter the sentence:
+hari hara navin
+Enter the word to be deleted:hara
+
+ after deletion the sentence is as follows
+hari navin 
+bash-3.2$ cat 6name.c
+#include<stdio.h>
+#include<string.h>
+main()
+{
+ char s[50],w[20],d[20];
+ int i,j;
+ printf("\n enter full name \n");
+ gets(s);
+  i=0;
+ while(s[i]!='\0')
+ {j=0;
+ while(1)
+ {
+  if(s[i]==' ' || s[i]=='\0')
+ break;
+ w[j++]=s[i++];
+ }
+ w[j]='\0';
+ if(s[i]==' ')
+ {
+ printf("%c",w[0]);
+ printf("%c",'.');
+ }
+  if(s[i]=='\0')
+ printf("%s",w);
+  if(s[i]!='\0')
+ i++;}}
+bash-3.2$ cc 6name.c
+bash-3.2$ ./a.out 
+
+ enter full name 
+hari hara navin
+h.h.navinbash-3.2$ cat 6menudriven.c
+#include<stdio.h>
+#include<string.h>
+main()
+{
+ char s[30];
+ int choice,len,i,j,temp;
+ int alphabets=0;
+ int numerals=0;
+ int others=0;
+ printf("the choices are \n");
+ printf("1.The length of a string\n");
+ printf("2.Reverse of a string\n");
+ printf("3.Count the number of characters\n");
+ printf("Enter your choice \n");
+ scanf("%d",&choice);
+ printf("enter the string \n");
+ scanf("%s",s);
+ switch(choice)
+ {
+ case 1:
+ //  printf("enter the string \n");
+ //  gets(s);
+  len=0;
+  while(s[len]!=0)
+  {
+  len++;
+  }
+  printf("the length of the string is %d",len);
+break;
+case 2:
+ //  printf("enter the string \n");
+ //  scanf("%s",s);
+ i=0,j=0,len=0;
+ while(s[len]!='\0')
+ {
+ len++;
+ }
+ j=len-1;
+ while(i<j)
+ {
+ temp=s[i];
+ s[i]=s[j];
+ s[j]=temp;
+ i++;
+ j--;
+ }
+ printf("reverse of a string is %s",s);
+ break;
+ case 3:
+  //printf("enter the string \n");
+
+  //gets(s);
+ i=0;
+ while(s[i]!='\0')
+ {if((s[i]>='a' && s[i]<='z')||(s[i]>='A' && s[i]<='Z'))
+ {
+ alphabets++;
+ i++;
+ }
+ else if(s[i]>='0' && s[i]<='9')
+ {numerals++;
+ i++;
+ }
+ else
+ {others++;
+ i++;}
+ }
+ printf("number of alphabets =%d \n",alphabets);
+ printf("number of numerals =%d \n",numerals);
+ printf("other characters =%d \n",others);
+ break;
+ }}
+bash-3.2$ cc 6menudriven.c
+bash-3.2$ ./a.out 
+the choices are 
+1.The length of a string
+2.Reverse of a string
+3.Count the number of characters
+Enter your choice 
+2
+enter the string 
+navin
+reverse of a string is nivanbash-3.2$ cat menu2.c
+#include<string.h>
+#include<stdio.h>
+main()
+{
+ char str[30],ch;
+ int choice ,i,p,count,flag,len;
+ printf("\t\t\tThe choices are\n");
+ printf("1.Search a character and report its position\n");
+ printf("2.Find out the character at the specified position \n");
+ printf("3.Display the number of occurences of a particular character\n");
+ printf("4.Check whether the string is palindriome or not \n");
+ printf("5.Exit\n");
+ while(1)
+ {
+ printf("Enter your choice \n");
+ scanf("%d",&choice);
+  if(choice==5)
+ {break;}
+ printf("Enter the string\n");
+ scanf("%s",str);
+ switch(choice)
+ {
+case 1:count=1;
+ printf("\nEnter the character to be searched\n");
+ scanf("\n%c",&ch);
+ for(i=0;str[i]!='\0';i++)
+ {
+ if(str[i]==ch)
+ {
+ p=i;
+ printf("\nThe Position of %c is %d\n ",ch ,count);
+ }
+ count++;
+ }
+ if(count==0)
+ printf("\nThe given character is not present\n");
+ else
+ printf("\nThe character is present\n");
+ break;
+case 2:
+ printf("Enter the position\n");
+ scanf("%d",&p);
+ printf("the character is %c\n",str[p-1]);
+ break;
+case 3:count=0;
+ printf("Enter the character to be searched: \n");
+ scanf("\n%c",&ch);
+ for(i=0;str[i]!='\0';i++)
+ {
+ if(str[i]==ch)
+ count++;
+ }
+ if(count==0)
+ printf("The character is not present \n");
+ else
+ printf("Occurence of character %c is %d\n",ch,count);
+ break;
+case 4:
+ flag=0;
+ len=0;
+ while(str[len]!='\0')
+ {
+ len++;
+ }
+ for(i=0;i<len;i++)
+ {
+ if(str[i]!=str[len-i-1])
+ {
+ flag=1;
+ break;
+ }
+ }
+ if(flag==1)
+ printf("The given string is not a palindrome\n");
+ else
+ printf("The given string is a palindrome\n");
+ break;
+default:
+ printf("Try again");
+}
+}
+}
+bash-3.2$ cc menu2.c
+bash-3.2$ ./a.out 
+			The choices are
+1.Search a character and report its position
+2.Find out the character at the specified position 
+3.Display the number of occurences of a particular character
+4.Check whether the string is palindriome or not 
+5.Exit
+Enter your choice 
+4
+Enter the string
+madam
+The given string is a palindrome
+bash-3.2$ cat 6extract.c
+#include<stdio.h>
+#include<string.h>
+main()
+{int n,m,i;
+ char s[50];
+ printf("Enter the string\n");
+ gets(s);
+ printf("Enter the position from which the string is to be extracted\n");
+ scanf("%d",&n);
+ printf("Enter number of characters to be extracted");
+ scanf("%d",&m);
+ for(i=n-1;i<m;i++,n=n+1)
+ printf("%c",s[n]);
+}
+
+bash-3.2$ cat 6extract.c
+#include<stdio.h>
+#include<string.h>
+main()
+{int n,m,i;
+ char s[50];
+ printf("Enter the string\n");
+ gets(s);
+ printf("Enter the position from which the string is to be extracted\n");
+ scanf("%d",&n);
+ printf("Enter number of characters to be extracted");
+ scanf("%d",&m);
+ for(i=n-1;i<m;i++,n=n+1)
+ printf("%c",s[n]);
+}
+
+bash-3.2$ cc 6extract.c
+bash-3.2$ ./a.out 
+Enter the string
+hariharanavin
+Enter the position from which the string is to be extracted
+2
+Enter number of characters to be extracted
+8
+riharanbash-3.2$ exit
+exit
+There are stopped jobs.
+bash-3.2$ exit
+exit
+
+Script done on Wed 09 Nov 2016 11:59:13 AM IST

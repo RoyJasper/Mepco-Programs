@@ -1,0 +1,346 @@
+******************************************************************
+NAME : ROY JASPER C S                        14BIT058
+           EX 6 --> COLLECTION CLASS USING JAVA
+-------------------------------------------------------------------
+            CRICKET SCORES
+
+ PROGRAM:
+			
+import java.io.*;
+import java.util.*;
+class Cricket
+{
+    public static void main(String args[])
+    {
+        int sc,f,i;
+        String n,c,e;
+        Scanner obj=new Scanner(System.in);
+        Scanner obj1 = new Scanner(System.in);
+        HashMap <String,Integer> ob=new HashMap<String,Integer>();
+        System.out.println("Enter the number of men:");
+        int a=obj.nextInt();
+        for(i=0; i<a; i++)
+        {
+            System.out.println("Enter the name and Score:");
+            n=obj1.nextLine();
+            sc=obj.nextInt();
+            ob.put(n,sc);
+        }
+        System.out.println("Enter the name to be present or not\n");
+        e=obj1.nextLine();
+        System.out.println("The score is "+(ob.get(e)));
+    }
+}
+
+OUTPUT:
+Enter the name
+roy
+Enter the Type
+jas
+Enter the Whether a member or not
+false
+Enter the Service expences
+2200
+Enter the Product expences
+300
+Enter the date
+12116
+The Total Expenses is 660000
+The Service Expenses is 150
+The Product Expenses is 440
+
+-------------------------------------------------------------------------
+				USING VECTOR CLASS
+				
+	PROGRAM:
+	
+import java.io.*;
+import java.util.Vector;
+import java.util.Scanner;
+class VectorExample
+{
+    public static void main(String args[])
+    {
+        int a,b,c,d,x;
+        Vector ob = new Vector ();
+        Scanner obj=new Scanner (System.in);
+        while(true)
+        {
+            System.out.println("\nEnter the Choice \n1.Add \n2.Remove \n3.Get \n4.Clear \n5.Retrieve");
+            a=obj.nextInt();
+            switch(a)
+            {
+            case 1:
+                System.out.println("\nEnter the Element to be inserted");
+                b=obj.nextInt();
+                ob.add(b);
+                break;
+            case 2:
+                System.out.println("\nEnter the Position");
+                c=obj.nextInt();
+                System.out.println("The Removed Element is :"+(ob.remove(c)));
+                break;
+            case 3:
+                System.out.println("\nEnter the Position to be Retreived");
+                x=obj.nextInt();
+                System.out.println("The element at"+ x +"is"+(ob.get(x)));
+                break;
+            case 4:
+                ob.clear();
+                break;
+            case 5:
+                for(int j=0; j<ob.size(); j++)
+                    System.out.println(ob.get(j));
+                break;
+            case 6:
+                System.
+            }
+        }
+    }
+}
+
+OUTPUT:
+
+Enter the Choice
+1.Add
+2.Remove
+3.Get
+4.Clear
+5.Retrieve
+1
+
+Enter the Element to be inserted
+11
+
+Enter the Choice
+1.Add
+2.Remove
+3.Get
+4.Clear
+5.Retrieve
+1
+
+Enter the Element to be inserted
+22
+
+Enter the Choice
+1.Add
+2.Remove
+3.Get
+4.Clear
+5.Retrieve
+1
+
+Enter the Element to be inserted
+33
+
+Enter the Choice
+1.Add
+2.Remove
+3.Get
+4.Clear
+5.Retrieve
+1
+
+Enter the Element to be inserted
+44
+
+Enter the Choice
+1.Add
+2.Remove
+3.Get
+4.Clear
+5.Retrieve
+1
+
+Enter the Element to be inserted
+55
+
+Enter the Choice
+1.Add
+2.Remove
+3.Get
+4.Clear
+5.Retrieve
+1
+
+Enter the Element to be inserted
+66
+
+Enter the Choice
+1.Add
+2.Remove
+3.Get
+4.Clear
+5.Retrieve
+2
+
+Enter the Position
+5
+The Removed Element is :66
+
+Enter the Choice
+1.Add
+2.Remove
+3.Get
+4.Clear
+5.Retrieve
+3
+
+Enter the Position to be Retreived
+4
+The element at4is55
+
+Enter the Choice
+1.Add
+2.Remove
+3.Get
+4.Clear
+5.Retrieve
+5
+11
+22
+33
+44
+55
+
+Enter the Choice
+1.Add
+2.Remove
+3.Get
+4.Clear
+5.Retrieve
+4
+
+Enter the Choice
+1.Add
+2.Remove
+3.Get
+4.Clear
+5.Retrieve
+5
+
+
+--------------------------------------------------------------------
+					ARRAY LIST CLASS IN JAVA
+					
+	PROGRAM:
+
+import java.io.*;
+import java.util.*;
+class ListClass
+{
+    public static void main(String args[])
+    {
+        int i,j,k;
+        Scanner obj=new Scanner(System.in);
+        ArrayList <Integer> al=new ArrayList <Integer> ();
+        int [] a =new int[5];
+        for(i=0; i<5; i++)
+        {
+            System.out.println("Enter the Number:");
+            a[i]=obj.nextInt();
+            al.add(a[i]);
+        }
+        System.out.println("Enter the Element to be get");
+        k=obj.nextInt();
+        j=al.get(k);
+        System.out.println(j);
+        ListIterator <Integer> litr = null;
+        litr=al.listIterator();
+
+        System.out.println("Elements in forward directiton");
+        while(litr.hasNext())
+        {
+            System.out.println(litr.next());
+        }
+        System.out.println("Elements in backward directiton");
+        while(litr.hasPrevious())
+        {
+            System.out.println(litr.previous());
+        }
+    }
+}
+
+OUTPUT:
+
+Enter the Number:
+5
+Enter the Number:
+6
+Enter the Number:
+4
+Enter the Number:
+7
+Enter the Number:
+8
+Enter the Element to be get
+4
+8
+Elements in forward directiton
+5
+6
+4
+7
+8
+Elements in backward directiton
+8
+7
+4
+6
+5
+-----------------------------------------------------------------
+             HASH TABLE CLASS IN JAVA
+			 
+	PROGRAM:
+	
+import java.util.*;
+import java.io.*;
+
+public class HashTableDemo
+{
+
+    public static void main(String args[])
+    {
+        Hashtable balance = new Hashtable();
+        Enumeration names;
+        String name,str;
+        int score;
+        int n;
+        Scanner obj=new Scanner(System.in);
+        Scanner obj1= new Scanner(System.in);
+        System.out.println("Enter the number of players:");
+        n=obj.nextInt();
+        for(int i=0; i<n; i++)
+        {
+            System.out.println("Enter the Name and score");
+            name=obj1.nextLine();
+            score=obj.nextInt();
+            balance.put(name,score);
+        }
+        names = balance.keys();
+        while(names.hasMoreElements())
+        {
+            str = (String) names.nextElement();
+            System.out.println(str + ": " +
+                               balance.get(str));
+        }
+    }
+}
+
+OUTPUT:
+Enter the number of players:
+3
+Enter the Name and score
+qq
+1
+Enter the Name and score
+ww
+2
+Enter the Name and score
+ee
+3
+ee: 3
+qq: 1
+ww: 2
+----------------------------------------------------------------

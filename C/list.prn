@@ -1,0 +1,407 @@
+*******************************************************************************
+EXNO:1																	ROLLNO:14BIT053
+DATE:																		NAME:RAHUL RAJAN D
+*******************************************************************************
+	STUDENT NAMELIST GENERATION USING SINGLY LINKED LIST
+*******************************************************************************
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+struct student
+{
+int stid;
+char name[50];
+struct student *next;
+};
+typedef struct student * list;
+int insert(int,int,char[],list);
+int search(int,list);
+void display(list);
+void delet(int,list);
+list preeleadd(int,list);
+int isempty(list);
+int locate(int,list);
+list retrive(int,list);
+void reverse(list);
+bash-3.2$ cat simp.c
+#include"slist.h"
+int insert(int n,int p,char na[50],list head)
+{
+static int f=1;
+int i;
+list temp,t;
+if(p==f)
+{
+temp=(list)malloc(sizeof(struct student));
+temp->stid=n;
+strcpy(temp->name,na);
+t=head;
+for(i=0;i<p-1;i++)
+{
+t=t->next;
+}
+temp->next=t->next;
+t->next=temp;
+f++;
+return (f);
+printf("THE DATA IS INSERTED SUCCESSFULLY");
+}
+else
+printf("ERROR");
+}
+int search(int n,list head)
+{
+list t;
+t=head->next;
+while(t!=NULL)
+{
+if(t->stid==n)
+{
+return 1;
+}
+else
+{
+t=t->next;
+}
+}
+//if(t==NULL)
+{
+return 0;
+}
+}
+void display(list head)
+{
+list t;
+t=head->next;
+while(t!=NULL)
+{
+printf("\nTHE STUDENT ID IS %d",t->stid);
+printf("\nTHE STUDENT NAME IS %s",t->name);
+t=t->next;
+}
+}
+void delet(int n,list head)
+{
+int r;
+list t,k;
+r=search(n,head);
+if(r==1)
+{
+printf("\nTHE ELEMENT IS PRESENT");
+t=preeleadd(n,head);
+k=t->next;
+t->next=t->next->next;
+free(k);
+}
+else
+{
+printf("\nTHE ELEMENT IS NOT PRESENT");
+}
+}
+list preeleadd(int n,list head)
+{
+list t;
+t=head->next;
+while(t!=NULL)
+{
+if(t->stid==n)
+{
+return t;
+}
+else
+{
+t=t->next;
+}
+}
+}
+int isempty(list head)
+{
+if(head->next==NULL)
+{
+return 0;
+}
+else
+{
+return 1;
+}
+}
+int locate(int n,list head)
+{
+list t;
+int a=1;
+t=head->next;
+while(t!=NULL)
+{
+if(t->stid==n)
+{
+return a;
+}
+else
+{
+t=t->next;
+a++;
+}
+}
+if(t==NULL)
+{
+return 0;
+}
+}
+list retrive (int p,list head)
+{
+list t;
+int i;
+t=head->next;
+for(i=0;i<p-1;i++)
+{
+t=t->next;
+}
+return (t);
+}
+void reverse (list head)
+{
+list t,k,r;
+t=head;
+while(t->next!=NULL)
+{
+t=t->next;
+}
+r=t;
+while(head->next->next!=NULL)
+{
+k=head;
+while(k!=NULL)
+{
+if(k->next==t)
+{
+t->next=k;
+k->next=NULL;
+break;
+}
+else
+k=k->next;
+}
+t=k;
+}
+head->next=r;
+}
+
+bash-3.2$ cat sapp.c
+#include"slist.h"
+int main()
+{
+int n,p,choice,b,c,e,g;
+list head,q;
+char na[20];
+head=(list)malloc(sizeof(struct student));
+while(1)
+{
+printf("\n1.insertion\n2.search\n3.display\n4.delete\n5.isempty\n6.locate\n7.retrive\n 8.reverse\n 9.exit enter the choice");
+scanf("%d",&choice);
+switch(choice)
+{
+case 1:
+printf("ENTER HTE ID,POSITION,NAME OF THE STUDENT");
+scanf("%d%d%s",&n,&p,na);
+g=insert(n,p,na,head);
+break;
+case 2:
+printf("ENTER EHT STUDENT ID TO BE SEARCHED");
+scanf("%d",&n);
+b=search(n,head);
+if(b==1)
+printf("IT IS PRESENT");
+else
+printf("IT IS NOT PRESENT");
+break;
+case 3:
+display(head);
+break;
+case 4:
+printf("ENTER THE STUDENT ID");
+scanf("%d",&n);
+delet(n,head);
+break;
+case 5:
+c=isempty(head);
+if(c==1)
+printf("THE ELEMENT IS NOT PRESENT");
+else
+printf("THE ELEMENT IS PRESENT");
+break;
+case 6:
+printf("ENTER THE STUDENT ID");
+scanf("%d",&n);
+e=locate(n,head);
+if(e!=0)
+printf("THE POSITION IS %d",e);
+else
+printf("IT IS NOT PRESENT");
+break;
+case 7:
+printf("ENTER THE POSITION");
+scanf("%d",&p);
+if(p<=g)
+{
+q=retrive(p,head);
+printf("THE NAME IS %s ID %d",q->name,q->stid);
+}
+else
+printf("IT IS OUT OF POSITION");
+break;
+case 8:
+reverse(head);
+break;
+case 9:
+exit(0);
+}
+}
+}
+
+bash-3.2$ cc simp.c -c
+bash-3.2$ cc sapp.c simp.o
+bash-3.2$ ./a.out
+
+1.insertion
+2.search
+3.display
+4.delete
+5.isempty
+6.locate
+7.retrive
+ 8.reverse
+ 9.exit enter the choice 1
+ENTER THE ID,POSITION,NAME OF THE STUDENT 1452 1 rahul
+
+1.insertion
+2.search
+3.display
+4.delete
+5.isempty
+6.locate
+7.retrive
+ 8.reverse
+ 9.exit enter the choice 1
+ENTER THE ID,POSITION,NAME OF THE STUDENT 1453 2 rajan
+
+1.insertion
+2.search
+3.display
+4.delete
+5.isempty
+6.locate
+7.retrive
+ 8.reverse
+ 9.exit enter the choice 1
+ENTER THE ID,POSITION,NAME OF THE STUDENT 1454 3 raj
+
+1.insertion
+2.search
+3.display
+4.delete
+5.isempty
+6.locate
+7.retrive
+ 8.reverse
+ 9.exit enter the choice 2
+ENTER THE STUDENT ID TO BE SEARCHED 1452
+IT IS PRESENT
+1.insertion
+2.search
+3.display
+4.delete
+5.isempty
+6.locate
+7.retrive
+ 8.reverse
+ 9.exit enter the choice 3
+
+THE STUDENT ID IS 1452
+THE STUDENT NAME IS rahul
+THE STUDENT ID IS 1453
+THE STUDENT NAME IS rajan
+THE STUDENT ID IS 1454
+THE STUDENT NAME IS raj
+1.insertion
+2.search
+3.display
+4.delete
+5.isempty
+6.locate
+7.retrive
+ 8.reverse
+ 9.exit enter the choice 4
+ENTER THE STUDENT ID 1458
+
+THE ELEMENT IS NOT PRESENT
+1.insertion
+2.search
+3.display
+4.delete
+5.isempty
+6.locate
+7.retrive
+ 8.reverse
+ 9.exit enter the choice 5
+THE LIST IS NOT EMPTY
+1.insertion
+2.search
+3.display
+4.delete
+5.isempty
+6.locate
+7.retrive
+ 8.reverse
+ 9.exit enter the choice 6
+ENTER THE STUDENT ID 1454
+THE POSITION IS 3
+1.insertion
+2.search
+3.display
+4.delete
+5.isempty
+6.locate
+7.retrive
+ 8.reverse
+ 9.exit enter the choice 7
+ENTER THE POSITION 2
+THE NAME IS rajan ID 1453
+1.insertion
+2.search
+3.display
+4.delete
+5.isempty
+6.locate
+7.retrive
+ 8.reverse
+ 9.exit enter the choice 8
+
+1.insertion
+2.search
+3.display
+4.delete
+5.isempty
+6.locate
+7.retrive
+ 8.reverse
+ 9.exit enter the choice 3
+
+THE STUDENT ID IS 1454
+THE STUDENT NAME IS raj
+THE STUDENT ID IS 1453
+THE STUDENT NAME IS rajan
+THE STUDENT ID IS 1452
+THE STUDENT NAME IS rahul
+1.insertion
+2.search
+3.display
+4.delete
+5.isempty
+6.locate
+7.retrive
+ 8.reverse
+ 9.exit enter the choice 9
+bash-3.2$ exit
+exit
+
+Script done on Wed 12 Aug 2015 12:10:34 PM IST

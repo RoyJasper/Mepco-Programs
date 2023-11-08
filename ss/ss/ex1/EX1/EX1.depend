@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1454436235 source:e:\work\ex1\hash.c
+	"hash.h"
+	<ctype.h>
+	<string.h>
+	<stdlib.h>
+	<stdio.h>
+
+1454436465 e:\work\ex1\hash.h
+
+1454436502 source:e:\work\ex1\main.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"hash.h"
+

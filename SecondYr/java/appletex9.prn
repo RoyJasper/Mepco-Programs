@@ -1,0 +1,329 @@
+*****************************************************************
+ROY JASPER C S   							14BIT058
+			         APPLET --> EX9
+-----------------------------------------------------------------
+CHANGING FOREGROUND AND BACKGROUND COLOUR
+
+import java.awt.*;
+import java.awt.event.*;
+import java.applet.*;
+public class FBground extends Applet implements ActionListener,ItemListener
+{
+Button[] colors;
+Checkbox foreground,background;
+TextArea workarea;
+CheckboxGroup cbg;
+Panel buttonpanel,checkpanel,palettepanel;
+String colour;
+public void init()
+{
+buttonpanel=new Panel();
+buttonpanel.setLayout(new GridLayout(3,3));
+colors=new Button[9];
+colors[0]=new Button("RED");
+colors[1]=new Button("GREEN");
+colors[2]=new Button("BLUE");
+colors[3]=new Button("CYAN");
+colors[4]=new Button("ORANGE");
+colors[5]=new Button("WHITE");
+colors[6]=new Button("BLACK");
+colors[7]=new Button("YELLOW");
+colors[8]=new Button("PINK");
+for(int i=0;i<9;i++)
+{
+colors[i].addActionListener(this);
+buttonpanel.add(colors[i]);
+}
+checkpanel=new Panel();
+checkpanel.setLayout(new FlowLayout());
+cbg=new CheckboxGroup();
+foreground=new Checkbox("ForeGround",cbg,true);
+background=new Checkbox("BackGround",cbg,false);
+foreground.addItemListener(this);
+background.addItemListener(this);
+checkpanel.add(foreground);
+checkpanel.add(background);
+workarea=new TextArea(8,40);
+workarea.setFont(new Font("Arial",Font.BOLD,20));
+palettepanel=new Panel();
+palettepanel.setLayout(new BorderLayout());
+palettepanel.add(workarea,BorderLayout.CENTER);
+palettepanel.add(checkpanel,BorderLayout.EAST);
+palettepanel.add(buttonpanel,BorderLayout.SOUTH);
+add(palettepanel);
+}
+public void itemStateChanged(ItemEvent ie)
+{
+}
+public void actionPerformed(ActionEvent ae)
+{
+colour=ae.getActionCommand();
+if(foreground.getState()==true)
+workarea.setForeground(getColour());
+if(background.getState()==true)
+workarea.setBackground(getColour());
+}
+public Color getColour()
+{
+Color mycolor=null;
+if(colour.equals("RED"))
+mycolor=Color.red;
+if(colour.equals("GREEN"))
+mycolor=Color.green;
+if(colour.equals("BLUE"))
+mycolor=Color.blue;
+if(colour.equals("CYAN"))
+mycolor=Color.cyan;
+if(colour.equals("ORANGE"))
+mycolor=Color.orange;
+if(colour.equals("WHITE"))
+mycolor=Color.white;
+if(colour.equals("BLACK"))
+mycolor=Color.black;
+if(colour.equals("YELLOW"))
+mycolor=Color.yellow;
+if(colour.equals("PINK"))
+mycolor=Color.pink;
+return mycolor;
+}
+}
+-----------------------------------------------------------------
+LOGIN PAGE:
+
+
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
+import javax.swing.*;
+public class LoginPage implements ActionListener
+{
+	protected JFrame f;
+	JLabel heading,name,pwd;
+	JButton Login,SignUp,LogOut;
+	JTextField Username;
+	JPasswordField Password;
+	Connection conn;
+	public static void main(String[] args) throws ClassNotFoundException,SQLException
+	{
+		LoginPage l=new LoginPage();
+		l.connect();
+		l.layout();
+		l.access();
+	}
+	public void connect() throws SQLException, ClassNotFoundException
+	{  
+		Class.forName("oracle.jdbc.driver.OracleDriver");  
+		conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","javaproj","itsme");
+	}
+	public void access()
+	{
+		Login.addActionListener(this);
+		SignUp.addActionListener(this);
+		LogOut.addActionListener(this);
+	}
+	public void layout()
+	{
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int width = (int) screenSize.getWidth();
+		int height = (int) screenSize.getHeight();
+		f=new JFrame();
+		//f.setBackground(Color.BLACK);
+		//getContentPane().setBackground(Color.BLACK);
+		Container c = f.getContentPane();
+		c.setBackground(Color.WHITE);
+		heading=new JLabel("MSM STEEL WORKS");
+		heading.setBounds(600,20,300,30); 
+		Font fo = new Font("Rockwell",Font.ITALIC,30);
+		heading.setFont(fo);
+		f.add(heading);
+		name=new JLabel("USERNAME"); 
+		name.setBounds(100,100,300,30);       
+		f.add(name);
+		Username=new JTextField(20);
+		Username.setBounds(250, 100, 300, 30);
+		f.add(Username);
+		pwd=new JLabel("PASSWORD"); 
+		pwd.setBounds(100,200,300,30);       
+		f.add(pwd);
+		Password = new JPasswordField(20);
+		Password.setBounds(250, 200, 300, 30);
+		f.add(Password);
+		Login=new JButton("Login");
+		Login.setBounds(600,150,100, 30); 		          
+		f.add(Login);
+
+		SignUp=new JButton("SignUp"); 
+		SignUp.setBounds(800,150,100, 30);  		          
+		f.add(SignUp);  		          
+		
+		LogOut=new JButton("Exit"); 
+		LogOut.setBounds(1000,150,100, 30);  		          
+		f.add(LogOut);  
+		
+		f.setSize(width,height);
+		f.setLayout(null); 
+		f.setVisible(true);
+		
+	}
+
+
+
+	public void actionPerformed(ActionEvent ae) 
+	{
+			String str=ae.getActionCommand();			
+			if(str.equals("SignUp"))
+			{
+				f.setVisible(false);
+
+			if(str.equals("Login"))
+			{
+				Statement st;
+				String user=""+Username.getText();
+				char pass[]=Password.getPassword();
+				try 
+				{
+					st = conn.createStatement();
+					ResultSet rs=st.executeQuery("select * from users where uname='"+user+"' and pass='"+String.valueOf(pass)+"'");
+					if(rs.next())  
+					{
+						f.setVisible(false);
+						JOptionPane.showMessageDialog(null,"LOGIN Successful");
+				
+					}
+					else
+						JOptionPane.showMessageDialog(null, "Invalid Username/password");
+				}
+				catch (Exception e1)
+				{
+
+					e1.printStackTrace();
+				}
+			}
+			if(str.equals("Exit"))
+			{
+				f.setVisible(false);
+				f.dispose();
+				System.exit(0);
+			}
+				
+			}
+	}
+}
+-----------------------------------------------------------------
+CALCULATOR:
+
+import java.awt.*;
+import java.awt.event.*;
+import java.applet.*;
+public class MyCalc extends Applet implements ActionListener
+{
+	String msg=" ";
+	int v1,v2,result;
+	TextField t1;
+	Button b[]=new Button[10];
+	Button add,sub,mul,div,clear,mod,EQ;
+	char OP;
+	public void init()
+	{
+		Color k=new Color(0,255,0);
+		setBackground(k);
+		t1=new TextField(10);
+		GridLayout gl=new GridLayout(4,5);
+		setLayout(gl);
+		for(int i=0;i<10;i++)
+		{
+			b[i]=new Button(""+i);
+		}
+		add=new Button("ADDITION");
+		sub=new Button("SUBRACT");
+		mul=new Button("MULTIPLY");
+		div=new Button("DIVIDE");
+		mod=new Button("MODULUS");
+		clear=new Button("CLS");
+		EQ=new Button("EQUALS");
+		t1.addActionListener(this);
+		add(t1);
+		for(int i=0;i<10;i++)
+		{
+			add(b[i]);
+		}
+		add(add);
+		add(sub);
+		add(mul);
+		add(div);
+		add(mod);
+		add(clear);
+		add(EQ);
+		for(int i=0;i<10;i++)
+		{
+			b[i].addActionListener(this);
+		}
+		add.addActionListener(this);
+		sub.addActionListener(this);
+		mul.addActionListener(this);
+		div.addActionListener(this);
+		mod.addActionListener(this);
+		clear.addActionListener(this);
+		EQ.addActionListener(this);
+	}
+ 
+	public void actionPerformed(ActionEvent ae)
+	{
+		String str=ae.getActionCommand();
+		char ch=str.charAt(0);
+		if ( Character.isDigit(ch))
+		t1.setText(t1.getText()+str);
+		else
+		if(str.equals("ADDITION"))
+		{
+			v1=Integer.parseInt(t1.getText());
+			OP='+';
+			t1.setText("");
+		}
+		else if(str.equals("sub"))
+		{
+			v1=Integer.parseInt(t1.getText());
+			OP='-';
+			t1.setText("");
+		}
+		else if(str.equals("MULTIPLY"))
+		{
+			v1=Integer.parseInt(t1.getText());
+			OP='*';
+			t1.setText("");
+		}
+		else if(str.equals("DIVIDE"))
+		{
+			v1=Integer.parseInt(t1.getText());
+			OP='/';
+			t1.setText("");
+		}
+		else if(str.equals("MODULUS"))
+		{
+			v1=Integer.parseInt(t1.getText());
+			OP='%';
+			t1.setText("");
+		}
+		if(str.equals("EQUALS"))
+		{
+			v2=Integer.parseInt(t1.getText());
+			if(OP=='+')
+				result=v1+v2;
+			else if(OP=='-')
+				result=v1-v2;
+			else if(OP=='*')
+				result=v1*v2;
+			else if(OP=='/')
+				result=v1/v2;
+			else if(OP=='%')
+				result=v1%v2;
+			t1.setText(""+result);
+		}	
+		if(str.equals("CLS"))
+		{
+			t1.setText("");
+		}
+	}
+}
+
+-----------------------------------------------------------------

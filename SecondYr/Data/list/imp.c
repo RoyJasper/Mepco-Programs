@@ -1,0 +1,165 @@
+#include"head.h"
+void insert(int n,int p,char nam[20],list head)
+{
+ int i;
+ list temp,t;
+ temp=(list)malloc(sizeof(struct student));
+ temp->no=n;
+ strcpy(temp->name,nam);
+ t=head;
+ for(i=0;i<p-1;i++)
+ {
+  t=t->next;
+ }
+  temp->next=t->next;
+  t->next=temp;
+ printf("\nInsertion is successfull \n");
+}
+int search(int n,char nam[20],list head)
+{
+ list t;
+ t=head->next;
+ while(t!=NULL)
+ {
+ if(t->no==n)
+  return 1;
+ else
+  t=t->next;
+ }
+ if(t==NULL)
+  return 0;
+}
+
+
+void display(list head)
+{
+ list t;
+ t=head->next;
+ while(t!=NULL)
+ {
+  printf("\nthe student number is %d",t->no);
+  printf("\nthe name of student is  %s",t->name);
+  t=t->next;
+ }
+}
+
+void delet(list head,int n,char nam[50])
+{
+ int x;
+ list t,k;
+ x=search(n,nam,head);
+ if(x==1)
+ {
+  t=preeleadd(n,head);
+  k=t->next;
+  t->next=t->next->next;
+  free(k);
+  printf("%d is deleted",t.data);
+ }
+ else
+  printf("\nElement is not present\n");
+}
+
+
+list preeleadd(int n,list head)
+{
+ list t;
+ t=head->next;
+ while(t!=NULL)
+ {
+  if(t->no==n)
+   return t;
+  else
+   t=t->next;
+ }
+}
+
+int isempty(list head)
+{
+ if(head->next==NULL)
+  return 1;
+  else
+  return 0;
+}
+
+
+int locate(int n,list head)
+{
+ list t;
+ int y=1;
+ t=head->next;
+ while(t!=NULL)
+ {
+  if(t->no==n)
+  {
+   return y;
+   break;
+  }
+  else
+  {
+   t=t->next;
+   y=y+1;
+  }
+ }
+}
+
+
+int retrieve(int p,list head)
+{
+ list t;
+ int i;
+ t=head;
+ for(i=0;i<p;i++)
+ {
+  t=t->next;
+ }
+  return t->no;
+
+}
+
+/*void reverse (list head)
+{
+list t,k,r;
+t=head;
+while(t->next!=NULL)
+{
+t=t->next;
+}
+r=t;
+while(head->next->next!=NULL)
+{
+k=head->next;
+while(k!=NULL)
+{
+if(k->next==t)
+{
+t->next=k;
+k->next=NULL;
+}
+else
+k=k->next;
+}
+t=k;
+}
+head->next=r;
+}*/
+void swap(int a,int b,list head)
+{
+list k,t,s;
+int i;
+t=head;
+for(i=0;i<a-1;i++)
+ {
+  t=t->next;
+ // k=head;
+ }
+for(i=0;i<b-1;i++)
+  k=k->next;
+s=k->next->next;
+k->next->next=t->next->next;
+t->next->next=s;
+s=t->next;
+t->next=k->next;
+k->next=s;
+}
+

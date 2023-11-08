@@ -1,0 +1,181 @@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NAME : ROY JASPER C S       14BIT058     EX1
+       WORKING WITH FILE SYSTEM AND COMMANDS
+---------------------------------------------------------:
+
+PROGRAM:
+
+
+#include<stdio.h>
+#include<sys/types.h>
+#include<sys/stat.h>
+#include<unistd.h>
+#include<fcntl.h>
+int main(int argc,char *argv[])
+{
+    int fp;
+    char ch;
+    fp=open(argv[1],O_RDONLY);
+    if(fp==-1)
+        printf("\n Error");
+    else
+    {
+//  read(fp,&ch,1);
+//  while(ch!=EOF)
+        while(read(fp,&ch,1)>0)
+        {
+            printf("%c",ch);
+        }
+    }
+    close(fp);
+}
+bash-3.2$ ./ex1
+
+ Errorbash-3.2$ ./ex1 sam.txt
+hello guyz......
+
+#include<sys/types.h>
+#include<sys/stat.h>
+#include<unistd.h>
+#include<fcntl.h>
+#include<stdio.h>
+int main(int argc,char *argv[])
+{
+    int fd1,fd2;
+    char ch;
+    fd1=open(argv[1],O_RDONLY);
+    fd2=open(argv[2],O_RDWR);
+    if(fd1==-1||fd2==-1)
+        printf("\n Error");
+    else if(argc==3)
+    {
+        //read(fd1,&ch,1);
+        while(read(fd1,&ch,1)>0)
+        {
+            write(fd2,&ch,1);
+        }
+    }
+    else
+        printf("\n Error");
+    close(fd1);
+    close(fd2);
+    return 0;
+}
+.txt
+bash-3.2$ vi[K[Kcat sam3.txt
+hello guyz......
+bash-3.2$ cat move.c
+#include<sys/types.h>
+#include<sys/stat.h>
+#include<unistd.h>
+#include<fcntl.h>
+#include<stdio.h>
+int main(int argc,char *argv[])
+{
+    int fd1,fd2;
+    char ch;
+    fd1=open(argv[1],O_RDONLY);
+    fd2=open(argv[2],O_RDWR);
+    if(fd1==-1||fd2==-1)
+        printf("\n Error");
+    else if(argc==3)
+    {
+        while(read(fd1,&ch,1)>0)
+        {
+            write(fd2,&ch,1);
+        }
+    }
+    else
+        printf("\n Error");
+    unlink(argv[1]);
+    close(fd1);
+    close(fd2);
+    return 0;
+}
+
+bash-3.2$ ./ex4 sdam[K[K[K[Ksam.txt sam3,[K.txt
+bash-3.2$ cat sam.trxt[K[K[Kxt
+
+bash-3.2$ cat sam.txt3.txt
+hello guyz......
+
+md.c
+#include<sys/types.h>
+#include<sys/stat.h>
+#include<unistd.h>
+#include<fcntl.h>
+#include<stdio.h>
+int main(int argc,char *argv[])
+{
+    int fd1,fd2;
+    char ch;
+    switch(argc)
+    {
+    case 2:
+        fd1=open(argv[1],O_RDONLY);
+        if(fd1==-1)
+            printf("\n Error in opening ");
+        else
+        {
+            while(read(fd1,&ch,1)>0)
+            {
+                printf("%c",ch);
+            }
+        }
+        close(fd1);
+        return 0;
+    case 3:
+        if(argv[2]=='>')
+        {
+            fd1=open(argv[1],O_RDONLY);
+            fd2=open(argv[3],O_RDWR);
+            if(fd1==-1||fd2==-1)
+                printf("\n Error in opening ");
+            else
+            {
+                while(read(fd1,&ch,1)>0)
+                {
+                    write(fd2,&ch,1);
+                }
+                close(fd1);
+                close(fd2);
+            }
+        }
+        else if(strcmp(argv[2],">>")==0)
+        {
+            fd1=open(argv[1],O_RDONLY);
+            fd2=open(argv[3],O_APPEND);
+            if(fd1==-1||fd2==-1)
+                printf("\n Error in opening ");
+            else
+            {
+                while(read(fd1,&ch,1)>0)
+                {
+                    write(fd2,&ch,1);
+                }
+                close(fd1);
+                close(fd2);
+            }
+        }
+        else
+            printf("\n Enter correct symbol");
+    default:
+        printf("\nError.....");
+    }
+    return 0;
+}
+bash-3.2$ ./ex5 sam2.txt
+welcome to it ........
+bash-3.2$ ./ex5 sam2.txt > sam3.txt
+bash-3.2$ cat sam3.txt
+welcome to it ........
+
+bash-3.2$ ./ex5 sam2.txt >> sam3.txt[C[C[C[C[C[C[C[C[C[C[14Pcat[C[C[C[C[C[C[C[C[C
+welcome to it ........
+welcome to it ........
+bash-3.2$ exitr
+bash: exitr: command not found
+bash-3.2$ exitr[C[K
+exit
+
+Script done on Thu 21 Jan 2016 12:21:36 PM IST

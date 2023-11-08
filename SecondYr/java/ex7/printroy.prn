@@ -1,0 +1,266 @@
+**************************************************************************
+                      POGRAMS USING FILES
+Ex.No:7                                         Roll.no:14BIT058
+Date:                                           Name:C.S.Roy Jasper
+**************************************************************************
+
+import java.io.*;
+
+public class Access {
+
+        public static void main(String[] args) throws IOException {
+                FileInputStream obj1=new FileInputStream(args[0]);
+                char n;
+                int ch,c=0;
+                String  s;
+                while((ch=obj1.read())!=-1)
+                {       n=(char)ch;
+                        s=""+n;
+                        if(s.equals(args[1]))
+                        {
+                                c=c+1;
+                        }
+
+                }
+                System.out.println("THE OCCURANCE IS "+c);
+
+        }
+
+}
+bash-3.2$ java Access new1.txt e
+THE OCCURANCE IS 8
+bash-3.2$ cat Count.java
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Count {
+        public static void main(String[] args) throws IOException {
+                FileInputStream obj1 = new FileInputStream(args[0]);
+                char n;
+                int ch,word=1,line=1,character=0;
+                String  s;
+                while((ch=obj1.read())!=-1)
+                {       n=(char)ch;
+                        if(n==(' '))
+                        {
+                                word=word+1;
+                        }
+                        if(n==('\r'))
+                        {
+                                line=line+1;
+                                word=word+1;
+                        }
+                        character=character+1;
+                }
+                System.out.println("THE CHARACTER IS "+character);
+                System.out.println("THE WORD IS"+word);
+                System.out.println("THE LINES IS"+line);
+        }
+}
+bash-3.2$ java Count new1.txt
+THE CHARACTER IS 108
+THE WORD IS27
+THE LINES IS1
+bash-3.2$ cat Stimulation.java
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Stimulation {
+
+        public static void main(String[] args) throws IOException {
+                System.out.println("1.COPY 2.CAT");
+                Scanner in=new Scanner(System.in);
+                int choice=in.nextInt();
+                int ch;
+                byte n;
+                char na;
+                String s;
+                switch(choice)
+                {
+                case 1:
+                        FileInputStream obj1=new FileInputStream(args[0]);
+                        FileOutputStream obj=new FileOutputStream(args[1]);
+                        while((ch=obj1.read())!=-1)
+                        {       n=(byte)ch;
+                                obj.write(n);
+                        }
+                        break;
+                case 2:
+                        if(args.length == 1)
+                        {
+                                FileInputStream obj2=new FileInputStream(args[0]);
+                                while((ch=obj2.read())!=-1)
+                                {       na=(char)ch;
+                                        System.out.print(na);
+                                }
+                        }
+                        else
+                        {       System.out.println(args[1]);
+                                if(args[1].equals(">"))
+                                {
+                                        FileInputStream obj3=new FileInputStream(args[0]);
+                                        FileOutputStream obj4=new FileOutputStream(args[2]);
+                                        while((ch=obj3.read())!=-1)
+                                        {       n=(byte)ch;
+                                                obj4.write(n);
+                                        }
+                                }
+                                if(args[1].equals(">>"))
+                                {
+                                        FileInputStream obj3=new FileInputStream(args[0]);
+                                        FileOutputStream obj4 = new FileOutputStream(args[2],true);
+                                        while((ch=obj3.read())!=-1)
+                                        {       na=(char)ch;
+                                                s=""+na;
+                                                obj4.write(na);
+                                        }
+                                }
+                        }
+
+                }
+
+
+        }
+
+}
+bash-3.2$ java Stimulation new1.txt
+1.COPY 2.CAT
+2
+i may not be the best but i m for away from the worst
+i may not be the best but i m for away from the worst
+bash-3.2$ cat Wordlist.java
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class Wordlist {
+
+public static void main(String[] args) throws IOException {
+        FileInputStream obj1=new FileInputStream(args[0]);
+        FileOutputStream obj=new FileOutputStream(args[1]);
+        FileOutputStream obj2=new FileOutputStream(args[2]);
+        int []a=new int[50];
+        String []s1=new String[50];
+        int i=0,ch=0,j,k;
+        char n;
+        byte l;
+        while(ch!=-1)
+        {       s1[i]="";
+                while((ch=obj1.read())!=-1)
+                {
+                n=(char)ch;
+                if((n==' ')||(n=='\n'))
+                        break;
+                s1[i]=""+s1[i]+n;
+                }
+                i++;
+        }
+        int m = i;
+        for(i=0;i<m;i++)
+        {
+                for(j=i+1;j<m;j++)
+                {
+                        if(s1[i].equals(s1[j]))
+                        {
+                                a[i]=a[i]+1;
+                                for(k=j+1;k<m;k++)
+                                {
+                                        s1[k-1]=""+s1[k];
+                                }
+                                j=j-1;
+                                m=m-1;
+                        }
+                }
+        }
+        for(i=0;i<m;i++)
+        {
+                System.out.println(s1[i]+a[i]);
+        }
+        String s="";
+        int b;
+        for(i=0;i<m;i++)
+        {
+                for(j=i+1;j<m;j++)
+                {
+                        if(s1[i].compareTo(s1[j])>0)
+                        {
+                                s= s1[i];
+                                s1[i]=s1[j];
+                                s1[j]=s;
+                                b=a[i];
+                                a[i]=a[j];
+                                a[j]=b;
+                        }
+                }
+        }
+        i=0;
+        byte p;
+        while(i!=m)
+        {
+                k=s1[i].length();
+                j=0;
+                while(j!=k)
+                {
+                        ch=(char)s1[i].charAt(j);
+                        j++;
+                        l=(byte)ch;
+                        obj.write(l);
+                }
+                i++;
+
+        }
+        for(i=0;i<m;i++)
+        {
+                for(j=i+1;j<m;j++)
+                {
+                        if(a[i]<a[j])
+                        {
+                                s= s1[i];
+                                s1[i]=s1[j];
+                                s1[j]=s;
+                                b=a[i];
+                                a[i]=a[j];
+                                a[j]=b;
+                        }
+                }
+        }
+        i=0;
+        while(i!=m)
+        {
+                k=s1[i].length();
+                j=0;
+                while(j!=k)
+                {
+                        ch=(char)s1[i].charAt(j);
+                        j++;
+                        l=(byte)ch;
+                        obj2.write(l);
+                }
+                i++;
+
+        }
+}
+}
+bash-3.2$ java Wordlist new1.txt new2.txt new3.txt
+i3
+may1
+not1
+be1
+the3
+best1
+but1
+m1
+for1
+away1
+from1
+worst1
+0
+bash-3.2$T
+

@@ -1,0 +1,271 @@
+*****************************************************************************************
+ROY JASPER C S 																												14BIT058
+															EX3  Database in Android
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+Main page:
+
+package data.student;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+public class Student_DataActivity extends Activity {
+    /** Called when the activity is first created. */
+    Button st,ad;
+	@Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        ad=(Button)findViewById(R.id.button1);
+        st=(Button)findViewById(R.id.button2);
+        ad.setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(Student_DataActivity.this,Admin.class);
+				 startActivity(intent);
+			}
+		});
+        st.setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intentx = new Intent(Student_DataActivity.this,Student.class);
+				 startActivity(intentx);
+			}
+		});
+    }
+}
+
+-------------------------------------------
+Student page:
+
+package data.student;
+
+import android.app.Activity;
+import android.app.AlertDialog.Builder;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+ 
+public class Student extends Activity 
+{
+    EditText txt;
+    Button b1;
+    SQLiteDatabase db;
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+    	super.onCreate(savedInstanceState);
+        setContentView(R.layout.student);
+        txt=(EditText)findViewById(R.id.editText1);
+        b1=(Button)findViewById(R.id.button1);
+        db=openOrCreateDatabase("StudentDB", Context.MODE_PRIVATE, null);
+        db.execSQL("CREATE TABLE IF NOT EXISTS student(rollno VARCHAR,name VARCHAR,marks VARCHAR);");
+        b1.setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				if(txt.getText().toString().trim().length()==0)
+	            {
+	                showMessage("Error", "Please enter Rollno");
+	                return;
+	            }
+	            Cursor c=db.rawQuery("SELECT * FROM student WHERE rollno='"+txt.getText()+"'", null);
+	            if(c.moveToFirst())
+	            {
+	              
+	                showMessage("Record is ","Name is "+c.getString(1)+"\nMarks is "+c.getString(2));
+	            }
+	            else
+	            {
+	                showMessage("Error", "Invalid Rollno");
+	                
+	            }	
+			}
+		});
+        
+    }
+    public void showMessage(String title,String message)
+    {
+        Toast.makeText(getBaseContext(),title+"\n"+message, Toast.LENGTH_LONG).show();
+    }
+}
+
+---------------------------------------------------
+
+Admin Page:
+
+package data.student;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+public class Admin extends Activity {
+	 
+	EditText Rollno,Name,Marks;
+    Button Insert,Delete,Update,View,ViewAll;
+    SQLiteDatabase db;
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.display);
+ 
+        Rollno=(EditText)findViewById(R.id.Rollno);
+        Name=(EditText)findViewById(R.id.Name);
+        Marks=(EditText)findViewById(R.id.Marks);
+        Insert=(Button)findViewById(R.id.Insert);
+        Delete=(Button)findViewById(R.id.Delete);
+        Update=(Button)findViewById(R.id.Update);
+        View=(Button)findViewById(R.id.View);
+        ViewAll=(Button)findViewById(R.id.ViewAll);
+        db=openOrCreateDatabase("StudentDB", Context.MODE_PRIVATE, null);
+        db.execSQL("CREATE TABLE IF NOT EXISTS student(rollno VARCHAR PRIMARY KEY,name VARCHAR,marks VARCHAR);");
+        Insert.setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				if(Rollno.getText().toString().length()==0||
+	                    Name.getText().toString().length()==0||
+	                    Marks.getText().toString().length()==0)
+	            {
+	                showMessage("Error", "Please enter all values");
+	                return;
+	            }
+			    try {
+			    	db.execSQL("INSERT INTO student VALUES('"+Rollno.getText()+"','"+Name.getText()+
+		                    "','"+Marks.getText()+"');");
+			    	showMessage("Success", "Record added");
+		             
+			    } catch (Exception e){
+			    	showMessage("Error", "Duplicate entry ");
+			        try {
+						throw  new Exception(e);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+			    }
+				
+	            clearText();
+			}
+		});
+        Delete.setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				if(Rollno.getText().toString().length()==0)
+	            {
+	                showMessage("Error", "Please enter Rollno");
+	                return;
+	            }
+	            Cursor c=db.rawQuery("SELECT * FROM student WHERE rollno='"+Rollno.getText()+"'", null);
+	            if(c.moveToFirst())
+	            {
+	                db.execSQL("DELETE FROM student WHERE rollno='"+Rollno.getText()+"'");
+	                showMessage("Success", "Record Deleted");
+	            }
+	            else
+	            {
+	                showMessage("Error", "Invalid Rollno");
+	            }
+	            clearText();
+			}
+		});
+        Update.setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				 if(Rollno.getText().toString().length()==0)
+		            {
+		                showMessage("Error", "Please enter Rollno");
+		                return;
+		            }
+		            Cursor c=db.rawQuery("SELECT * FROM student WHERE rollno='"+Rollno.getText()+"'", null);
+		            if(c.moveToFirst()) {
+		                db.execSQL("UPDATE student SET name='" + Name.getText() + "',marks='" + Marks.getText() +
+		                        "' WHERE rollno='"+Rollno.getText()+"'");
+		                showMessage("Success", "Record Modified");
+		            }
+		            else {
+		                showMessage("Error", "Invalid Rollno");
+		            }
+		            clearText();
+			}
+		});
+        View.setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				if(Rollno.getText().toString().length()==0)
+	            {
+	                showMessage("Error", "Please enter Rollno");
+	                return;
+	            }
+	            Cursor c=db.rawQuery("SELECT * FROM student WHERE rollno='"+Rollno.getText()+"'", null);
+	            if(c.moveToFirst())
+	            {
+	              
+	                showMessage("Record is ","Name is "+c.getString(1)+"\nMarks is "+c.getString(2));
+	            }
+	            else
+	            {
+	                showMessage("Error", "Invalid Rollno");
+	                clearText();
+	            }
+			}
+		});
+       ViewAll.setOnClickListener(new View.OnClickListener() {
+		
+		public void onClick(View arg0) {
+			// TODO Auto-generated method stub
+			Cursor c=db.rawQuery("SELECT * FROM student", null);
+            if(c.getCount()==0)
+            {
+                showMessage("Error", "No records found");
+                return;
+            }
+            String x="";
+            while(c.moveToNext())
+            {
+                x=x+"Rollno: "+c.getString(0)+"\n"+"Name: "+c.getString(1)+"\n"+"Marks: "+c.getString(2)+"\n\n";
+            }
+            showMessage("Student Details", x);
+		}
+	});
+ 
+        
+    }
+
+    public void showMessage(String title,String message)
+    {
+        Toast.makeText(getBaseContext(),title+"\n"+message, Toast.LENGTH_LONG).show();
+    }
+    public void clearText()
+    {
+        Rollno.setText("");
+        Name.setText("");
+        Marks.setText("");
+        
+    }
+}
+--------------------------------------------------

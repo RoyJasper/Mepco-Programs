@@ -1,0 +1,263 @@
+***************************************
+
+V.KIRAN RAJ         14BIT049
+
+
+            EX:NO:10
+
+****************************************
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include<math.h>
+ char yy[10][100];
+void binary(char x)
+  {
+      if((int)x==48)
+      {
+          printf("0000 ");
+      }
+        else if((int)x==49)
+      {
+          printf("0001 ");
+      }
+      else
+      {
+          int c[10],e[10];
+          int r,l,a,i=0,count=0;
+          a=(int)x;
+          if(a>57)
+            a=a-55;
+          else
+            a=a-48;
+       if(a<4)
+        printf("00");
+        else if(a>=4 && a<8)
+            printf("0");
+        while(a!=0)
+        {
+            c[i] = a%2;
+            a = a / 2;
+            count++;
+            i++;
+        }
+            for(i=count-1; i>=0; i--)
+            {
+                printf("%d", c[i]);
+            }
+              printf(" ");
+
+      }
+
+  }
+  char *dectohexa(int quotient)
+{
+    int temp,i=1,j;
+    char h[100];
+ while(quotient!=0){
+         temp = quotient % 16;
+      if( temp < 10)
+           temp =temp + 48;
+      else
+         temp = temp + 55;
+    h[i++]= temp;
+      quotient = quotient / 16;
+  }
+int k=0;
+    char *he = (char*)malloc(sizeof(char)*100);
+    for (j = i -1 ;j> 0;j--)
+    he[k++]=h[j];
+    he[k]='\0';
+    return he;
+}
+   int check(char x)
+   {
+       if(x=='\n' || x=='^')
+       return 0;
+       else
+        return 1;
+
+   }
+   int count(char x)
+  {
+      if((int)x==48)
+      {
+        return 0;
+      }
+        else if((int)x==49)
+      {
+          return 1;
+      }
+      else
+      {
+          int c[10],e[10];
+          int r,l,a,i=0,co=0,p=0;
+          a=(int)x;
+          if(a>57)
+            a=a-55;
+          else
+            a=a-48;
+        while(a!=0)
+        {
+            c[i] = a%2;
+            a = a / 2;
+            co++;
+            i++;
+        }
+            for(i=co-1; i>=0; i--)
+            {
+                 if(c[i]==1)
+                    p++;
+            }
+            return p;
+      }
+
+  }
+main()
+{
+    FILE *fp;
+    fp=fopen("p3.c","r");
+    char x,y[100],z[100],s[100],loc[100],n[100],l[100],start[100],name[100],length[100];
+    int g,h,f;
+    printf("\n enter the relocation address     :");
+    scanf("%s",length);
+    sscanf(length,"%X",&f);
+    x=fgetc(fp);
+    int k=0,i=0,j;
+    printf("\n \n****************************************************************\n\tRELOCATION LOADER USING MODIFICATION RECORD\n******************************************************************\n  ");
+     x=fgetc(fp);
+    while(x!=EOF)
+    {
+        if(x=='H')
+        {
+           x=fgetc(fp);
+           while(x!='\n')
+           {
+               x=fgetc(fp);
+           }
+
+        }
+        else if(x=='T')
+        {
+            int cou=0;
+            i=0;
+            x=getc(fp);
+            x=getc(fp);
+            while(x!='^')
+            {
+                y[i]=x;
+                i++;
+                x=getc(fp);
+
+            }
+            y[i]='\0';
+            sscanf(y,"%X",&h);
+            g=f+h;
+            strcpy(loc,dectohexa(g));
+            x=getc(fp);
+            x=getc(fp);
+            x=getc(fp);
+            x=getc(fp);
+            cou=count(x);
+            x=getc(fp);
+            cou=cou+count(x);
+            x=getc(fp);
+            cou=cou+count(x);
+            printf("\n");
+            x=getc(fp);
+            x=getc(fp);
+            kia:
+              while(x!='\n')
+            {
+                       printf(" %s ",loc);
+                       binary(x);
+                       x=fgetc(fp);
+                       binary(x);
+                       printf("\n");
+                       int zz;
+                       sscanf(loc,"%X",&zz);
+                           zz=zz+1;
+                          strcpy(loc,dectohexa(zz));
+                            i=0;
+                            x=fgetc(fp);
+                            while(check(x)!=0)
+                            {
+                                z[i]=x;
+                                x=fgetc(fp);
+                                i++;
+                            }
+                            z[i]='\0';
+                            int pp=strlen(z);
+                            if(cou!=0)
+                            {
+                            int ee,g;
+                            sscanf(z,"%X",&ee);
+                            g=ee+f;
+                            strcpy(z,dectohexa(g));
+                            cou--;
+                            }
+                            for(i=0;i<pp;i++)
+                            {
+                        printf(" %s ",loc);
+                        binary(z[i]);
+                        i=i+1;
+                        binary(z[i]);
+                        printf("\n");
+                        int zz;
+                        sscanf(loc,"%X",&zz);
+                        zz=zz+1;
+                        strcpy(loc,dectohexa(zz));
+
+                            }
+                            if(x=='\n')
+                                goto kia;
+                            x=fgetc(fp);
+                }
+        }
+        else if(x=='E')
+        {
+            exit(0);
+        }
+      x=getc(fp);
+    }
+}
+
+bash-3.2$ cat p3.c
+H^ADD^1000^00023
+T^1000^0A^E00^AB1009^EF1007^221000
+T^3000^0A^800^121009^301007^221000
+E^001000
+
+bash-3.2$ cc a.out[D[K[D[K[D[Kc
+bash-3.2$ ./a.out
+
+ enter the relocation address     :1000
+
+ 
+****************************************************************
+	RELOCATION LOADER USING MODIFICATION RECORD
+******************************************************************
+  
+ 2000 1010 1011 
+ 2001 0010 0000 
+ 2002 0000 1001 
+ 2003 1110 1111 
+ 2004 0010 0000 
+ 2005 0000 0111 
+ 2006 0010 0010 
+ 2007 0010 0000 
+ 2008 0000 0000 
+
+ 4000 0001 0010 
+ 4001 0010 0000 
+ 4002 0000 1001 
+ 4003 0011 0000 
+ 4004 0001 0000 
+ 4005 0000 0111 
+ 4006 0010 0010 
+ 4007 0001 0000 
+ 4008 0000 0000 
+bash-3.2$ exit
+exit
+
+Script done on Tue 04 Oct 2016 04:00:26 PM IST

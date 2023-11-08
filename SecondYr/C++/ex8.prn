@@ -1,0 +1,263 @@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NAME ROY JASPER								14BIT058
+  			OPERATOR  OVERLOADING AND TYPECONVERSION
+_____________________________________________________
+
+						STACK PROGRAM
+PROGRAM:
+
+#include<iostream>
+#include<string>
+using namespace std;
+class stack
+{
+ private:
+ int top;
+ int a[10];
+ public:
+ stack()
+ {
+  top=0;
+ }
+ void operator + (int data)
+ {
+  if(top==10)
+  {
+   cout<<"stack is overflow\n"<<data<<"CANNOT BE INSERTED";
+  }
+  else
+  {
+  a[top]=data;
+  top++;
+  }
+ }
+ void operator - ()
+ {
+  if(top==0)
+  cout<<"stack empty";
+  else
+  {
+   top--;
+   cout<<"\nPOP Element is"<<a[top];
+  }
+}
+};
+int main()
+{
+ int x,z,c;
+ stack s;
+ while(1)
+{
+ cout<<"\nenter your choice\n1.push\n2.pop\n3.exit";
+ cin>>x;
+ switch(x)
+ {
+  case 1:
+        cout<<"enter the character to push";
+        cin>>z;
+        s+z;
+        break;
+  case 2:
+        -s;
+        //cout<<"the poped element is"<<c;
+        break;
+  case 3:
+        goto roy;
+        break;
+  default:
+        cout<<"invalid choice";
+        break;
+  }
+ }
+ roy:
+     cout<<"";
+}
+
+OUTPUT:
+
+
+enter your choice
+1.push
+2.pop
+3.exit1
+enter the character to push5
+
+enter your choice
+1.push
+2.pop
+3.exit1
+enter the character to push9
+
+enter your choice
+1.push
+2.pop
+3.exit2
+
+POP Element is9
+enter your choice
+1.push
+2.pop
+3.exit2
+
+POP Element is5
+enter your choice
+1.push
+2.pop
+3.exit2
+
+POP Element is4
+enter your choice
+1.push
+2.pop
+3.exit2
+stack empty
+enter your choice
+1.push
+2.pop
+3.exit3
+____________________________________
+           SAFE ARRAY
+
+PROGRAM:
+
+#include<iostream>
+using namespace std;
+class comple
+{
+ public:
+ int real,img;
+ public:
+ comple()
+ {
+  real=0;
+  img=0;
+ }
+ void set(int treal,int timg)
+ {
+     real=treal;
+     img=timg;
+ }
+ void operator [] (int ind)
+ {
+  if((ind<0)||(ind>4))
+  {
+    cout<<"\n number-> "<<ind<<" array element is out of boundary";
+}
+  else
+  {
+   cout<<"\n for number->"<<ind;
+   cout<<"\n the real part is"<<real;
+   cout<<"\n the imaginary part is"<<img;
+  }
+ }
+};
+int main()
+{
+ int r,i,b;
+ char ch;
+ comple a;
+ /*a.set(2,3);
+ a[0];
+ a.set(1,4);
+ a[-3];
+ a.set(5,6);
+ a[4];
+ a.set(2,3);
+ a[9];*/
+ while(ch!='n')
+ {
+ cout<<"\nEnter the real and imaginary part of a complex no ";
+ cin>>r>>i;
+ cout<<"\nEnter the index";
+ cin>>b;
+ a.set(r,i);
+ a[b];
+ cout<<"\nDo u want to continue y/n?";
+ cin>>ch;
+ if(ch=='n')
+    goto roy;
+ }
+ roy:
+ return 0;
+}
+
+OUTPUT:
+
+Enter the real and imaginary part of a complex no 4 5
+
+Enter the index2   2    2
+
+ for number->2
+ the real part is4
+ the imaginary part is5
+Do u want to continue y/n?y
+
+Enter the real and imaginary part of a complex no 8 9
+
+Enter the index6  6
+
+ number-> 6 array element is out of boundary
+Do u want to continue y/n?n
+-----------------------------------------------------------
+				RAILWAY TO STANDARD TIME CONVERSION
+
+PROGRAM:
+
+#include<iostream>
+#include<string>
+using namespace std;
+class time
+{
+
+    int h1,m1,s1,h2,m2,s2;
+    string a;
+    public:
+        time(int th1=0,int tm1=0,int ts1=0,int th2=0,int tm2=0,int ts2=0,string ta="  ")
+        {
+            h1=th1;
+            m1=tm1;
+            s1=ts1;
+            h2=th2;
+            m2=tm2;
+            s2=ts2;
+            a=ta;
+        }
+};
+main()
+{
+    int h1,m1,s1,h2,m2,s2;
+    string a;
+    cout<<"\nEnter standard time hr , min , sec , am/pm ";
+    cin>>h1;
+    cin>>m1;
+    cin>>s1;
+    cin>>a;
+    if(a=="pm")
+    {
+        h1+=12;
+    }
+    cout<<"\n Railway time is "<<h1<<":"<<m1<<":"<<s1;
+    cout<<"\nEnter railway time hr , min , sec";
+    cin>>h2;
+    cin>>m2;
+    cin>>s2;
+    if(h2>=12)
+    {
+        h2-=12;
+        a="pm";
+    }
+    cout<<"\n Standard time is "<<h2<<":"<<m2<<":"<<s2<<" "<<a;
+}
+
+OUTPUT:
+
+
+Enter standard time hr , min , sec , am/pm 4 52 33 pm
+
+ Railway time is 16:52:33
+Enter railway time hr , min , sec 22 43 154 
+
+ Standard time is 10:43:15 pm
+exit
+
+Script done on Tue 13 Oct 2015 11:19:04 PM IST

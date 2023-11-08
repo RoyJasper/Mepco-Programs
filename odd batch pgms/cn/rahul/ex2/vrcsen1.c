@@ -1,0 +1,123 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+main()
+{
+  FILE *fp,*fp1;
+  char a[50],b[50][50],c[50];
+  int m,choice,n,i,j,k=0,count=0,l=0;
+  for(i=0;i<50;i++)
+  {
+    for(j=0;j<50;j++)
+    {
+      b[i][j]='\0';
+    }
+  }
+  for(i=0;i<50;i++)
+	{
+    a[i]='\0';
+		c[i]='\0';
+	}
+  printf("1.VRC\n2.LRC\nENTER THE CHOICE:");
+  scanf("%d",&choice);
+  switch(choice)
+  {
+    case 1:
+			fp=fopen("medium1.txt","w");
+      printf("ENTER THE BIT SEQUENCE");
+      scanf("%s",a);
+      n=strlen(a);
+      for(i=0;i<n;i++)
+      {
+        for(j=0;j<8;j++)
+        {
+          b[i][j]=a[k];
+            k++;
+          if(k>=n)
+            break;
+        }
+          if(k>=n)
+            break;
+      }
+      m=i+1;
+      for(i=0;i<m;i++)
+      {
+				count=0;
+        for(j=0;j<strlen(b[i]);j++)
+        {
+          if(b[i][j]=='1')
+          {
+            count=count+1;
+          }
+        }
+        if(count%2!=0)
+          b[i][j]='1';
+        else
+          b[i][j]='0';
+      }
+      for(i=0;i<m;i++)
+      {
+        printf("%s\n",b[i]);
+      }
+			for(i=0;i<m;i++)
+			{
+				for(j=0;j<strlen(b[i]);j++)
+				{
+					fputc(b[i][j],fp);
+				}
+			}
+      break;
+		case 2:
+			fp1=fopen("medium2.txt","w");
+			printf("ENTER THE BIT SEQUENCE");
+      scanf("%s",a);
+      n=strlen(a);
+			for(i=0;i<n;i++)
+      {
+        for(j=0;j<8;j++)
+        {
+          b[i][j]=a[k];
+            k++;
+          if(k>=n)
+            b[i][j]='0';
+        }
+          if(k>=n)
+            break;
+      }
+      m=i+1;
+			for(i=0;i<m;i++)
+      {
+        printf("%s\n",b[i]);
+      }
+			for(i=0;i<8;i++)
+			{
+				count=0;
+				for(j=0;j<m;j++)
+				{
+					count=count+b[j][i];
+				}
+				if(count%2!=0)
+				{
+					c[l]='1';
+					l++;
+				}
+				else
+				{
+					c[l]='0';
+					l++;
+				}
+			}
+			printf("%s",c);
+		for(i=0;i<m;i++)
+		{
+			for(j=0;j<strlen(b[i]);j++)
+      {
+        fputc(b[i][j],fp1);
+      }
+		}
+		for(j=0;j<strlen(c);j++)
+    {
+      fputc(c[j],fp1);
+    }
+  }
+}

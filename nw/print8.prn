@@ -1,0 +1,89 @@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ROY JASPER C S 					14BIT058
+		ARP CLIENT SERVER PROGRAM
+-----------------------------------------------------------
+SERVER:
+#include <stdio.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main()
+{
+    int soc,i,j=0,odc=0,evc=0,n ;
+    char nstr[20],od[20],ev[20];
+    struct sockaddr_in serv, cli;
+    struct sockaddr_storage store;
+    socklen_t len, clen;
+
+    FILE *fp;
+    char str[20],mas,ip[60],hw[60],f[60],hwa[60],dev[60],ch;
+    soc = socket(PF_INET, SOCK_DGRAM, 0);
+    serv.sin_family = AF_INET;
+    serv.sin_port = htons(1789);
+    serv.sin_addr.s_addr = htonl(INADDR_ANY);
+
+    bind(soc, (struct sockaddr *) &serv, sizeof(serv));
+
+    len = sizeof store;
+
+    recvfrom(soc,str,100,0,(struct sockaddr *)&store, &len);
+    printf("\n IP is : %s",str);
+
+    fp=fopen("/proc/net/arp","r");
+    if(fp==-1)
+        printf("Error file" );
+    fscanf(fp,"%s %s %s %s %s %s %s %s %s",ip,hw,f,hwa,mas,dev,ip,hw,hwa);
+    while(!feof(fp))
+    {
+        fscanf(fp,"%s %s %s %s %c %s",ip,hw,f,hwa,&mas,dev);
+        if(strcmp(str,ip)==0)
+        {
+            printf("Mac is : %s",hwa);
+        }
+    }
+    fclose(fp);
+    return 0;
+}
+---------------------------------------------------------
+CLIENT:
+#include <stdio.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <string.h>
+
+int main()
+{
+    int cs, pno;
+    char mac[60],ip[60];
+    struct sockaddr_in serv;
+    socklen_t len;
+    cs = socket(PF_INET, SOCK_DGRAM, 0);
+    serv.sin_family = AF_INET;
+    serv.sin_port = htons(1789);
+    serv.sin_addr.s_addr = htonl(INADDR_ANY);
+    memset(serv.sin_zero, '\0', sizeof serv.sin_zero);
+    len = sizeof serv;
+    printf("Type a IP :\n");
+    scanf("%s",ip);
+
+    sendto(cs,ip,100,0,(struct sockaddr *)&serv,len);
+    recvfrom(cs,mac,100,0,(struct sockaddr *)&serv, &len);
+    return 0;
+}
+------------------------------------------------------
+ARP FILE:
+IP address       HW type     Flags       HW address            Mask     Device
+192.168.89.254   0x1         0x2         00:50:56:e5:49:b0     *        eno16777736
+192.168.89.2     0x1         0x2         00:50:56:f7:be:6f     *        eno16777736
+-----------------------------------------------------------
+OUTPUT CLIENT:
+Type a IP :
+192.168.89.254
+
+OUTPUT SERVER:
+IP is : 192.168.89.254
+Mac is : 00:50:56:e5:49:b0
+----------------------------------------------------------------
+

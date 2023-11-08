@@ -1,0 +1,195 @@
+****************************************************************
+	14BIT058						ROY JASPER C S
+				EX 13 > LEX & YACC
+****************************************************************
+                              LEX AND YACC
+%{
+#include<stdio.h>
+int posint=0;
+int negint=0;
+int postfrac=0;
+int negfrac=0;
+%}
+%%
+"+"?[0-9]+ {posint++;}
+"-"?[0-9]+ {negint++;}
+"+"?[0-9]*"."[0-9]+ {postfrac++;}
+"-"?[0-9]*"."[0-9]+ {negfrac++;}
+%%
+int yywrap()
+{
+return 1;
+}
+main(int argc,char* argv[])
+{
+char na[40];
+ yyin=fopen("imi.txt","r");
+ yylex();
+ printf("Postive Integer:%d\nNegative Integer:%d\nPositive Fraction:%d\nNegative Fraction:%d",posint,negint,postfrac,negfrac);
+}
+
+
+
+
+Postive Integer:1
+Negative Integer:1
+Positive Fraction:1
+Negative Fraction:1bash-3.2$ cat no.l
+%{
+#include<stdio.h>
+int c=0,w=0,l=0,s=0;  //char naa[80];
+%}
+%%
+" " s++;c++;
+\n l++;w++;
+. {c=c+yyleng;}
+%%
+int yywrap()
+{
+ return 1;
+}
+main(int argc,char *argv())
+{
+ char naa[70];
+ //printf("Enter file name");
+ //scanf("%s",naa);
+ yyin=fopen("im.txt","r");
+ yylex();
+ printf("Characters:%d\nWords:%d\nLines:%d\nSpaces:%d",c,w,l,s);
+}    
+
+
+Characters:24
+Words:4
+Lines:4
+Spaces:1bash-3.2$ caz[Kt art.l
+%{
+#include<stdio.h>
+#include<string.h>
+int c=0,d=0,j=0,t=0;
+char str[50][50],str1[50][50];
+%}
+%%
+[a-z A-Z][a-z A-Z 0-9]* c++;strcpy(str[j++],yytext);
+"="|"+"|"-"|"*"|"/" d++;strcpy(str1[t++],yytext);
+%%
+int yywrap()
+{
+  return 1;
+}
+int main(int argc,char *argv[])
+{
+  int j=0,t=0,i;
+  yyin=fopen("op.txt","r");
+  yylex();
+  if((c-d)==1)
+  {
+    printf("\nIt is a Valid Expression");
+    printf("\nOperands:\n");
+    for(i=0;i<c;i++)
+      printf("%s\n",str[i]);
+    printf("\nOperators:\n");
+    for(i=0;i<d;i++)
+      printf("%s\n",str1[i]);
+  }
+}
+
+
+It is a Valid Expression
+Operands:
+f
+a
+b
+c
+d
+r
+
+Operators:
+=
++
+-
+*
+/
+
+%{
+#include<stdio.h>
+int s=0,p=0;
+%}
+%%
+"//" {s++;}
+%%
+int yywrap()
+{
+return 1;
+}
+main()
+{
+ yyin=fopen("old.txt","r");
+ yylex();
+ printf("Number of Comment lines are :%d\n",s);
+}
+
+printftoprint
+scanftogetinput
+stdiostandardipop
+Number of Comment lines are :3
+
+%{
+#include<stdio.h>
+int v=0;
+int c=0;
+%}
+%%
+"int"|"float"|"double"|"char" {v++;}
+%%
+int yywrap()
+{
+return 1;
+}
+int main()
+{ 
+yyin=fopen("id.txt","r");
+yylex();
+printf("Number of identifier %d \n",v);
+}
+
+
+ h 
+ f
+ c
+Number of identifier 3 
+
+%{^M
+ ^M
+#include <stdio.h>^M
+#include "y.tab.h"^M
+int c;^M
+extern int yylval;^M
+%}^M
+%%^M
+" "       ;^M
+[a-z]     {^M
+            c = yytext[0];^M
+            yylval = c - 'a';^M
+            return(LETTER);^M
+          }^M
+[0-9]     {^M
+            c = yytext[0];^M
+            yylval = c - '0';^M
+            return(DIGIT);^M
+          }^M
+[^a-z0-9\b]    {^M
+                 c = yytext[0];^M
+                 return(c);^M
+               }^M
+
+8+2^M
+10^M
+8-2^M
+6^M
+8*2^M
+16^M
+8/2^M
+4^M
+^M
+

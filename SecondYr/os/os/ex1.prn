@@ -1,0 +1,7 @@
+Script started on Thu 21 Jan 2016 11:45:32 AM IST
+bash-3.2$ cat ex1a.c
+cat: ex1a.c: No such file or directory
+bash-3.2$ exit
+exit
+
+Script done on Thu 21 Jan 2016 11:45:40 AM IST

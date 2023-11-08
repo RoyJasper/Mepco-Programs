@@ -1,0 +1,328 @@
+-----------------------------------------------------------------
+NAME: KALYANA SUNDAR			14BITL06
+			EX 4-->SOCKET USING TCP
+-----------------------------------------------------------------
+TIME RECEIVE PROGRAM:
+
+SERVER:
+#include<stdlib.h>
+#include<unistd.h>
+#include<sys/types.h>
+#include<stdio.h>
+#include<netinet/in.h>
+#include<arpa/inet.h>
+#include<sys/socket.h>
+#include<string.h>
+#include<time.h>
+int main()
+{
+    int sid,accpt,b=1,r,len;
+    char *data,buf[200];
+    struct sockaddr_in sin;
+    time_t ti;
+    struct tm *t;
+    data=(char *)malloc(200*sizeof(char));
+    //strcpy(data,"hi");
+    sid=socket(AF_INET,SOCK_STREAM,0);
+    if(sid==-1)
+        printf("\n\nSocket failure\n\n");
+    else
+    {
+        sin.sin_family = AF_INET;
+        sin.sin_port = htons(1478);
+        sin.sin_addr.s_addr = htonl(INADDR_ANY);
+        while(b!=0)
+            b = bind(sid,(struct sockaddr *)&sin,sizeof(sin));
+        if(b==0)
+        {
+            printf("\n\nBinded\n\n");
+            len=sizeof(struct sockaddr_in);
+            listen(sid,10);
+            accpt = accept(sid,(struct sockaddr *)&sin,&len);
+           // if(accept==-1)                                                                                                                                                                                          pt==-1)
+              //  printf("Connection not Accepted");
+            //else
+               // printf("\nConnection Accepted\n");
+            while(strcmp(data,"exit")!=0)
+            {
+                r=recv(accpt,data,50,0);
+                time(&ti);
+                t=localtime(&ti);
+                if(r==-1)
+                    printf("\n\nData Received Failed\n\n");
+                else
+                {
+                    if(strcmp(data,"send date")==0)
+                    {
+                        sprintf(buf,"%d %d %d",t->tm_mday,t->tm_mon,t->tm_year+1900);
+                        send(accpt,buf,strlen(buf),0);
+                    }
+                    else if(strcmp(data,"send time")==0)
+                    {
+                        sprintf(buf,"%d : %d : %d",t->tm_hour,t->tm_min,t->tm_sec);
+                        send(accpt,buf,strlen(buf),0);
+                    }
+                    }
+                 //   else
+                    {
+                   //     exit(0);
+                    }
+                }
+                //printf("tell");
+            }
+            close(sid);
+        }
+        //else
+          //  printf("\n\nBinding Failed\n\n");
+    }
+
+CLIENT:
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<unistd.h>
+#include<sys/types.h>
+#include<netinet/in.h>
+#include<arpa/inet.h>
+#include<sys/socket.h>
+void client()
+{
+    int sid,conn,nsend,nrecv,nclose;
+    char smsg[50],rmsg[50];
+    struct sockaddr_in server;
+    sid=socket(AF_INET,SOCK_STREAM,0);
+    if(sid==-1)
+    {
+        printf("\nSocket failure\n");
+    }
+    else
+    {
+        server.sin_addr.s_addr = htonl(INADDR_ANY);
+        server.sin_family = AF_INET;
+        server.sin_port = htons(1478);
+        conn=connect(sid,(struct sockaddr *)&server,sizeof(server));
+        if(conn==-1)
+            printf("Connection Problem\n");
+        else
+        {
+            printf("\nConnected\n");
+            while(strcmp(rmsg,"exit")!=0)
+            {
+                strcpy(smsg,"");
+                strcpy(rmsg,"");
+                printf("\n>>");
+                scanf("%[^\n]",smsg);
+                nsend=send(sid,smsg,strlen(smsg),0);
+                if(nsend==-1)
+                {
+                    printf("\nMessage Send Failed\n");
+                }
+                else
+                {
+                    nrecv=recv(sid,rmsg,2000,0);
+                    if(nrecv==-1)
+                    {
+                        printf("\nReceive failed\n");
+                    }
+                    else
+                    {
+                        printf("\n>>");
+                        printf("%s\n",rmsg);
+                    }
+                }
+            }
+        }
+    }
+    close(sid);
+}
+main()
+{
+    client();
+}
+
+OUTPUT:
+SERVER:
+
+Binded
+
+CLIENT:
+Enter Message : Send Time
+
+>> 1:33:32
+-----------------------------------------------------------------
+			JAVA PROGRAM TO CHECK PRIME OR NOT
+SERVER:
+package Prime;
+
+import java.io.*;
+import java.net.*;
+public class MyServer
+{
+    public static void main(String[] args)
+    {
+        try
+        {
+            ServerSocket ss=new ServerSocket(6666);
+            Socket s=ss.accept();
+            DataInputStream dis=new DataInputStream(s.getInputStream());
+            int  no=(Integer)dis.readInt();
+            int i;
+            int flg=0;
+            for(i=2;i<no;i++)
+            {
+				if(no%i==0)
+            		flg=1;
+            }
+            if(flg==1)
+            {
+            	System.out.println("Not Prime");
+            }
+            if(flg==0)
+            {
+            	System.out.println("Prime");
+            }
+                ss.close();
+            }
+            catch(Exception e)
+            {
+                System.out.println(e);
+            }
+        }
+    }
+
+CLIENT:
+package Prime;
+
+import java.io.*;
+import java.net.*;
+import java.util.Scanner;
+public class MyClient
+{
+    public static void main(String[] args)
+    {
+    	int no;
+        try
+        {
+            Socket s=new Socket("localhost",6666);
+            DataOutputStream dout=new DataOutputStream(s.getOutputStream());
+            System.out.println("Enter a no to check prime or not ");
+            Scanner in=new Scanner(System.in);
+            no=in.nextInt();
+            dout.writeInt(no);
+            dout.flush();
+            dout.close();
+            s.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+    }
+}
+
+OUTPUT:
+SERVER:
+Running..
+
+CLIENT:
+Enter a no to check prime or not 
+23
+Prime
+-----------------------------------------------------------------
+			TO GET NUMBER OF VOWELS
+SERVER:
+#include <stdio.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <string.h>
+
+int main()alen
+{
+    int wsoc, soc;
+    char str[20];
+    struct sockaddr_in saddr;
+    struct sockaddr_storage serv;
+    socklen_t alen;
+
+
+    wsoc = socket(PF_INET, SOCK_STREAM, 0);
+
+
+    saddr.sin_family = AF_INET;
+
+    saddr.sin_port = htons(8888);
+
+    saddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+
+    memset(saddr.sin_zero, '\0', sizeof saddr.sin_zero);
+
+
+    bind(wsoc, (struct sockaddr *) &saddr, sizeof(saddr));
+
+
+    if(listen(wsoc,5)==0)
+        printf("Listening\n");
+    else
+        printf("Error\n");
+
+
+    alen = sizeof serv;
+    soc = accept(wsoc, (struct sockaddr *) &serv, &alen);
+
+
+    recv(soc,str,100,0);
+    int cou=0,i,n=strlen(str);
+    for(i=0;i<n;i++)
+    {
+        if((str[i]=='a')||(str[i]=='e')||(str[i]=='i')||(str[i]=='o')||(str[i]=='u'))
+            cou++;
+    }
+    printf(" \n No of vowels are %d ",cou);
+    return 0;
+}
+
+CLIENT:
+#include <stdio.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <string.h>
+
+int main()
+{
+    int cs;
+    char str[20];
+    struct sockaddr_in saddr;
+    socklen_t alen;
+
+    cs = socket(PF_INET, SOCK_STREAM, 0);
+
+
+    saddr.sin_family = AF_INET;
+
+    saddr.sin_port = htons(8888);
+
+    saddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+
+    memset(saddr.sin_zero, '\0', sizeof saddr.sin_zero);
+
+
+    alen = sizeof saddr;
+    connect(cs, (struct sockaddr *) &saddr, alen);
+
+    printf("\n Enter string : ");
+    scanf("%s",str);
+    send(cs,str,100,0);
+    close(cs);
+    return 0;
+}
+
+OUTPUT:
+
+SERVER:
+Running....
+
+CLIENT:
+Enter String  : aeiou
+
+Server Reply : 5
+-----------------------------------------------------------------

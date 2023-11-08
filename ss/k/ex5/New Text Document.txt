@@ -1,0 +1,22 @@
+/*void display()
+{
+    FILE *fp;
+    struct table t;
+    fp=fopen("table.bin","ab+");
+    while (fread(&t,sizeof(struct table),1,fp) )// != NULL)
+    {
+        if(strcmp(t.mnemonic,"$")!=0)
+        {
+            printf("\n  %s",t.loc);
+            printf("\t  %s",t.label);
+            printf("\t  %s",t.mnemonic);
+            printf("\t  %s",t.operand);
+            printf("\t  %s",t.code);
+        }
+    }
+    fclose(fp);
+}*/
+
+
+ //printf("\n\n   LOC LABLE MNEMONIC OPERAND OPCODE\n\n");
+   // display();

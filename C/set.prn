@@ -1,0 +1,412 @@
+***************************************************************************
+EXNO:10           NAME:RAHUL RAJAN D
+DATE:7.10.15      ROLLNO:14BIT053
+************************************************************************
+  IMPLEMENTATION OF SET
+***********************************************************************
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+struct node
+{
+int *a;
+int capacity;
+};
+typedef struct node *set;
+set makeset(set);
+set makesize(set);
+set unionarbi(set);
+set unionhei(set);
+set unionsiz(set);
+void findset(int,set);
+void display(set);
+
+
+bash-3.2$ cat setimp.c
+#include"sethead.h"
+set makeset(set s)
+{
+int i,n;
+s=(set)malloc(sizeof(struct node));
+printf("ENTER THE CAPACITY");
+scanf("%d",&n);
+s->a=(int*)malloc(sizeof(int)*n);
+s->capacity=n;
+for(i=1;i<=n;i++)
+s->a[i]=0;
+return s;
+}
+set makesize(set s)
+{
+int i,n;
+s=(set)malloc(sizeof(struct node));
+printf("ENTER THE CAPACITY");
+scanf("%d",&n);
+s->a=(int*)malloc(sizeof(int)*n);
+s->capacity=n;
+for(i=1;i<=n;i++)
+s->a[i]=-1;
+return s;
+}
+set unionarbi(set s)
+{
+int r1,r2;
+printf("ENTER THE VALUES");
+scanf("%d%d",&r1,&r2);
+if(s->a[r2]==0)
+s->a[r2]=r1;
+return s;
+}
+set unionhei(set s)
+{
+int r1,r2;
+printf("ENTER THE VALUES");
+scanf("%d%d",&r1,&r2);
+if(s->a[r1]==s->a[r2])
+{
+if(s->a[r1]==0&&s->a[r2]==0)
+{
+s->a[r2]=r1;
+s->a[r1]--;
+}
+else if(s->a[r1]<0&&s->a[r2]<0)
+{
+s->a[r1]=s->a[r2]+s->a[r1];
+s->a[r1]=r1;
+}
+else if(s->a[r1]>0&& s->a[r2]>0)
+{
+printf("ALREADY IT IS A SUBSET");
+}
+}
+else if(s->a[r1]<=0&&s->a[r2]<=0)
+{
+if(s->a[r1]>s->a[r2])
+{
+s->a[r2]=r1;
+}
+else
+s->a[r1]=r2;
+}
+return s;
+}
+set unionsiz(set s)
+{
+int r1,r2;
+printf("ENTER THE VALUES");
+scanf("%d%d",&r1,&r2);
+if(s->a[r1]>=0||s->a[r2]>=0)
+{
+printf("ALREADY IT IS A SUBSET");
+}
+else if(s->a[r1]<=s->a[r2])
+{
+s->a[r1]=s->a[r1]+s->a[r2];
+s->a[r2]=r1;
+}
+else if(s->a[r1]>s->a[r2])
+{
+s->a[r2]=s->a[r1]+s->a[r2];
+s->a[r1]=r2;
+}
+return s;
+}
+void findset(int x,set s)
+{
+if(s->a[x]<=0)
+printf("%d IS THE SET",x);
+else
+findset(s->a[x],s);
+}
+void display(set s)
+{
+int i;
+printf("THE ELEMENT ARE");
+for(i=1;i<=s->capacity;i++)
+{
+printf("\n%d->%d",i,s->a[i]);
+}
+}
+
+bash-3.2$ cat setapp.c
+#include"sethead.h"
+main()
+{
+set s1,s2,s3;
+int choice,e;
+s1=(set)malloc(sizeof(struct node));
+while(1)
+{
+star:
+printf("1.ARBITARY 2.HEIGHT 3.SIZE 4.EXIT ENTER THE CHOICE");
+scanf("%d",&choice);
+switch(choice)
+{
+case 1:
+while(1)
+{
+printf("1.MAKESET 2.UNION 3.FINDSET 4.DISPLAY 5.EXIT ENTER THE CHOICE");
+scanf("%d",&choice);
+switch(choice)
+{
+case 1: s1=makeset(s1);
+break;
+case 2:	s1=unionarbi(s1);
+break;
+case 3:	printf("ENTER THE SEARCH NUMBER");
+scanf("%d",&e);
+if(e>s1->capacity)
+{
+printf("NOT POSSIBLE");
+}
+else
+findset(e,s1);
+break;
+case 4: display(s1);
+break;
+case 5:	goto star;
+break;
+}
+}
+break;
+case 2:
+while(1)
+{
+printf("1.MAKESET 2.UNION 3.FINDSET 4.DISPLAY 5.EXIT ENTER THE CHOICE");
+scanf("%d",&choice);
+switch(choice)
+{
+case 1: s2=makeset(s2);
+break;
+case 2: s2=unionarbi(s2);
+break;
+case 3: printf("ENTER THE SEARCH NUMBER");
+scanf("%d",&e);
+if(e>s2->capacity)
+{
+printf("NOT POSSIBLE");
+}
+else
+findset(e,s2);
+break;
+case 4: display(s2);
+break;
+case 5: goto star;
+break;
+}
+}
+break;
+case 3:
+while(1)
+{
+printf("1.MAKESET 2.UNION 3.FINDSET 4.DISPLAY 5.EXIT ENTER THE CHOICE");
+scanf("%d",&choice);
+switch(choice)
+{
+case 1: s3=makesize(s3);
+break;
+case 2: s3=unionsiz(s3);
+break;
+case 3: printf("ENTER THE SEARCH NUMBER");
+scanf("%d",&e);
+if(e>s3->capacity)
+{
+printf("NOT POSSIBLE");
+}
+else
+findset(e,s3);
+break;
+case 4: display(s3);
+break;
+case 5: goto star;
+break;
+}
+}
+break;
+case 4: exit(0);
+break;
+}
+}
+}
+bash-3.2$ cc setimp.c -c
+bash-3.2$ cc setapp.c sw[Ketimp.o
+bash-3.2$ ./a.out
+1.ARBITARY 
+2.HEIGHT 
+3.SIZE 
+4.EXIT 
+ENTER THE CHOICE 1
+1.MAKESET 
+2.UNION 
+3.FINDSET 
+4.DISPLAY 
+5.EXIT 
+ENTER THE CHOICE 1
+ENTER THE CAPACITY 8
+1.MAKESET 
+2.UNION 
+3.FINDSET 
+4.DISPLAY 
+5.EXIT 
+ENTER THE CHOICE 2
+ENTER THE VALUES 7 8
+1.MAKESET 
+2.UNION 
+3.FINDSET 
+4.DISPLAY 
+5.EXIT 
+ENTER THE CHOICE 2
+ENTER THE VALUES 5 4
+1.MAKESET 
+2.UNION 
+3.FINDSET 
+4.DISPLAY 
+5.EXIT 
+ENTER THE CHOICE 2
+ENTER THE VALUES 1 2
+1.MAKESET 
+2.UNION 
+3.FINDSET 
+4.DISPLAY 
+5.EXIT 
+ENTER THE CHOICE 3
+ENTER THE SEARCH NUMBER 1
+1 IS THE SET
+1.MAKESET 
+2.UNION 
+3.FINDSET 
+4.DISPLAY 
+5.EXIT 
+ENTER THE CHOICE 4
+THE ELEMENT ARE
+1->0
+2->1
+3->0
+4->5
+5->0
+6->0
+7->0
+8->7
+1.MAKESET 
+2.UNION 
+3.FINDSET 
+4.DISPLAY 
+5.EXIT 
+ENTER THE CHOICE 5
+1.ARBITARY 
+2.HEIGHT 
+3.SIZE 
+4.EXIT 
+ENTER THE CHOICE 2
+1.MAKESET 
+2.UNION 
+3.FINDSET 
+4.DISPLAY 
+5.EXIT 
+ENTER THE CHOICE 1
+ENTER THE CAPACITY 8
+1.MAKESET 
+2.UNION 
+3.FINDSET 
+4.DISPLAY 
+5.EXIT 
+ENTER THE CHOICE 2
+ENTER THE VALUES 4 5
+1.MAKESET 
+2.UNION 
+3.FINDSET 
+4.DISPLAY 
+5.EXIT 
+ENTER THE CHOICE 2
+ENTER THE VALUES 1 2
+1.MAKESET 
+2.UNION 
+3.FINDSET 
+4.DISPLAY 
+5.EXIT 
+ENTER THE CHOICE 2
+ENTER THE VALUES 7 8
+1.MAKESET 
+2.UNION 
+3.FINDSET 
+4.DISPLAY 
+5.EXIT 
+ENTER THE CHOICE 4
+THE ELEMENT ARE
+1->0
+2->1
+3->0
+4->0
+5->4
+6->0
+7->0
+8->7
+1.MAKESET 
+2.UNION 
+3.FINDSET 
+4.DISPLAY 
+5.EXIT 
+ENTER THE CHOICE 5
+1.ARBITARY 
+2.HEIGHT 
+3.SIZE 
+4.EXIT 
+ENTER THE CHOICE 3
+1.MAKESET 
+2.UNION 
+3.FINDSET 
+4.DISPLAY 
+5.EXIT 
+ENTER THE CHOICE 1
+ENTER THE CAPACITY 8
+1.MAKESET 
+2.UNION 
+3.FINDSET 
+4.DISPLAY 
+5.EXIT 
+ENTER THE CHOICE 2
+ENTER THE VALUES 4 5
+1.MAKESET 
+2.UNION 
+3.FINDSET 
+4.DISPLAY 
+5.EXIT 
+ENTER THE CHOICE 2
+ENTER THE VALUES 1 2
+1.MAKESET 
+2.UNION 
+3.FINDSET 
+4.DISPLAY 
+5.EXIT 
+ENTER THE CHOICE 2
+ENTER THE VALUES 1 4
+1.MAKESET 
+2.UNION 
+3.FINDSET 
+4.DISPLAY 
+5.EXIT 
+ENTER THE CHOICE 4
+THE ELEMENT ARE
+1->-4
+2->1
+3->-1
+4->1
+5->4
+6->-1
+7->-1
+8->-1
+1.MAKESET 
+2.UNION 
+3.FINDSET 
+4.DISPLAY 
+5.EXIT 
+ENTER THE CHOICE 5
+1.ARBITARY 
+2.HEIGHT 
+3.SIZE 
+4.EXIT 
+ENTER THE CHOICE 4
+bash-3.2$ exit
+exit
+
+Script done on Wed 14 Oct 2015 12:03:39 PM IST

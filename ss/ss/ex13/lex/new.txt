@@ -1,0 +1,8 @@
+writef
+writef
+writef
+readf
+readf
+hello
+haiii
+suffer

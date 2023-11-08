@@ -1,0 +1,79 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+main()
+{
+	FILE *fp;
+	char a[100],b[]={'s','t','x'},c[]={'e','t','x'};
+	int n,i,j,k,d=0,e=0;
+	printf("ENTER THE STRING   ");
+	gets(a);
+	n=strlen(a);
+	fp=fopen("sender.txt","w");
+	for(i=0;i<3;i++)
+	{
+		putc(b[i],fp);
+	}
+	for(i=0;i<n;i++)
+  {
+    if(a[i]=='e')
+		{
+			if(a[i+1]=='t')
+			{
+				if(a[i+2]=='x')
+				{
+					j=i;
+					n=n+3;
+					k=n-1;
+					while(k>=j+3)
+					{
+						a[k]=a[k-3];
+						k--;
+					}
+					a[k]='e';
+					a[k-1]='l';
+					a[k-2]='d';
+					d=1;
+				}
+			}
+		}
+		if(d==1)
+		{
+			i=i+6;
+		}
+		if(a[i]=='d')
+    {
+      if(a[i+1]=='l')
+      {
+        if(a[i+2]=='e')
+        {
+          j=i;
+          n=n+3;
+          k=n-1;
+          while(k>=j+3)
+          {
+            a[k]=a[k-3];
+            k--;
+          }
+          a[k]='e';
+          a[k-1]='l';
+          a[k-2]='d';
+          e=1;
+				}
+			}
+		}
+		if(e==1)
+		{
+			i=i+6;
+		}
+	}
+	for(i=0;i<n;i++)
+  {
+    putc(a[i],fp);
+  }
+	for(i=0;i<3;i++)
+  {
+    putc(c[i],fp);
+  }
+	fclose(fp);
+}

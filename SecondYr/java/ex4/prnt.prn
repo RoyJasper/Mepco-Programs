@@ -1,0 +1,582 @@
+**************************************************************************
+          JAVA PROGRAMS USING OOPS CONCEPT
+**************************************************************************
+Ex.No:4                                         Roll.no:14BIT054
+Date:                                           Name:G.Rakhav Krishna
+**************************************************************************
+AIM: TO WRITE JAVA PROGRAM TO FIND THE AREA OF THE CIRCLE
+**************************************************************************
+bash-3.2$ cat circle.java
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+class circle
+{
+ private double l;
+ private String c;
+ public circle()
+ {
+   l=10;
+  String c="red";
+ }
+ public circle(double l,String c)
+ {
+  this.l=l;
+  this.c=c;
+ }
+ public double getradius()
+ {
+  return l;
+ }
+ public double getarea()
+ {
+  return(3.14*l*l);
+ }
+}
+class testcircle
+{
+ public static void main (String args[]) throws IOException
+ {
+  double l;
+  String c;
+  Scanner obj=new Scanner(System.in);
+  System.out.println("enter the radius value");
+  l=obj.nextDouble();
+  System.out.println("enter the colour");
+  c=obj.nextLine();
+  circle c1=new circle(l,c);
+  System.out.println("radius is:"+c1.getradius());
+  System.out.println("\narea is:"+c1.getarea());
+ }
+}
+
+bash-3.2$ javac testcircle[1P testcircle
+enter the radius value
+5
+enter the colour
+radius is:5.0
+
+area is:78.5
+********************************************************************************8
+AIM:TO PERFORM BANK OPERATION
+*********************************************************************************
+bash-3.2$ cat Bank.java
+import java.io.*;
+import java.util.*;
+class Account
+{
+public double bal;
+public int acc;
+public void deposit(double sum)
+{
+if(sum>0)
+bal=bal+sum;
+else
+System.out.println("Cannot Deposit");
+}
+public void withdraw(double sum)
+{
+if((bal-sum)>0)
+bal=bal-sum;
+else
+System.out.println("Error!!!!");
+}
+public double getbal()
+{
+return bal;
+}
+public int getacc()
+{
+return acc;
+}
+public void setbal(double a)
+{
+System.out.println(a);
+bal=a;
+}
+public void setacc(int a)
+{
+acc=a;
+}
+public String toString()
+{
+return ("accountno:"+acc+"\n"+"balance:"+bal+"\n");
+}
+public   void print()
+{
+System.out.println(toString());
+}
+}
+class Savings extends Account
+{
+private int interest;
+public void setInterest(int a)
+{
+interest=a;
+}
+public int getInterest()
+{
+return interest;
+}
+public String toString()
+{
+return ("accountno:"+acc+"\n"+"balance:"+bal+"\n"+"Interest:"+interest+"\n");
+}
+public  void print()
+{
+System.out.println(toString());
+}
+}
+class Current extends Account
+{
+private int over;
+public void setOver(int a)
+{
+over=a;
+}
+public int getOver()
+{
+return over;
+}
+public String toString()
+{
+return ("accountno:"+acc+"\n"+"balance:"+bal+"\n"+"over_draft_limit:"+over+"\n");
+}
+public  void print()
+{
+System.out.println(toString());
+}
+}
+class Bank
+{
+public static void main(String arg[])
+{
+int s,f;
+double d;
+Scanner obj = new Scanner(System.in);
+Scanner ob = new Scanner(System.in);
+Savings sa=new Savings();
+for(int i=0;i<2;i++)
+{
+System.out.println("enter the accno , balance , interest");
+s=obj.nextInt();
+d=obj.nextDouble();
+f=obj.nextInt();
+sa.setacc(s);
+sa.setbal(d);
+sa.setInterest(f);
+System.out.println("enter the amount to be deposited");
+f=obj.nextInt();
+sa.deposit(f);
+System.out.println("enter the amount to be withdrawn");
+f=obj.nextInt();
+sa.withdraw(f);
+System.out.println("The accno , balance , interest");
+sa.print();
+}
+}
+}
+
+bash-3.2$ java Bank.[K
+enter the accno , balance , interest
+123
+2000
+25
+2000.0
+enter the amount to be deposited
+3000
+enter the amount to be withdrawn
+200
+The accno , balance , interest
+accountno:123
+balance:4800.0
+Interest:25
+
+enter the accno , balance , interest
+1234
+78903
+233
+78903.0
+enter the amount to be deposited
+2000
+enter the amount to be withdrawn
+20
+The accno , balance , interest
+accountno:1234
+balance:80883.0
+Interest:233
+
+*************************************************************************************
+AIM:TO FIND THE NEXT AND PREVIOUS TIME OF THE GIVEN TIME
+*************************************************************************************
+bash-3.2$ catho[K[K hour.java
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+class time
+{
+ int h,m,s;
+ int h1,m1,s1;
+ public void sethour(int hr)
+ {
+  h=hr;
+ }
+ public void setminute(int min)
+ {
+  m=min;
+ }
+ public void setsecond(int sec)
+ {
+  s=sec;
+ }
+ public int gethour()
+ {
+  return h;
+ }
+ public int getminute()
+ {
+  return m;
+ }
+ public int getsecond()
+ {
+  return s;
+ }
+ public void nexthour()
+ {
+  if(h==23)
+  h=0;
+  else
+  h++;
+ }
+ public void nextminute()
+ {
+  if(m==59)
+  {
+   h+=1;
+   m=0;
+  }
+  else
+  m++;
+ }
+ public void nextsecond()
+ {
+  if(s==59)
+  {
+   m+=1;
+   s=0;
+  }
+  else
+  s++;
+ }
+ public void prevhour(int hr)
+ {
+  h1=hr;
+  if(h1==0)
+  h1=23;
+  else
+  h1--;
+ }
+ public void prevminute(int min)
+ {
+  m1=min;
+  if(m1==0)
+  {
+   m1=59;
+   h1--;
+  }
+  else
+  m1--;
+ }
+ public void prevsecond(int sec)
+ {
+  s1=sec;
+  if(s1==0)
+  {
+   s1=59;
+   m1--;
+  }
+  else
+  s1--;
+ }
+ public void tostring()
+ {
+  System.out.println(+h":"+m":"+s);
+ }
+ public void tostring1()
+ {
+  System.out.println(+h1":"+m1":"+s1);
+ }
+}
+class demo
+{
+ public static void main(String args[])throws IOException
+ {
+  time t=new time();
+  int hr,min,sec;
+  Scanner obj=new Scanner(System.in);
+  System.out.println("enter the hour");
+  hr=obj.nextInt();
+  System.out.println("enter the minute");
+  min=obj.nextInt();
+  System.out.println("enter the second");
+  sec=obj.nextInt();
+  t.sethour(hr);
+  t.setminute(min);
+  t.setsecond(sec);
+  t.nexthour();
+  t.nextminute();
+  t.nextsecond();
+  System.out.println("next time is");
+  t.tostring();
+  t.prevhour(hr);
+  t.prevminute(min);
+  t.prevsecond(sec);
+  System.out.println("previous time is");
+  t.tostring1();
+ }
+}
+
+bash-3.2$ javac demo[K[K[K[K[K[K demo
+enter the hour
+12
+enter the minute
+34
+enter the second
+67  56
+next time is
+Hour:13
+minute:35
+second:57
+previous time is
+Hour:11
+minute:33
+second:55
+bash-3.2$ ls
+Account.class  circle.class	     Current.class  person.class   starter.class  teacher.class      time.class
+Bank.class     circle.java	     demo.class     prnt.prn	   student.class  testcircle.class   Volume.class
+Bank.java      collegestudent.class  hour.java	    Savings.class  student.java   TestMyCircle.java  volume.java
+******************************************************************************
+AIM:TO GET THE STUDENT DETAILS AND PRINT IT USING OOPS CONCEPT
+******************************************************************************
+bash-3.2$ cat starter.c[K[K[K[K[K[K[Kudent.java
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+class person
+{
+ String name,address;
+ int age;
+ public String getname()
+ {
+  return name;
+ }
+ public void setname(String a)
+ {
+  name=a;
+ }
+ public int getage()
+ {
+  return age;
+ }
+ public void setage(int age)
+ {
+  this.age=age;
+ }
+ public String getaddress()
+ {
+  return address;
+ }
+ public void setaddress(String address)
+ {
+  this.address=address;
+ }
+}
+class student extends person
+{
+ public int rno;
+ public int getno()
+ {
+  return rno;
+ }
+ public void setno(int rno)
+ {
+  this.rno=rno;
+ }
+}
+class teacher extends person
+{
+ String subject;
+ int salary;
+ public int getsalary()
+ {
+  return salary;
+ }
+ public void setsalary(int sal)
+ {
+  salary=sal;
+ }
+ public void setsubject(String sub)
+ {
+  subject=sub;
+ }
+ public String getsubject()
+ {
+  return subject;
+ }
+}
+class collegestudent extends student
+{
+ int year;
+ String major;
+ public int getyear()
+ {
+  return year;
+ }
+ public void setyear(int year)
+ {
+  this.year=year;
+ }
+ public String getmajor()
+ {
+  return major;
+ }
+ public void setmajor(String maj)
+ {
+  major=maj;
+ }
+}
+class starter
+{
+ public static void main(String args[]) throws IOException
+ {
+  Scanner obj=new Scanner(System.in);
+  teacher t= new teacher();
+  collegestudent c= new collegestudent();
+  int age,rno,year,sal;
+  String a,address,maj,sub,name;
+  System.out.println("enter the age");
+  age=obj.nextInt();
+  System.out.println("enter the rollno");
+  rno=obj.nextInt();
+  System.out.println("enter the year");
+  year=obj.nextInt();
+  System.out.println("enter the salary");
+  sal=obj.nextInt();
+  System.out.println("enter the name");
+  a=obj.nextLine();
+  name=obj.nextLine();
+  System.out.println("enter the address");
+  address=obj.nextLine();
+  System.out.println("enter the major");
+  maj=obj.nextLine();
+  System.out.println("enter the subject");
+  sub=obj.nextLine();
+  c.setname(name);
+  c.setage(age);
+  c.setaddress(address);
+  c.setno(rno);
+  c.setyear(year);
+  c.setmajor(maj);
+  t.setsubject(sub);
+  t.setsalary(sal);
+  System.out.println("name is:"+c.getname()+"\nroll no:"+c.getno()+"\nage:"+c.getage()+"\naddress:"+c.getaddress());
+  System.out.println("\nmajor:"+c.getmajor()+"\nsubject:"+t.getsubject()+"\nyear:"+c.getyear()+"\nsalary:"+t.getsalary());
+ }
+}
+
+bash-3.2$ javac starte[K[K[K[K[K[K[K[K[Ka starter
+enter the age
+230 
+enter the rollno
+2001
+enter the year
+2015
+enter the salary
+300000
+enter the name
+rakhav
+enter the address
+chennairajapura
+enter the major
+technical
+enter the subject
+computer s  science
+name is:rakhav
+roll no:2001
+age:23
+address:chennairajapura
+
+major:technical
+subject:computerscience
+year:2015
+salary:300000
+bash-3.2$ ls
+Account.class  circle.class	     Current.class  person.class   starter.class  teacher.class      time.class
+Bank.class     circle.java	     demo.class     prnt.prn	   student.class  testcircle.class   Volume.class
+Bank.java      collegestudent.class  hour.java	    Savings.class  student.java   TestMyCircle.java  volume.java
+*********************************************************************************************
+AIM:TO FIND THE VOLUME OF THE SPHERE AND ROLLING OF A DIE ETC
+**********************************************************************************************
+bash-3.2$ cat TestMyCircle.java[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kvolume.c[Kjava
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+class Volume
+{
+ public static void main(String args[])
+ {
+  double die,distance=0.0,area=0.0;
+  int choice,radius,x1,x2,y1,y2;
+  Scanner obj=new Scanner(System.in);
+
+  System.out.println("ENTER YOUR CHOICE\n1.VOLUME OF SPHERE\n2.DISTANCE BETWEEN TWO POINTS\n3.STIMULATING DIE");
+  choice=obj.nextInt();
+switch(choice)
+{
+ case 1:
+        System.out.println("ENTER RADIUS \n");
+        radius=obj.nextInt();
+        area=4*Math.PI*radius*radius*radius/3;
+        System.out.println("VOLUME OF SPHERE =\n"+area);
+        break;
+ case 2:
+      System.out.println("ENTER FROM POINTS as (x,y)");
+      x2=obj.nextInt();
+      y2=obj.nextInt();
+      System.out.println("ENTER TO POINTS as (x,y)");
+      x1=obj.nextInt();
+      y1=obj.nextInt();
+      distance=Math.sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)));
+      System.out.println("DISTANCE BETWEEN POINTS IS  "+distance);
+      break;
+ case 3:
+      die=Math.random()*7;
+      int a=(int)die;
+      if(a!=0)
+      System.out.println("YOUR TURN GIVES  "+a);
+      break;
+   }
+  }
+ }
+bash-3.2$ java Volume
+ENTER YOUR CHOICE
+1.VOLUME OF SPHERE
+2.DISTANCE BETWEEN TWO POINTS
+3.STIMULATING DIE
+1
+ENTER RADIUS 
+
+4
+VOLUME OF SPHERE =
+268.082573106329
+bash-3.2$ java Volume
+ENTER YOUR CHOICE
+1.VOLUME OF SPHERE
+2.DISTANCE BETWEEN TWO POINTS
+3.STIMULATING DIE
+3
+YOUR TURN GIVES  1
+bash-3.2$ exit
+exit
+
+Script done on Tue 23 Feb 2016 11:38:43 AM IST

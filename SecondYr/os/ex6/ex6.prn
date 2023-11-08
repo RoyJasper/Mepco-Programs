@@ -1,0 +1,218 @@
+**********************************************************************************
+Name: C.S.Roy Jasper                                           14bit058
+----------------------------------------------------------------------------------
+                   EX 6-------> PROGRAM USING SEMAPHORES
+---------------------------------------------------------------------------------
+
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<sys/ipc.h>
+#include<sys/shm.h>
+#include<sys/types.h>
+#include<sys/stat.h>
+#include<sys/sem.h>
+void wait(int);
+void signal(int);
+main()
+{
+int f,m,b,i;
+int mutex,empty,full,n,in=-1,out=-1,shmid;
+int a[5],*buffer,*p,id,sid,*g;
+printf("\nENTER THE ELEMENT");
+scanf("%d",&p);
+n=p;
+mutex=shmget(IPC_PRIVATE,1,IPC_CREAT|0776);
+semctl(mutex,0,SETVAL,1);
+empty=shmget(IPC_PRIVATE,1,IPC_CREAT|0776);
+semctl(empty,0,SETVAL,n);
+full=shmget(IPC_PRIVATE,1,IPC_CREAT|0776);
+semctl(full,0,SETVAL,1);
+shmid=shmget(IPC_PRIVATE,n*sizeof(int),IPC_CREAT|0776);
+buffer=(int *)shmat(shmid,NULL,0);
+shmid=shmget(IPC_PRIVATE,sizeof(int),IPC_CREAT|0776);
+p=(int *)shmat(id,NULL,0);
+shmid=shmget(IPC_PRIVATE,sizeof(int),IPC_CREAT|0776);
+p=(int *)shmat(sid,NULL,0);
+m=fork();
+if(m==0)
+{
+wait(empty);
+printf("Enter the Values");
+wait(mutex);
+in=(in+p);
+for(in=0;in<p;in++)
+{
+scanf("%d",&b);
+buffer[in]=b;
+}
+signal(mutex);
+signal(full);
+}
+else if(m>0)
+{
+getchar();
+getchar();
+wait(full);
+wait(mutex);
+out=(out+1);
+f=buffer[out];
+printf("Deleted Element is-> %d ",f);
+signal(mutex);
+signal(empty);
+}
+else
+exit(0);
+}
+//}
+void wait(int semid)
+{
+struct sembuf buf;
+buf.sem_num=0;
+buf.sem_op=-1;
+buf.sem_flg=0;
+semop(semid,&buf,1);
+}
+void signal(int semid)
+{
+struct sembuf buf;
+buf.sem_num=0;
+buf.sem_op=1;
+buf.sem_flg=0;
+semop(semid,&buf,1);
+}
+
+bash-3.2$ cc 6e.c
+
+ENTER THE ELEMENT 4 3
+Enter the Values
+45
+56
+67
+Deleted Element is-> 45 
+-------------------------------------------------------------------------
+#include<stdio.h>
+#include<stdlib.h>
+#include<sys/ipc.h>
+#include<sys/shm.h>
+#include<sys/types.h>
+#include<sys/stat.h>
+#include<sys/sem.h>
+void wait(int);
+void signal(int);
+main()
+{
+int m,b;
+int mutex,shmid;
+int a,*balance;
+mutex=shmget(IPC_PRIVATE,1,IPC_CREAT|0776);
+semctl(mutex,0,SETVAL,1);
+shmid=shmget(IPC_PRIVATE,sizeof(int),IPC_CREAT|0776);
+balance=(int *)shmat(shmid,NULL,0);
+m=fork();
+{
+if(m==0)
+{
+wait(mutex);
+printf("\nEnter the Amount to be Credited");
+scanf("%d",&a);
+*balance = *balance+a;
+printf("\nBalance is----->%d",*balance);
+signal(mutex);
+}
+else if(m>0)
+{
+getchar();
+wait(mutex);
+printf("\nEnter the Amount to be Debited");
+scanf("%d",&a);
+*balance=*balance - a;
+printf("\nBalance is------->%d",*balance);
+signal(mutex);
+}
+}
+}
+void wait(int semid)
+{
+struct sembuf buf;
+buf.sem_num=0;
+buf.sem_op=-1;
+buf.sem_flg=0;
+semop(semid,&buf,1);
+}
+void signal(int semid)
+{
+struct sembuf buf;
+buf.sem_num=0;
+buf.sem_op=1;
+buf.sem_flg=0;
+semop(semid,&buf,1);
+}
+
+bash-3.2$ cc 6y.c
+bash-3.2$ ./a.out
+
+Enter the Amount to be Credited 4000
+
+Balance is->4000
+
+Enter the Amount to be Debited 900
+
+Balance is->3100
+-----------------------------------------------------------------------
+#include<stdio.h>
+#include<stdlib.h>
+#include<sys/ipc.h>
+#include<sys/shm.h>
+#include<sys/types.h>
+#include<sys/stat.h>
+#include<sys/sem.h>
+void wait(int);
+void signal(int);
+main()
+{
+int m,b;
+int mutex,shmid;
+int a[5],*buffer;
+mutex=shmget(IPC_PRIVATE,1,IPC_CREAT|0776);
+semctl(mutex,0,SETVAL,1);
+shmid=shmget(IPC_PRIVATE,sizeof(int),IPC_CREAT|0776);
+buffer=(int *)shmat(shmid,NULL,0);
+m=fork();
+if(m==0)
+{
+wait(mutex);
+printf("\nTrain is on the Platform");
+signal(mutex);
+}
+else if(m>0)
+{
+wait(mutex);
+printf("\nPlatform is Free");
+signal(mutex);
+}
+}
+void wait(int semid)
+{
+struct sembuf buf;
+buf.sem_num=0;
+buf.sem_op=-1;
+buf.sem_flg=0;
+semop(semid,&buf,1);
+}
+void signal(int semid)
+{
+struct sembuf buf;
+buf.sem_num=0;
+buf.sem_op=1;
+buf.sem_flg=0;
+semop(semid,&buf,1);
+}
+
+bash-3.2$ cc 6z.x[Kc
+bash-3.2$ ./a.out
+
+Train is on the Platform
+Platform is Free
+
+--------------------------------------------------------------

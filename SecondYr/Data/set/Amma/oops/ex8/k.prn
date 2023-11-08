@@ -1,0 +1,227 @@
+*******************************************************************************
+AUTHOR NAME  :P.SIVA SANKARAN
+ROLL NO      :14BIT059
+EXERCISE NO  :8
+EXERCISE NAME:PROGRAM USING WRAPPER CLASS
+*******************************************************************************
+TO FIND THE VALUE IS BETWEEN LIMIT OR NOT
+***************************************** 
+#include<iostream>
+#include<string>
+using namespace std;
+class integer
+{
+private:
+int lb;
+int ub;
+int value;
+public:
+void validate()
+{
+cout<<value;
+if((value>=lb)&&(value<=ub))
+cout<<"\n value is present in the given limit 0-100\n";
+else
+cout<<"\n  value is not present in the given limit 0-100\n";
+}
+integer(int x=0,int y=100,int z=0  )
+{
+value=x;
+ub=y;
+lb=z;
+}
+integer operator () (int k)
+{
+cout<<k;
+cout<<"\n**********************************************\n";
+value=k;
+return integer (value);
+}
+};
+int main()
+{
+int x;
+cout<<"\n  enter the value to be checked    :";
+cin>>x;
+integer il=x;
+integer (x).validate();
+return 0;
+}
+
+OUTPUT
+******
+
+  enter the value to be checked    :
+15
+15
+ value is present in the given limit 0-100
+CONVERT CELSIUS TO FAHRENHEIT
+******************************
+#include<iostream>
+#include<string>
+using namespace std;
+class farenheit;
+class celcius
+{
+double cel;
+public:
+celcius()
+{
+cel=0;
+}
+celcius(double ab)
+{
+  cel=ab;
+}
+/*celcius(farenheit &fa)
+  {
+  double cd=fa.getfaren();
+  cel=(5/9)*(cd-32);
+  }*/
+double getcel()
+    {
+  return cel;
+    }
+void show()
+  {
+
+  cout<<"\n CELCIUS IS ::"<<cel<<" degree\n";
+  cout<<"\n***********************************";
+
+  }
+};
+class farenheit
+{
+double faren;
+public:
+farenheit()
+{faren=0;}
+
+farenheit(double ef)
+  {
+  faren=ef;
+  }
+farenheit(celcius ce)
+  {
+  double gh=ce.getcel();
+  faren=((9*gh)/5)+32;
+  }
+operator celcius()
+{
+  double ff=faren;
+ // cout<<"\n"<<ff;
+  cout<<"\n\n";
+  double cc;
+  cc=5*(ff-32)/9;
+//  cout<<"\n"<<cc<<"check";
+  return celcius(cc);
+}
+double getfaren()
+  {
+  return faren;
+  }
+void show()
+  {
+  cout<<"\n***********************************";
+  cout<<"\n\n FARENHEIT IS:: "<<faren<<" faren";
+  }
+};
+int main()
+{
+double x,y;
+cout<<"\n enter the celcius :";
+cin>>x;
+cout<<"\n enter the farenheit   :";
+cin>>y;
+celcius c(x);
+farenheit f(y);
+farenheit f1;
+celcius c2;
+f1=c;
+f1.show();
+c2=f;
+c2.show();
+return 0;
+}
+
+OUTPUT
+*******
+ enter the celcius :
+25
+
+ enter the farenheit   :
+85
+
+***********************************
+
+ FARENHEIT IS:: 77 faren
+
+
+ CELCIUS IS ::29.4444 degree
+
+***********************************
+TO CHECK TWO NAMES ARE EQUAL OR NOT
+************************************
+#include<iostream>
+#include<string>
+using namespace std;
+class cstring
+{
+string str;
+public:
+cstring(string x="")
+{
+str=x;
+}
+bool operator < (cstring a)
+{
+  if( str < a.str )
+    return true;
+  else
+    return false;
+}
+bool operator == (cstring b)
+{
+  if(str < b.str)
+    return true;
+  else
+    return false;
+}
+};
+int main()
+{
+string a,b;
+cout<<"\n enter your name    ";
+cin>>a;
+cout<<"\n enter my name       ";
+cin>>b;
+if(b<a)
+cout<<"\n my name is lesser than your name  \n";
+else
+cout<<"\n my name is greater than your name  \n";
+if(b=="siva")
+cout<<"\n my name is correct\n";
+else
+cout<<"\n  my name is incorrect\n";
+if(b==a)
+cout<<"\n my name is equal to your name \n";
+else
+cout<<"\n my name is not equal to your name\n";
+}
+OUTPUT
+******
+ enter your name    
+siva
+
+ enter my name       
+siva
+
+ my name is greater than your name  
+
+  my name is correct
+
+ my name is equal to your name 
+bash-3.2$ exit
+exit
+
+

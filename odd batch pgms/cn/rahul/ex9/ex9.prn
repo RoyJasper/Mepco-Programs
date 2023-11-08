@@ -1,0 +1,86 @@
+**************************************************************
+EX.NO:09		NAME: RAHUL RAJAN D
+DATE:08/9/16		ROLLNO: 14BIT053
+**************************************************************
+  IMPLEMENTATION OF MULTICASTING
+**************************************************************
+CLIENT:
+import java.io.*;
+import java.util.*;
+import java.net.*;
+public class Client 
+{
+ public static void main(String[] args) 
+ {
+  MulticastSocket socket = null;
+  DatagramPacket inPacket = null;
+  byte[] inBuf = new byte[256];
+  try 
+  {
+   Scanner in=new Scanner(System.in);
+   int port=in.nextLine();
+   socket = new MulticastSocket(pn);
+   InetAddress address = InetAddress.getByName("224.2.2.3");
+   socket.joinGroup(address);
+   while (true) 
+   {
+    inPacket = new DatagramPacket(inBuf, inBuf.length);
+    socket.receive(inPacket);
+    String msg = new String(inBuf, 0, inPacket.getLength());
+    System.out.println(" Msg : " + msg);
+   }
+  } 
+  catch (IOException ioe) 
+  {
+   System.out.println(ioe);
+  }
+ }
+}
+
+SERVER:
+import java.io.*;
+import java.net.*;
+import java.util.*;
+public class Server 
+{
+ public static void main(String[] args) 
+ {
+  DatagramSocket socket = null;
+  DatagramPacket outPacket = null;
+  byte[] outBuf;
+  Scanner in=new Scanner(System.in);  
+  System.out.println("\nEnter the port number");
+  int PORT = in.nextInt();
+  System.out.println("\nEnter the port number");
+  String group=in.nextLine(); 
+  try 
+  {
+   socket = new DatagramSocket();
+   long counter = 0;
+   String msg;
+   System.out.println("Enter the message");
+   msg=in.nextLine();
+   outBuf = msg.getBytes();
+   InetAddress address = InetAddress.getByName("224.2.2.3");
+   outPacket = new DatagramPacket(outBuf, outBuf.length, address, PORT);
+   socket.send(outPacket);
+   System.out.println("Server sends : " + msg);
+   try 
+   {
+    Thread.sleep(500);
+   } 
+  } 
+  catch (IOException ioe) 
+  {
+   System.out.println(ioe);
+  }
+ }
+}
+
+OUTPUT:
+CLIENT:
+MSG:HAI
+
+SERVER:
+ENTER THE MESSAGE:HAI
+

@@ -1,0 +1,441 @@
+<-----------------------------EX 13----------------------------->
+NAME: ROY JASPER C S
+ROLL NO :14BIT058
+-------------------------------------------------
+package Command;
+import java.sql.*;
+import java.util.Scanner;
+public  class Student
+{
+    Connection conn;
+    int choice;
+    int id,sta=0,stu=0,pack,cgpa,d,sid;
+    char s='y',ch;
+    String pass,sql,sql1,name,dept,stupass,comp;
+    Scanner in=new Scanner(System.in);
+    public static void main(String[] args) throws ClassNotFoundException,SQLException
+    {
+        Student l=new Student();
+        l.connect();
+        l.access();
+    }
+    public void connect() throws SQLException, ClassNotFoundException
+    {
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","javaproj","itsme");
+    }
+    public void access() throws SQLException
+    {
+        Statement st=conn.createStatement();
+        System.out.println("\n Enter if u r a Student-->0 or staff-->1 ");
+        int chk=in.nextInt();
+        if(chk==1)
+        {
+            System.out.println("Enter your login id and Password");
+            id=in.nextInt();
+            pass=in.next();
+            sql=" select * from staff where sid='"+id+"' and pass='"+pass+"'";
+            ResultSet rs=st.executeQuery(sql);
+            if(rs.next())
+            {
+                sta=1;
+                enter(sta,stu,id,pass);
+            }
+            else
+            {
+                System.out.println("Invalid login id and Password");
+                System.exit(0);
+            }
+        }
+        else if (chk==0)
+        {
+            System.out.println("Enter your login id and Password");
+            id=in.nextInt();
+            pass=in.next();
+            sql=" select * from student where  sid='"+id+"' and pass='"+pass+"'";
+            ResultSet rs=st.executeQuery(sql);
+
+            if(rs.next())
+            {
+                stu=1;
+                enter(sta,1,id,pass);
+            }
+
+            else
+            {
+                System.out.println("Invalid login id and Password");
+                System.exit(0);
+            }
+        }
+    }
+
+    public void enter(int sta,int stu,int id,String pass) throws SQLException
+    {
+        if (sta==1)
+        {
+            while(true)
+            {
+                System.out.println("++++++++++ STAFF SECTION ++++++++++\n1.Insert Student or Staff details\n 2.Modify Student details\n 3.Delete Student\n 4.Display Student details\n 5.Students Placed in a Company\n 6.Get Average of Package(in Function)\n 7.Exit \n Enter your choice  ");
+                choice=in.nextInt();
+                switch(choice)
+                {
+                case 1:
+                    
+                        System.out.println("Enter 1 for staff else 0 for student");
+                        int c=in.nextInt();
+                        if(c==0)
+                        {
+                            System.out.println("Enter name");
+                            name=in.next();
+                            System.out.println("Enter ID(USE NUMBERS ONLY)");
+                            int sid=in.nextInt();
+                            System.out.println("Enter Password for this student ");
+                            stupass=in.next();
+                            System.out.println("Enter department");
+                            dept=in.next();
+                            System.out.println("Enter CGPA");
+                            cgpa=in.nextInt();
+                            System.out.println("Enter Company Placed");
+                            comp=in.next();
+                            System.out.println("Enter Package");
+                            pack=in.nextInt();
+                            sql="insert into student values("+sid+",'"+name+"','"+stupass+"','"+dept+"',"+cgpa+",'"+comp+"',"+pack+")";
+                            Statement st=conn.createStatement();
+                            try
+                            {
+                                st = conn.createStatement();
+                                d = st.executeUpdate(sql);
+                            }
+                            catch (SQLException e2)
+                            {
+                                e2.printStackTrace();
+                            }
+                            if(d==1)
+                                System.out.println("INSERTED SUCCESSFULLY");
+                            else
+                                System.out.println("NOT INSERTED");
+                        }
+                        else if(c==1)
+                        {
+                            System.out.println("Enter name");
+                            name=in.next();
+                            System.out.println("Enter ID(USE NUMBERS ONLY)");
+                            int sid=in.nextInt();
+                            System.out.println("Enter Password for this staff ");
+                            stupass=in.next();
+                            System.out.println("Enter department");
+                            dept=in.next();
+                            sql="insert into staff values("+sid+",'"+name+"','"+stupass+"','"+dept+"')";
+                            Statement st=conn.createStatement();
+                            try
+                            {
+                                st = conn.createStatement();
+                                d = st.executeUpdate(sql);
+                            }
+                            catch (SQLException e2)
+                            {
+                                e2.printStackTrace();
+                            }
+                            if(d==1)
+                                System.out.println("INSERTED SUCCESSFULLY");
+                            else
+                                System.out.println("NOT INSERTED");
+
+                        }
+                    //    System.out.println("Insert plus y else n");
+                      //  String s=in.next();
+                        //ch= s.charAt(0);
+                    
+                    
+                    break;
+                case 2:
+                    System.out.println("\nEnter ID of Student to be Modified\n");
+                    sid=in.nextInt();
+
+                    Statement st1=conn.createStatement();
+                    sql="select * from student where sid="+sid+" ";
+                    ResultSet rs=st1.executeQuery(sql);
+                    int n = 0;
+                    try
+                    {
+                        if(rs.next())
+                        {
+                            System.out.println("\n Enter which field should modify..\n1.SID 2.NAME 3.PASS 4.DEPT 5.CGPA 6.COMPANY  7.PACKAGE\n");
+                            int mod=in.nextInt();
+                            String modify=get(mod);
+                            System.out.println("\n Enter value to modify\n");
+                            if(mod==1||mod==5||mod==7)
+                            {
+                                int sid1=in.nextInt();
+                                sql="update student set "+modify+" = "+sid1+" where sid="+sid+"";
+                            }
+                            else
+                            {
+                                name=in.next();
+                                sql="update student set "+modify+" = '"+name+"' where sid="+sid+"";
+                            }
+                            try
+                            {
+                                st1 = conn.createStatement();
+                                d = st1.executeUpdate(sql);
+                            }
+                            catch (SQLException e2)
+                            {
+                                e2.printStackTrace();
+                            }
+                            if(d==1)
+                                System.out.println("UPDATED SUCCESSFULLY");
+                            else
+                                System.out.println(" NOT UPDATED");
+                            n=1;
+                        }
+
+                    }
+                    catch (SQLException e1)
+                    {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+                    if(n!=1)
+                        System.out.println("\n Required ID not present\n");
+
+
+
+                    break;
+                case 7:
+                	/*
+                	   create function func return varchar is
+  					2  v varchar(10);
+  					3  begin
+  					4  select avg(package) into v from student;
+  					5  return v;
+  					6  end;
+  					7  /
+                	 */
+                	String sql="select func() from dual";
+                	st1 = conn.createStatement();
+                	rs = st1.executeQuery(sql);
+                    if(rs.next())
+                    System.out.println("Average package: "+rs.getFloat(1));
+                	break;
+                case 3:
+                    System.out.println("\nEnter ID of Student to be deleted\n");
+                    sid=in.nextInt();
+                    sql="delete from student where sid="+sid;
+                    Statement st11=conn.createStatement();
+                    try
+                    {
+                        st11 = conn.createStatement();
+                        d = st11.executeUpdate(sql);
+                    }
+                    catch (SQLException e2)
+                    {
+                        e2.printStackTrace();
+                    }
+                    if(d==1)
+                        System.out.println("DELETED SUCCESSFULLY");
+                    else
+                        System.out.println("NOT DELETED");
+
+                    break;
+                case 4:
+                    System.out.println("Enter ID(USE NUMBERS ONLY)");
+                    sid=in.nextInt();
+                    Statement st111=conn.createStatement();
+                    sql="select * from student where sid="+sid+"";
+                    ResultSet rs1=st111.executeQuery(sql);
+                    try
+                    {
+                        while(rs1.next())
+                        {
+                            name=rs1.getString(2);
+                            dept=rs1.getString(4);
+                            cgpa=rs1.getInt(5);
+                            comp=rs1.getString(6);
+                            pack=rs1.getInt(7);
+                            System.out.println("\nName is : "+name+"\nDept is : "+dept+"\n Cgpa is : "+cgpa+"\nCompany placed is : "+comp+"\nPackage is : "+pack+"\n");
+
+                        }
+
+                    }
+                    catch (SQLException e1)
+                    {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+                    break;
+                case 5:
+                    d=0;
+                    System.out.println("\nEnter Company\n");
+                    comp=in.next();
+                    // Statement st11=conn.createStatement();
+                    sql="select * from student where company='"+comp+"'";
+                    Statement st1111=conn.createStatement();
+                    ResultSet rs11=st1111.executeQuery(sql);
+                    try
+                    {
+                        System.out.println("\n Students placed are..\n");
+                        while(rs11.next())
+                        {
+                            name=rs11.getString(2);
+                            System.out.println(name+"\n");
+                            d=1;
+                        }
+
+                    }
+                    catch (SQLException e1)
+                    {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+                    if(d==1)
+                        System.out.println("NO one placed...:(");
+
+
+                    break;
+                case 6:
+                    System.out.println("\nThanz\n");
+                    System.exit(0);
+                    break;
+                }
+            }
+        }
+        else if(stu==1)
+        {
+            while(true)
+            {
+                System.out.println("++++++++++ STUDENT SECTION ++++++++++\n1.Biodata\n2.Exit \n Enter your choice  ");
+                d=in.nextInt();
+                switch(d)
+                {
+                case 1:
+                    Statement st=conn.createStatement();
+                    ResultSet rs=st.executeQuery("select * from student where sid="+id+" and pass='"+pass+"'");
+                    int n = 0;
+                    try
+                    {
+                        if(rs.next())
+                        {
+                            name=rs.getString(2);
+                            dept=rs.getString(4);
+                            cgpa=rs.getInt(5);
+                            comp=rs.getString(6);
+                            pack=rs.getInt(7);
+                            n=1;
+                        }
+
+                    }
+                    catch (SQLException e1)
+                    {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+                    if(n==1)
+                        System.out.println("\nName is : "+name+"\nDept is : "+dept+"\n Cgpa is : "+cgpa+"\nCompany placed is : "+comp+"\nPackage is : "+pack+"\n");
+                    else
+                    {
+                        System.out.println("\n Required ID not present\n");
+                    }
+
+                    break;
+                case 2:
+                    System.out.println("\nThanz\n");
+                    System.exit(0);
+                    break;
+                }
+            }
+        }
+    }
+    public void display(int id,String pass) throws SQLException
+    {
+        Statement st=conn.createStatement();
+        ResultSet rs=st.executeQuery("select * from student where sid="+id+" and pass='"+pass+"'");
+        int n = 0;
+        try
+        {
+            if(rs.next())
+            {
+                name=rs.getString(2);
+                dept=rs.getString(4);
+                cgpa=rs.getInt(5);
+                comp=rs.getString(6);
+                pack=rs.getInt(7);
+                n=1;
+            }
+
+        }
+        catch (SQLException e1)
+        {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        if(n==1)
+            System.out.println("\nName is : "+name+"\nDept is : "+dept+"\n Cgpa is : "+cgpa+"\nCompany placed is : "+comp+"\nPackage is : "+pack+"\n");
+        else
+        {
+            System.out.println("\n Required ID not present\n");
+        }
+
+    }
+    public String get(int n)
+    {
+        if(n==1)
+            return "sid";
+        else if(n==2)
+            return "name";
+        else if(n==3)
+            return "pass";
+        else if(n==4)
+            return "dept";
+        else if(n==5)
+            return "cgpa";
+        else if(n==6)
+            return "company";
+        else
+            return "package";
+    }
+
+}
+
+OUTPUT:
+
+ Enter if u r a Student-->0 or staff-->1 
+1
+Enter your login id and Password
+21
+roy21
+++++++++++ STAFF SECTION ++++++++++
+1.Insert Student or Staff details
+ 2.Modify Student details
+ 3.Delete Student
+ 4.Display Student details
+ 5.Students Placed in a Company
+ 6.Get Average of Package(in Function)
+ 7.Exit 
+ Enter your choice  
+7
+Average package: 228440.5
+++++++++++ STAFF SECTION ++++++++++
+1.Insert Student or Staff details
+ 2.Modify Student details
+ 3.Delete Student
+ 4.Display Student details
+ 5.Students Placed in a Company
+ 6.Get Average of Package(in Function)
+ 7.Exit 
+ Enter your choice  
+7
+Average package: 228440.5
+++++++++++ STAFF SECTION ++++++++++
+1.Insert Student or Staff details
+ 2.Modify Student details
+ 3.Delete Student
+ 4.Display Student details
+ 5.Students Placed in a Company
+ 6.Get Average of Package(in Function)
+ 7.Exit 
+ Enter your choice  
+6
+
+Thanz
+
